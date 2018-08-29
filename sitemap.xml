@@ -1,0 +1,1054 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/</loc>
+    
+    <lastmod>2018-08-29T11:26:45.343Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/</loc>
+    
+    <lastmod>2018-07-22T15:36:39.781Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/categories/index.html</loc>
+    
+    <lastmod>2018-07-22T12:27:31.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/tags/index-1.html</loc>
+    
+    <lastmod>2018-07-22T12:26:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/tags/index.html</loc>
+    
+    <lastmod>2018-07-22T12:26:42.041Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/07/Windows-After-updating-Visual-Studio-2017-the-debug-mode-will-stop-by-itself/</loc>
+    
+    <lastmod>2018-07-20T21:49:13.999Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/06/C-Sharp-LeetCode-28-Implement-strStr/</loc>
+    
+    <lastmod>2018-06-03T10:13:55.412Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/</loc>
+    
+    <lastmod>2018-05-13T16:36:48.643Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/05/C-Sharp-LeetCode-8-String-to-Integer-atoi/</loc>
+    
+    <lastmod>2018-05-12T12:36:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/05/C-Sharp-LeetCode-804-Unique-Morse-Code-Words/</loc>
+    
+    <lastmod>2018-05-12T03:18:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/04/ET-Core-EFCore-Generate-DbModel/</loc>
+    
+    <lastmod>2018-04-21T10:41:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/03/C-Visual-Studio-2017-%E4%BF%AE%E6%94%B9%E9%A0%90%E8%A8%AD-class-%E5%AD%98%E5%8F%96%E7%AF%84%E5%9C%8D%E6%88%90-public/</loc>
+    
+    <lastmod>2018-03-27T16:13:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/03/SideProject-Gif-%E7%94%A2%E7%94%9F%E5%99%A8/</loc>
+    
+    <lastmod>2018-03-27T16:10:21.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2018/03/MSSQL-%E9%96%8B%E5%95%9F%E5%B0%8D%E5%A4%96-TCP-IP-Port-%E9%80%A3%E7%B7%9A/</loc>
+    
+    <lastmod>2018-03-20T14:14:39.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/</loc>
+    
+    <lastmod>2018-03-20T14:13:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/404.html</loc>
+    
+    <lastmod>2018-02-25T19:53:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/04/wordpress-automatically-after-file-upload-renaming/</loc>
+    
+    <lastmod>2018-02-25T19:47:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/04/teaching-baby-echo-line-chatbot-api-php/</loc>
+    
+    <lastmod>2018-02-25T19:47:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates/</loc>
+    
+    <lastmod>2018-02-25T19:47:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/04/wordpress-support-chinese-site/</loc>
+    
+    <lastmod>2018-02-25T19:47:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/about/index.html</loc>
+    
+    <lastmod>2018-02-25T19:34:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/c-sharp-asp-net-mvc-5-inherited-validationattribute-simple-implementation-form-fields-validation/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/wordpress-plugin-automatic-conversion-of-wp-slug-translate-web-site-in-english/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/wordpress-using-disqus-comment-system-in-windows-server-2012-r2-link-account-failed/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/c-asp-net-mvc5-fileupload-upload-file-size-limit/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-basic-review-recursive-exercise/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-convert-transition-parse-forced-transition-tryparse-security-transition-and-the-operator-of-the-difference-between-transformation-performance/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/windows-install-pptp-on-windows-server-2012-r2-server/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/windows-win10-turn-off-automatic-updates/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/c-asp-net-mvc5-inherit-authorizeattribute-to-implement-custom-validation/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/04/windows-browser-homepage-was-kidnapped-by-hao123/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-136-single-number/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/using-phpmyadmin-cloudflare-flexible-ssl-service-error-occurs/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/c-asp-net-mvc5-mysql-entity-framework-study-notes-a-the-environmental-setting/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/11/system-architecture-design/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/selinux-security-settings-cause-the-php-mysql-to-normal-online/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/sql-a-picture-explaining-join/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/phpmyadmin-error-occurs-after-installation-for-linux/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/03/net-core-deployment-net-core-deployment-to-ubuntu-server-16-04/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/mssql-using-t-sql-implementation-tab/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/mssql-sql-server-management-studio-online-tools/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/modified-mysql-timeout-time-to-improve-performance/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/line-helper-chatbot-baby-wi-fi-query/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/line-chatbot-baby-little-helper-air-quality-queries/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/04/javascript-do-not-work-history-back-or-history-go-in-special-browser/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/iis-windows-server-2016-unable-to-install-url-rewrite/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/c-asp-net-mvc5-uploaded-with-the-jquery-form-plugin-and-httppostedfilebase-archives/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/08/c-replication-model-changes-will-lead-each-other-rings/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/asp-net-mvc5-when-using-ajax-beginform-will-not-work-correctly/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/chrome-page-does-not-advance-reading/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/centos-install-7-x-vpn-pptp/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-500-keyboard-row/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/centos-install-7-x-lamp-environment-linux-apache-mariadb-php/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/c-use-the-htmlagilitypack-searching-child-nodes-output-garbled-text/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/04/c-sharp-portable-wmiscan-v1-0-check-if-there-are-strange-scripts-example-hao123/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/c-sharp-use-interface-abstract-override-inheritance-implements-a-simple-example/</loc>
+    
+    <lastmod>2018-02-25T19:31:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/mysql-leetcode-easy-182-duplicate-emails/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharpleetcodeeasy-104-maximum-depth-of-binary-tree/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/c-uses-the-google-maps-geocoding-api-to-address-to-latitude/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/06/c-sharp-linq-expression-divides-the-array-into-small-arrays-of-fixed-lengths/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/06/c-sharp-leetcode-easy-617-merge-two-binary-trees/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/centos-7-x-fail2ban-prevents-hackers-from-brute-force-password/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/06/c-sharp-leetcode-easy-561-array-partition/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/06/c-sharp-leetcode-easy-535-encode-decode-tinyurl/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-492-construct-the-rectangle/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-476-number-complement/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/05/css-html-in-the-continuous-letters-or-numbers-do-not-wrap-the-problem/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/git-instructions-instructions/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/wordpress-when-the-plug-error-display-500-error-code-how-to-do/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/iis-in-windows-server-on-the-implementation-of-php-inexplicable-slow/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-485-max-consecutive-ones/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/c-sharp-leetcode-easy-461-hamming-distance/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-448-find-all-numbers-disappeared-in-an-array/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-455-assign-cookies/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/wordpress-modify-the-table-name-prefix/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/c-sharp-leetcode-easy-412-fizz-buzz/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/wordpress-data-permissions-repair/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/05/javascript-resize-event-in-the-mobile-results-are-quite-different/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-389-find-the-difference/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/11/linux-install-jenkins-ci-server-to-bulid-netcore-2-0-on-ubuntu/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/10/linux-mysql-phpmyadmin-the-default-language-is-modified-to-utf8/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-409-longest-palindrome/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-notes-7zip-unzip-program/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-note-change-file-permissions/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-note-check-your-ip/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-notes-changes-the-time-zone/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-notes-delete-a-folder/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-notes-restart-instructions/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/c-sharp-leetcode-easy-387-first-unique-character-in-a-string/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/linux-notes-ubuntu-apache-new-domain-virtual-web-hosting/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/04/modifying-the-wordpress-upload-file-size-limit-setting-from-php-ini/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/mssql-automatic-identification-field-when-required-insert-when-information-should-be-how-do/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-383-ransom-note/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-349-intersection-of-two-arrays/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/mssql-using-setup-exe-full-uninstall-sql-server/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-easy-175-combine-two-tables/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/c-sharp-leetcode-easy-344-reverse-string/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/12/c-sharp-leetcode-easy-1-two-sum/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/mysql-insert-data-checked-before-data-is-duplicated/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-easy-176-second-highest-salary/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/10/c-sharp-leetcode-easy-657-judge-route-circle/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-easy-181-employees-earning-more-than-their-managers/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-easy-183-customers-who-never-order/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-easy-196-delete-duplicate-emails/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-easy-197-rising-temperature/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/10/mysql-leetcode-easy-595-big-countries/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-hard-262-trips-and-users/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-hard-185-department-top-three-salaries/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-medium-184-department-highest-salary/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-medium-178-rank-scores/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysqlleetcodemedium-177-nth-highest-salary/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/mysql-leetcode-medium-180-consecutive-numbers/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-292-nim-game/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/regex-knowing-these-20-regular-expressions-allows-you-to-write-as-little-as-1000-lines-of-code/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/11/ng2-understands-angular-cli-generated-project-directory-structure/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-27-remove-element/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/remove-the-ugly-index-php-wordpress-web-site-for-linux-apache/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-283-move-zeroes/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-167-two-sum-ii-input-array-is-sorted/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/use-apache-htaccess-to-turn-site/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-258-add-digits/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-226-invert-binary-tree/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-242-valid-anagram/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/ubuntu-lamp-mysql-unlock-even-limited/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/iis-sites-insist-on-using-https-encryption-online/</loc>
+    
+    <lastmod>2018-02-25T16:58:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/05/apache-restricted-directory-list/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-204-count-primes/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/05/apache-ssl-use-lets-encrypt-free-voucher/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/10/apply-ssd-4k-alignment/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/c-asp-net-mvc5-use-the-httppostedfilebase-file-upload/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/06/c-check-that-the-folder-exists-such-as-the-new-folder-does-not-exist/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/c-sharp-asp-net-webapi-modify-the-default-format-for-the-return-json/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/05/c-sharp-asp-net-mvc5-with-global-asax-application-error-to-record-exception/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/05/c-sharp-asp-net-mvc5-autofac-di-framework-autofac-config/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/09/c-sharp-asp-net-webapi-how-to-make-webapi-support-session/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/07/c-sharp-asp-net-webapi-return-json-ignore-null-field/</loc>
+    
+    <lastmod>2018-02-25T16:56:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/12/sideproject-ministry-of-finance-e-invoicing-api-testing-tools/</loc>
+    
+    <lastmod>2018-02-25T16:49:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/04/remove-the-ugly-index-php-wordpress-web-site-for-win10-iis10/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/06/javascript-exfast-comic-scroll-watch-to-comic/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/04/git-common-instruction-summary/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/06/c-sharp-invoke-and-begininvoke-the-execution-order-and-difference-in-the-primary-and-secondary-threads/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/04/mysql-and-mariadb-which-is-better-to-choose/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/win-windows-10-start-automatically-when-the-number-keys/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2017/01/vs-code-useful-package/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.exfast.me/2016/07/trashed/</loc>
+    
+    <lastmod>2018-02-21T15:08:19.000Z</lastmod>
+    
+  </url>
+  
+</urlset>
