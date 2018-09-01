@@ -308,6 +308,192 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/09/mssql-using-t-sql-implementation-tab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/mssql-using-t-sql-implementation-tab/" itemprop="url">[MSSQL] 使用 T-SQL 實作分頁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-09-03T01:08:50+08:00">
+                2016-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/mssql-using-t-sql-implementation-tab/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/09/mssql-using-t-sql-implementation-tab/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>很多表格會遇上資料有上萬筆資料或者上千萬時的大數據，這時如果還是把所有資料撈出來在分頁的話，會造成使用者頁面讀取時間過久，更會有伺服器壓力倍增的問題，這裡提供一個SQL解決方案。</p>
+<p>SQL如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">DECLARE @PageNum AS BIGINT;</span><br><span class="line">DECLARE @PageSize AS BIGINT;</span><br><span class="line">DECLARE @PageCount AS BIGINT;</span><br><span class="line">SET @PageNum = 3;</span><br><span class="line">SET @PageSize = 10;</span><br><span class="line">SET @PageCount = (	SELECT	COUNT(1)</span><br><span class="line">					FROM	dbo.TBase_Product</span><br><span class="line">					WHERE	Product_State != 9) / @PageSize;</span><br><span class="line"></span><br><span class="line">IF @PageNum &amp;lt; 1	SET @PageNum = 1;</span><br><span class="line"></span><br><span class="line">WITH Temp AS</span><br><span class="line">(</span><br><span class="line">	SELECT	*,</span><br><span class="line">			ROW_NUMBER() OVER(ORDER BY Product_ID) AS RowNum</span><br><span class="line">	FROM dbo.TBase_Product</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">SELECT	RowNum, @PageCount AS PageCount</span><br><span class="line">FROM	Temp</span><br><span class="line">WHERE	RowNum </span><br><span class="line">		BETWEEN ((@PageNum - 1) * @PageSize + 1) </span><br><span class="line">			AND (@PageNum * @PageSize)</span><br><span class="line">ORDER BY Product_ID;</span><br></pre></td></tr></table></figure>
+<p>執行結果：</p>
+<p><img src="/images/wordpress/2016/09/82eac96db99e98f9c96e3550d29bb239.jpg" alt="2016-09-03 01_01_10-SQLQuery9.sql - exfast.me,6000.iPCE_Coding (shuangrain (143))_ - Microsoft SQL S"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>參考：</p>
+<ol>
+<li><a href="http://stackoverflow.com/questions/10190/how-to-return-a-page-of-results-from-sql" target="_blank" rel="noopener">How to return a page of results from SQL?</a></li>
+<li><a href="https://dotblogs.com.tw/jeff-yeh/2011/01/12/20767" target="_blank" rel="noopener">Select Count(*) / Count(1) / Count(欄位名) 的差異</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/08/c-replication-model-changes-will-lead-each-other-rings/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2003,212 +2189,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/" itemprop="url">[C#] 使用 HtmlAgilityPack 來採集網頁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-07-02T14:12:51+08:00">
-                2016-07-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>因為工作需求，所以必須寫一隻小程式來擷取網頁資料，上網Google了一下於是找到了一個好用的套件<code>HtmlAgilityPack</code>，可以迅速的過濾HTML標籤，取得網頁資料。</p>
-<p>&nbsp;</p>
-<ol>
-<li>從NuGet安裝<code>&lt;code&gt;HtmlAgilityPack</code>&nbsp;</li>
-</ol>
-<p><img src="/images/wordpress/2016/07/01.jpg" alt="01"></p>
-<ol>
-<li>讀取網頁(以原價屋為例)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//指定來源網頁</span><br><span class="line">WebClient url = new WebClient();</span><br><span class="line">//將網頁來源資料暫存到記憶體內</span><br><span class="line">MemoryStream ms = new MemoryStream(url.DownloadData(&quot;http://www.coolpc.com.tw/evaluate.php&quot;));</span><br><span class="line">//使用預設編碼讀入 HTML </span><br><span class="line">HtmlDocument doc = new HtmlDocument();</span><br><span class="line">doc.Load(ms, Encoding.Default);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>原價屋除了商品的類型以外，類型內的選單(select)有做群組分類，為了要將分類與商品所以先建一個Model</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Product</span><br><span class="line">&#123;</span><br><span class="line">	public string type &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public string name &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>判斷所要的商品類型(以CPU為例)，再擷取該商品類型內選單的分類</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var list_type = new List&amp;lt;string&amp;gt;();</span><br><span class="line">HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(&quot;//select[@name=&apos;n4&apos;]//optgroup&quot;);</span><br><span class="line"></span><br><span class="line">foreach (HtmlNode node in nodes)</span><br><span class="line">&#123;</span><br><span class="line">	var type = node.Attributes[&quot;label&quot;].Value;</span><br><span class="line">	list_type.Add(type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>接下來就要該使擷取商品名稱與價格了</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">List&amp;lt;string&amp;gt; list_name = doc.DocumentNode.SelectSingleNode(&quot;//select[@name=&apos;n4&apos;]&quot;).InnerText.Split(&apos;\n&apos;).ToList();</span><br><span class="line"></span><br><span class="line">//刪除不必要的非商品選項</span><br><span class="line">list_name.RemoveRange(0,3);</span><br><span class="line">list_name.RemoveAt(list_name.Count - 1);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>將商品類型與名稱填入Model</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var models = new List&amp;lt;Product&amp;gt;();</span><br><span class="line">int number = 0;</span><br><span class="line">for (int i = 0; i &amp;lt; list_name.Count; i++)</span><br><span class="line">&#123;</span><br><span class="line">	string type = list_type[number];</span><br><span class="line">	string name = list_name[i];</span><br><span class="line"></span><br><span class="line">	if (name == &quot;&quot;)</span><br><span class="line">	&#123;</span><br><span class="line">		number++;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		models.Add(new Product()</span><br><span class="line">		&#123;</span><br><span class="line">			type = type,</span><br><span class="line">			name = name</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		Console.WriteLine(&quot;類型：&#123;0&#125; ,&quot;, type);</span><br><span class="line">		Console.WriteLine(&quot;名稱：&#123;0&#125;&quot;, name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Console.ReadLine();</span><br></pre></td></tr></table></figure>
-<ol>
-<li>執行結果<img src="/images/wordpress/2016/07/0000.jpg" alt="0000"><br>&nbsp;</li>
-</ol>
-<p>範例程式：<a href="https://github.com/shuangrain/ConsoleApplication_HtmlAgilityPack" target="_blank" rel="noopener">https://github.com/shuangrain/ConsoleApplication_HtmlAgilityPack</a></p>
-<p>&nbsp;</p>
-<p>參考：<a href="https://dotblogs.com.tw/jackbgova/2014/06/10/145471" target="_blank" rel="noopener">[ASP.NET][C#]使用HtmlAgilityPack(1) 擷取網頁上的股票</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2263,7 +2243,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">145</span>
+                  <span class="site-state-item-count">146</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2274,7 +2254,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2285,7 +2265,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-count">160</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

@@ -308,6 +308,222 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/" itemprop="url">CentOS 7.X Wrodpress 上傳的檔案無法被移動至wp-content/uploads/</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-09T20:36:27+08:00">
+                2016-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
+                    <span itemprop="name">OS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/OS/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在移植完Wrodpress測試是否正常時，發生了媒體無法上傳的問題，錯誤訊息給出<code>上傳的檔案無法被移動至wp-content/uploads/</code>，就翻了之前寫的文章<a href="https://blog.exfast.me/2016/05/wordpress-%e8%b3%87%e6%96%99%e6%ac%8a%e9%99%90%e4%bf%ae%e5%be%a9/">WordPress 資料權限修復</a>，這邊有一點點不太一樣的就是在CentOS裡面Apache的使用者不是<code>www-data</code>而是<code>apache</code>，修正完資料夾權限後竟然還是無法正常上傳媒體，爬文爬了一整晚將近12小時，下了各種關鍵字都找不到原因，最後快要放棄時逛逛PTT Linux版時無意間看到了<a href="https://www.ptt.cc/bbs/Linux/M.1461909132.A.489.html" target="_blank" rel="noopener">這篇</a>，才發現原來除了預設的資料夾權限以外，還多了SELinux安全性的問題。</p>
+<p>解決方法有兩種如下：</p>
+<ol>
+<li><p>給予權限寫入資料 (推薦!!)</p>
+<ul>
+<li>給予httpd讀取的權限</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo chcon -t httpd_sys_content_t /var/www/html/ -R</span><br></pre></td></tr></table></figure>
+<pre><code>*   給予寫入的權限
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo chcon -t httpd_sys_rw_content_t /data/www/html/sofast/wp-content/* -R</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>完全關閉SELinux (不推薦)</p>
+<ul>
+<li>開啟路徑</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/etc/sysconfig/selinux</span><br></pre></td></tr></table></figure>
+<pre><code>*   搜尋`SELINUX`修改為`&lt;code&gt;disabled`&lt;/code&gt;
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//預設enforcing為開啟，disabled為關閉</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
+<pre><code>*   重開機
+</code></pre><p>查詢SELinux是否開啟<code>(Enforcing為開啟，disabled為關閉)</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">getenforce</span><br></pre></td></tr></table></figure>
+<p>參考：</p>
+<ol>
+<li><a href="https://blog.lysender.com/2015/07/centos-7-selinux-php-apache-cannot-writeaccess-file-no-matter-what/" target="_blank" rel="noopener">CentOS 7 + SELinux + PHP + Apache – cannot write/access file no matter what</a></li>
+<li><a href="http://download.ithome.com.tw/article/index/id/2410" target="_blank" rel="noopener">CentOS 關閉SELinux方式</a></li>
+<li><a href="https://www.ptt.cc/bbs/Linux/M.1461909132.A.489.html" target="_blank" rel="noopener">[問題] CentOS 7 apache資料夾權限</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/centos-install-7-x-lamp-environment-linux-apache-mariadb-php/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1998,187 +2214,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/phpmyadmin-error-occurs-after-installation-for-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/phpmyadmin-error-occurs-after-installation-for-linux/" itemprop="url">[Ubuntu] phpMyAdmin 安裝後發生錯誤</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-04T00:27:20+08:00">
-                2016-05-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
-                    <span itemprop="name">OS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/phpmyadmin-error-occurs-after-installation-for-linux/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/phpmyadmin-error-occurs-after-installation-for-linux/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>環境：Ubuntu Server 15.10 x64</p>
-<p>使用<code>sudo apt-get install phpmyadmin</code>安裝後跳出這個錯誤</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">尚未設定 phpMyAdmin 設定儲存空間，部份延伸功能將無法使用。 了解原因。 或者前往任一個資料庫的 &apos;操作&apos; 頁籤設定。</span><br></pre></td></tr></table></figure>
-<p><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3.jpg" alt="01"><br><img src="/images/wordpress/2016/05/a2ef406e2c2351e0b9e80029c909242d.jpg" alt="02"></p>
-<p>最後發現是<code>config.inc.php</code>少了一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$cfg[&apos;Servers&apos;][$i][&apos;central_columns&apos;] = &apos;pma__central_columns&apos;;</span><br></pre></td></tr></table></figure>
-<p>加上去就解決了，上面明明都沒問題，唯獨少了這行，真詭異。</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2233,7 +2268,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">145</span>
+                  <span class="site-state-item-count">146</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2244,7 +2279,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2255,7 +2290,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-count">160</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
