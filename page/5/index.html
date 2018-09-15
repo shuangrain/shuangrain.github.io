@@ -308,6 +308,206 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-455-assign-cookies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/c-sharp-leetcode-easy-455-assign-cookies/" itemprop="url">[C#][LeetCode][Easy] 455. Assign Cookies</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-02-06T15:22:45+08:00">
+                2017-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/c-sharp-leetcode-easy-455-assign-cookies/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/02/c-sharp-leetcode-easy-455-assign-cookies/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>題目詢問說共可以滿足幾個小孩所期望的蛋糕數，例如總共有三個小孩A, B, C，A希望獲得1片蛋糕；B希望獲得2片蛋糕；C希望獲得3片蛋糕，而總共有兩塊蛋糕Z, X，Z可以切成1片，X可以切成兩片，這樣的話答案是2，因為最多只能滿足兩個小孩的需求。依照這個思路去撰寫Code就容易得多了。</p>
+<h1 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h1><blockquote>
+<p>Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie. Each child i has a greed factor g<sub>i</sub>, which is the minimum size of a cookie that the child will be content with; and each cookie j has a size s<sub>j</sub>. If s<sub>j</sub> &gt;= g<sub>i</sub>, we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximize the number of your content children and output the maximum number.</p>
+<p><strong>Note:</strong></p>
+<p>You may assume the greed factor is always positive.</p>
+<p>You cannot assign more than one cookie to one child.</p>
+<p><strong>Example 1:</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Input: [1,2,3], [1,1]</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; Output: 1</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; Explanation: You have 3 children and 2 cookies. The greed factors of 3 children are 1, 2, 3\. </span><br><span class="line">&gt; </span><br><span class="line">&gt; And even though you have 2 cookies, since their size is both 1, you could only make the child whose greed factor is 1 content.</span><br><span class="line">&gt; </span><br><span class="line">&gt; You need to output 1.</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Input: [1,2], [1,2,3]</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; Output: 2</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2\. </span><br><span class="line">&gt; </span><br><span class="line">&gt; You have 3 cookies and their sizes are big enough to gratify all of the children, </span><br><span class="line">&gt; </span><br><span class="line">&gt; You need to output 2.</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int FindContentChildren(int[] g, int[] s) &#123;</span><br><span class="line">        Array.Sort(g);</span><br><span class="line">        Array.Sort(s);</span><br><span class="line"></span><br><span class="line">        int ans = 0;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; ans &amp;lt; g.Length &amp;amp;&amp;amp; i &amp;lt; s.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            if (g[ans] &amp;lt;= s[i])</span><br><span class="line">            &#123;</span><br><span class="line">                ans++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-492-construct-the-rectangle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2163,202 +2363,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-medium-178-rank-scores/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/mysql-leetcode-medium-178-rank-scores/" itemprop="url">[MySQL][LeetCode][Medium] 178. Rank Scores</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-13T23:06:05+08:00">
-                2017-01-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/Program/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/mysql-leetcode-medium-178-rank-scores/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/01/mysql-leetcode-medium-178-rank-scores/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>題目要求找出成績排名，如果分數相同的話則相同名次，MySQL不像MSSQL有<code>ROW_NUMBER()</code>可以用，只好用個變數來存了。</p>
-<h1 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h1><blockquote>
-<p>Write a SQL query to rank scores. If there is a tie between two scores, both should have the same ranking. Note that after a tie, the next ranking number should be the next consecutive integer value. In other words, there should be no “holes” between ranks.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+-------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | Score |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  | 3.50  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  | 3.65  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3  | 4.00  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4  | 3.85  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 5  | 4.00  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 6  | 3.65  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>For example, given the above <code>Scores</code> table, your query should generate the following report (order by highest score):</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+-------+------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Score | Rank |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-------+------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4.00  | 1    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4.00  | 1    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3.85  | 2    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3.65  | 3    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3.65  | 3    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3.50  | 4    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-------+------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT a.Score, b.Rank</span><br><span class="line">FROM Scores AS a</span><br><span class="line">JOIN (SELECT (@row_number:=@row_number + 1) AS Rank, z.Score</span><br><span class="line">      FROM (SELECT x.* </span><br><span class="line">            FROM Scores AS x </span><br><span class="line">            GROUP BY x.Score</span><br><span class="line">            ORDER BY x.Score DESC) AS z</span><br><span class="line">      JOIN (SELECT @row_number := 0) AS y) AS b</span><br><span class="line">ON a.Score = b.Score  </span><br><span class="line">ORDER BY `b`.`Score` DESC</span><br></pre></td></tr></table></figure>
-<p>&nbsp;</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2413,7 +2417,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">146</span>
+                  <span class="site-state-item-count">147</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

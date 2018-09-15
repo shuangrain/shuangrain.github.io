@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="SQL,SQL Server,Linux,Docker," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="從入門到放棄">
-<meta property="og:url" content="https://blog.exfast.me/categories/Other/Program/Windows/index.html">
+<meta name="description" content="環境：Window 7  安裝 Docker Toolbox  新增 Volume 1docker volume create vol-mssql  建立容器 12345678910docker run \--restart=always \--name mssql \--mount &amp;quot;source=vol-mssql,target=/var/opt/mssql&amp;quot; \-e &amp;q">
+<meta name="keywords" content="SQL,SQL Server,Linux,Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Docker][Linux] SQL Server 安裝筆記">
+<meta property="og:url" content="https://blog.exfast.me/2018/09/docker-linux-sql-server-installation-notes/index.html">
 <meta property="og:site_name" content="從入門到放棄">
+<meta property="og:description" content="環境：Window 7  安裝 Docker Toolbox  新增 Volume 1docker volume create vol-mssql  建立容器 12345678910docker run \--restart=always \--name mssql \--mount &amp;quot;source=vol-mssql,target=/var/opt/mssql&amp;quot; \-e &amp;q">
 <meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-09-15T15:20:57.625Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="從入門到放棄">
+<meta name="twitter:title" content="[Docker][Linux] SQL Server 安裝筆記">
+<meta name="twitter:description" content="環境：Window 7  安裝 Docker Toolbox  新增 Volume 1docker volume create vol-mssql  建立容器 12345678910docker run \--restart=always \--name mssql \--mount &amp;quot;source=vol-mssql,target=/var/opt/mssql&amp;quot; \-e &amp;q">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://blog.exfast.me/categories/Other/Program/Windows/"/>
+  <link rel="canonical" href="https://blog.exfast.me/2018/09/docker-linux-sql-server-installation-notes/"/>
 
 
 
 
 
-  <title>分類: Windows | 從入門到放棄</title>
+  <title>[Docker][Linux] SQL Server 安裝筆記 | 從入門到放棄</title>
   
 
 
@@ -156,7 +161,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -293,55 +298,215 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Windows<small>分類</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/docker-linux-sql-server-installation-notes/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2016/07/trashed/" itemprop="url">
-              
-                <span itemprop="name">OpenCV 實作 (一) : 環境架設</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">[Docker][Linux] SQL Server 安裝筆記</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-07-01T15:01:23+08:00"
-              content="2016-07-01" >
-          07-01
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-09-15T23:14:00+08:00">
+                2018-09-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/docker-linux-sql-server-installation-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/docker-linux-sql-server-installation-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <p>環境：Window 7</p>
+<ol>
+<li>安裝 <a href="https://docs.docker.com/toolbox/toolbox_install_windows/" target="_blank" rel="noopener">Docker Toolbox </a></li>
+<li><p>新增 Volume</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create vol-mssql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">--restart=always \</span><br><span class="line">--name mssql \</span><br><span class="line">--mount &quot;source=vol-mssql,target=/var/opt/mssql&quot; \</span><br><span class="line">-e &quot;ACCEPT_EULA=Y&quot; \</span><br><span class="line">-e &quot;SA_PASSWORD=1OCHWiY9O#RF&quot; \</span><br><span class="line">-e &quot;MSSQL_PID=Express&quot; \</span><br><span class="line">-e &quot;MSSQL_COLLATION=Chinese_Taiwan_Stroke_CI_AS&quot; \</span><br><span class="line">-p 1433:1433 \</span><br><span class="line">-d microsoft/mssql-server-linux:latest</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新時區</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker exec -ti mssql bash</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install tzdata -y</span><br><span class="line">dpkg-reconfigure tzdata</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>參考資料：</p>
+<ol>
+<li><a href="https://dotblogs.com.tw/rachen/2017/09/07/142638" target="_blank" rel="noopener">Linux Docker 運行 MSSQL</a></li>
+<li><a href="https://docs.microsoft.com/zh-tw/sql/linux/quickstart-install-connect-docker?view=sql-server-2017" target="_blank" rel="noopener">快速入門： 使用 Docker 執行 SQL Server 2017 容器映像</a></li>
+<li><a href="http://blog.51cto.com/ultrasql/2152139" target="_blank" rel="noopener">在Linux上使用环境变量配置SQL Server设置</a></li>
+</ol>
+
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL/" rel="tag"># SQL</a>
+          
+            <a href="/tags/SQL-Server/" rel="tag"># SQL Server</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/Can-debug-ASPNET-Core-in-Win7-Docker/" rel="next" title="[Docker][NetCore] Win7 可以在 Docker 下 Debug ASP.NET Core 嗎？">
+                <i class="fa fa-chevron-left"></i> [Docker][NetCore] Win7 可以在 Docker 下 Debug ASP.NET Core 嗎？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -349,6 +514,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -590,6 +769,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -607,6 +790,18 @@
       <script id="dsq-count-scr" src="https://sofast.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://blog.exfast.me/2018/09/docker-linux-sql-server-installation-notes/';
+          this.page.identifier = '2018/09/docker-linux-sql-server-installation-notes/';
+          this.page.title = '[Docker][Linux] SQL Server 安裝筆記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://sofast.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
