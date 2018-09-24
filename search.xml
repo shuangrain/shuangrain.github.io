@@ -44,13 +44,13 @@
       
         <tags>
             
-            <tag> SQL </tag>
-            
-            <tag> SQL Server </tag>
+            <tag> Docker </tag>
             
             <tag> Linux </tag>
             
-            <tag> Docker </tag>
+            <tag> SQL </tag>
+            
+            <tag> SQL Server </tag>
             
         </tags>
       
@@ -76,8 +76,6 @@
             
             <tag> Windows </tag>
             
-            <tag> Linux </tag>
-            
             <tag> Win10 </tag>
             
             <tag> Docker </tag>
@@ -95,6 +93,8 @@
             <tag> Win7 </tag>
             
             <tag> Visual Studio  </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -120,9 +120,9 @@
             
             <tag> DI </tag>
             
-            <tag> .NET Core </tag>
-            
             <tag> Dependency Injection </tag>
+            
+            <tag> .NET Core </tag>
             
         </tags>
       
@@ -862,15 +862,15 @@
             
             <tag> ASP.NET MVC5 </tag>
             
-            <tag> MVC </tag>
-            
-            <tag> MVC5 </tag>
-            
             <tag> Autofac </tag>
             
             <tag> DI </tag>
             
             <tag> DI Framework </tag>
+            
+            <tag> MVC </tag>
+            
+            <tag> MVC5 </tag>
             
         </tags>
       
@@ -1384,9 +1384,9 @@
             
             <tag> Windows </tag>
             
-            <tag> Windows 10 </tag>
-            
             <tag> Win10 </tag>
+            
+            <tag> Windows 10 </tag>
             
             <tag> Win 10 </tag>
             
@@ -1988,11 +1988,11 @@
             
             <tag> Windows </tag>
             
+            <tag> Win10 </tag>
+            
             <tag> 教學 </tag>
             
             <tag> Windows 10 </tag>
-            
-            <tag> Win10 </tag>
             
         </tags>
       
@@ -2390,13 +2390,13 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> IIS </tag>
             
             <tag> Server </tag>
             
             <tag> WordPress </tag>
-            
-            <tag> Linux </tag>
             
             <tag> php </tag>
             
@@ -2484,9 +2484,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 轉載 </tag>
-            
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
             <tag> ASP.NET MVC </tag>
             
@@ -2666,9 +2666,9 @@
             
             <tag> ASP.NET </tag>
             
-            <tag> 轉載 </tag>
-            
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
             <tag> ASP.NET WebAPI </tag>
             
@@ -2726,9 +2726,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 轉載 </tag>
-            
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
         </tags>
       
@@ -2968,9 +2968,9 @@
             
             <tag> MSSQL </tag>
             
-            <tag> 轉載 </tag>
-            
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
         </tags>
       
@@ -3022,9 +3022,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 轉載 </tag>
-            
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
             <tag> Chrome </tag>
             
@@ -3456,11 +3456,11 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Server </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> CentOS </tag>
             
@@ -3490,9 +3490,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 轉載 </tag>
-            
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
             <tag> Google Map </tag>
             
@@ -3518,9 +3518,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> Server </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Server </tag>
             
             <tag> CentOS </tag>
             
@@ -3546,11 +3546,11 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Server </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> CentOS </tag>
             
@@ -3628,13 +3628,13 @@
             
             <tag> 筆記 </tag>
             
-            <tag> Apache </tag>
+            <tag> Linux </tag>
             
             <tag> WordPress </tag>
             
             <tag> 教學 </tag>
             
-            <tag> Linux </tag>
+            <tag> Apache </tag>
             
             <tag> CentOS </tag>
             
@@ -3662,13 +3662,13 @@
             
             <tag> 筆記 </tag>
             
-            <tag> Apache </tag>
+            <tag> Linux </tag>
             
             <tag> Server </tag>
             
             <tag> 教學 </tag>
             
-            <tag> Linux </tag>
+            <tag> Apache </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3780,13 +3780,13 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> SQL </tag>
             
             <tag> Server </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3844,11 +3844,11 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Server </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> SSL </tag>
             
@@ -3874,11 +3874,11 @@
             
             <tag> 筆記 </tag>
             
-            <tag> Apache </tag>
+            <tag> Linux </tag>
             
             <tag> Server </tag>
             
-            <tag> Linux </tag>
+            <tag> Apache </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3902,11 +3902,11 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Server </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3936,11 +3936,11 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Server </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> phpMyAdmin </tag>
             
@@ -3964,13 +3964,13 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 轉載 </tag>
+            <tag> Linux </tag>
             
             <tag> Server </tag>
             
             <tag> 教學 </tag>
             
-            <tag> Linux </tag>
+            <tag> 轉載 </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3996,13 +3996,13 @@
             
             <tag> 筆記 </tag>
             
-            <tag> Apache </tag>
-            
-            <tag> 轉載 </tag>
+            <tag> Linux </tag>
             
             <tag> 教學 </tag>
             
-            <tag> Linux </tag>
+            <tag> Apache </tag>
+            
+            <tag> 轉載 </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4052,13 +4052,13 @@
             
             <tag> 筆記 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Server </tag>
             
             <tag> WordPress </tag>
             
             <tag> 教學 </tag>
-            
-            <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4084,7 +4084,7 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 轉載 </tag>
+            <tag> Linux </tag>
             
             <tag> Server </tag>
             
@@ -4092,7 +4092,7 @@
             
             <tag> 教學 </tag>
             
-            <tag> Linux </tag>
+            <tag> 轉載 </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4326,11 +4326,11 @@
       
         <tags>
             
-            <tag> 轉載 </tag>
-            
             <tag> WordPress </tag>
             
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
         </tags>
       
@@ -4352,8 +4352,6 @@
       
         <tags>
             
-            <tag> 轉載 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
@@ -4361,6 +4359,8 @@
             <tag> WordPress </tag>
             
             <tag> 教學 </tag>
+            
+            <tag> 轉載 </tag>
             
             <tag> Windows 10 </tag>
             
