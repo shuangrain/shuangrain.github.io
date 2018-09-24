@@ -308,6 +308,212 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-medium-184-department-highest-salary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/mysql-leetcode-medium-184-department-highest-salary/" itemprop="url">[MySQL][LeetCode][Medium] 184. Department Highest Salary</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-15T22:31:33+08:00">
+                2017-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/mysql-leetcode-medium-184-department-highest-salary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/mysql-leetcode-medium-184-department-highest-salary/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>題目要求找出每個部門薪水最高的員工，若同部門最高薪水有複數則一起顯示，這題我在<code>JOIN</code>部門清單的時候先去把各部門最高薪資數字先撈了出來，這樣在關聯兩張表的時候就可以直接搜尋員工薪水是否等於最高薪資。</p>
+<h1 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h1><blockquote>
+<p>The <code>Employee</code> table holds all employees. Every employee has an Id, a salary, and there is also a column for the department Id.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+-------+--------+--------------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | Name  | Salary | DepartmentId |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+--------+--------------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  | Joe   | 70000  | 1            |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  | Henry | 80000  | 2            |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3  | Sam   | 60000  | 2            |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4  | Max   | 90000  | 1            |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+--------+--------------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The <code>Department</code> table holds all departments of the company.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | Name     |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  | IT       |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  | Sales    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Write a SQL query to find employees who have the highest salary in each of the departments. For the above tables, Max has the highest salary in the IT department and Henry has the highest salary in the Sales department.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+------------+----------+--------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Department | Employee | Salary |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +------------+----------+--------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | IT         | Max      | 90000  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Sales      | Henry    | 80000  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +------------+----------+--------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><ol>
+<li><code>JOIN</code>部門清單的時候先去把各部門最高薪資數字先撈了出來</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT  b.Name AS Department,</span><br><span class="line">        a.Name AS Employee,</span><br><span class="line">        a.Salary AS Salary</span><br><span class="line">FROM Employee AS a</span><br><span class="line">JOIN (  SELECT z.*, (SELECT MAX(y.Salary)</span><br><span class="line">                     FROM Employee AS y</span><br><span class="line">                     WHERE z.Id = y.DepartmentId</span><br><span class="line">                     LIMIT 0, 1) AS MaxSalary</span><br><span class="line">        FROM Department AS z) AS b</span><br><span class="line">ON a.DepartmentId = b.Id AND a.Salary = b.MaxSalary</span><br></pre></td></tr></table></figure>
+<ol>
+<li>(2017/01/16) 寫 <a href="https://blog.exfast.me/2017/01/mysql-leetcode-hard-185-department-top-three-salaries/">185. Department Top Three Salaries</a> 時後發現的方法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT  b.Name AS Department,</span><br><span class="line">        a.Name AS Employee,</span><br><span class="line">        a.Salary AS Salary</span><br><span class="line">FROM Employee AS a</span><br><span class="line">JOIN Department AS b</span><br><span class="line">ON a.DepartmentId = b.Id</span><br><span class="line">WHERE ( SELECT COUNT(DISTINCT(z.Salary)) </span><br><span class="line">        FROM Employee AS z</span><br><span class="line">        WHERE a.DepartmentId = z.DepartmentId</span><br><span class="line">        AND a.Salary &amp;lt; z.Salary) = 0</span><br></pre></td></tr></table></figure>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-medium-178-rank-scores/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2134,215 +2340,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-476-number-complement/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/c-sharp-leetcode-easy-476-number-complement/" itemprop="url">[C#][LeetCode][Easy] 476. Number Complement</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-10T18:59:58+08:00">
-                2017-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/c-sharp-leetcode-easy-476-number-complement/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/01/c-sharp-leetcode-easy-476-number-complement/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>心得：</p>
-<p>題目要求將數字轉換為其補數，看起來滿單純的我就想不開硬幹了，由於不想借助C#內建的方法，所以自己實作二進位與十進位之間轉換。</p>
-<p>題目：</p>
-<blockquote>
-<p>Given a positive integer, output its complement number. The complement strategy is to flip the bits of its binary representation.</p>
-<p><strong>Note:</strong></p>
-<ol>
-<li>The given integer is guaranteed to fit within the range of a 32-bit signed integer.</li>
-<li>You could assume no leading zero bit in the integer’s binary representation.<br>答案：</li>
-</ol>
-</blockquote>
-<ol>
-<li>Normal - 硬幹</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int FindComplement(int num) &#123;</span><br><span class="line">        string str = ConvertMethod(num);</span><br><span class="line">        string ans = &quot;&quot;;</span><br><span class="line">        for(int i = 0; i &amp;lt; str.Length; i++)&#123;</span><br><span class="line">            if(str[i] == &apos;0&apos;)&#123;</span><br><span class="line">                ans += &quot;1&quot;;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                ans += &quot;0&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ConvertMethod(ans);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private string ConvertMethod(int num)&#123;</span><br><span class="line">        string str = &quot;&quot;;</span><br><span class="line">        while (num &amp;gt; 1)</span><br><span class="line">        &#123;</span><br><span class="line">            str = num % 2 + str;</span><br><span class="line">            num = num / 2;</span><br><span class="line">            if (num == 1)</span><br><span class="line">            &#123;</span><br><span class="line">                str = num + str;</span><br><span class="line">                num = 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int ConvertMethod(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        for (int i = 0; i &amp;lt; str.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int tmp = 1;</span><br><span class="line">            for (int j = 1; j &amp;lt; (str.Length - i); j++)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp *= 2;</span><br><span class="line">            &#125;</span><br><span class="line">            ans += tmp * int.Parse(str[i].ToString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>LinQ</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int FindComplement(int num) &#123;</span><br><span class="line">        return Convert.ToInt32(new string(Convert.ToString(num, 2).Select(x =&amp;gt; x == &apos;1&apos; ? &apos;0&apos; : &apos;1&apos;).ToArray()), 2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>參考：</p>
-<ol>
-<li><a href="http://www.sggs.hc.edu.tw/sggsnew/comp/bccto2816.htm" target="_blank" rel="noopener">http://www.sggs.hc.edu.tw/sggsnew/comp/bccto2816.htm</a></li>
-<li><a href="https://dotblogs.com.tw/aquarius6913/2013/01/09/87041" target="_blank" rel="noopener">[C#] 轉2進位 / 10進位 / 16進位</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2397,7 +2394,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">147</span>
+                  <span class="site-state-item-count">148</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2408,7 +2405,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2419,7 +2416,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">160</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

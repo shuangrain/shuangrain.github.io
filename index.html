@@ -308,6 +308,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/c-sharp-netcore-compressed-files-and-unzipped-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/c-sharp-netcore-compressed-files-and-unzipped-files/" itemprop="url">[C#][.NETCore] 壓縮檔案 & 解壓縮檔案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-09-24T22:49:00+08:00">
+                2018-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/c-sharp-netcore-compressed-files-and-unzipped-files/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/c-sharp-netcore-compressed-files-and-unzipped-files/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 .NET Framework 的時候有好用的 <a href="https://www.nuget.org/packages/DotNetZip/" target="_blank" rel="noopener">DotNetZip</a> 可以快速壓縮&amp;解壓縮檔案<br>但在寫 .NET Core 的時候發現這個套件不能使用，那只好默默地自己寫了</p>
+<p>這邊就用 <code>System.IO.Compression</code> 提供的 <code>ZipArchive</code> 來簡單寫個壓縮 &amp; 解壓縮範例</p>
+<p>壓縮檔案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">string rootPath = AppDomain.CurrentDomain.BaseDirectory;</span><br><span class="line">string saveFileName = Path.Combine(rootPath, &quot;test.zip&quot;);</span><br><span class="line">string zipFileName = Path.Combine(rootPath, &quot;123.txt&quot;);</span><br><span class="line"></span><br><span class="line">using (var fs = new FileStream(saveFileName, FileMode.OpenOrCreate))</span><br><span class="line">&#123;</span><br><span class="line">    using (ZipArchive zipArchive = new ZipArchive(fs, ZipArchiveMode.Create))</span><br><span class="line">    &#123;</span><br><span class="line">        string fileName = Path.GetFileName(zipFileName);</span><br><span class="line"></span><br><span class="line">        var zipArchiveEntry = zipArchive.CreateEntry(fileName);</span><br><span class="line">        using (var zipStream = zipArchiveEntry.Open())</span><br><span class="line">        &#123;</span><br><span class="line">            byte[] bytes = File.ReadAllBytes(zipFileName);</span><br><span class="line">            zipStream.Write(bytes, 0, bytes.Length);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解壓縮檔案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">string rootPath = AppDomain.CurrentDomain.BaseDirectory;</span><br><span class="line">string zipFileName = Path.Combine(rootPath, &quot;test.zip&quot;);</span><br><span class="line">string saveFolder = rootPath;</span><br><span class="line"></span><br><span class="line">if (!saveFolder.EndsWith(Path.DirectorySeparatorChar))</span><br><span class="line">&#123;</span><br><span class="line">    saveFolder += Path.DirectorySeparatorChar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">using (var fs = new FileStream(zipFileName, FileMode.Open))</span><br><span class="line">&#123;</span><br><span class="line">    using (ZipArchive zipArchive = new ZipArchive(fs, ZipArchiveMode.Read))</span><br><span class="line">    &#123;</span><br><span class="line">        foreach (ZipArchiveEntry zipArchiveEntry in zipArchive.Entries)</span><br><span class="line">        &#123;</span><br><span class="line">            string temp = Path.Combine(saveFolder, zipArchiveEntry.FullName);</span><br><span class="line">            zipArchiveEntry.ExtractToFile(temp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解壓縮的時候最好可以將 <code>zipArchiveEntry.FullName</code> 再做一層處理，避免產生資安問題 <a href="http://cyrilwang.blogspot.com/2014/01/path-traversal-attack.html" target="_blank" rel="noopener">(詳情)</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/docker-linux-sql-server-installation-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1842,188 +2010,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/04/ET-Core-EFCore-Generate-DbModel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/ET-Core-EFCore-Generate-DbModel/" itemprop="url">[.NET Core] EFCore Generate DbModel</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-04-21T16:46:00+08:00">
-                2018-04-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/筆記/" itemprop="url" rel="index">
-                    <span itemprop="name">筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/ET-Core-EFCore-Generate-DbModel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/04/ET-Core-EFCore-Generate-DbModel/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>使用 EFCore 的時候沒有看有地方可以像 .NET Framework 可以直接使用 VS 新增 edmx 產生好資料庫的 Model 與 DbContext，這個時候就必須靠自己拉，不過當 Table 多的時候這樣人工慢慢新增 Model 有點智障，於是乎就上網找到了 EFCore Tool 有提供一段命令可以使用。</p>
-<p>網址：<a href="https://docs.microsoft.com/zh-tw/ef/core/miscellaneous/cli/powershell" target="_blank" rel="noopener">https://docs.microsoft.com/zh-tw/ef/core/miscellaneous/cli/powershell</a></p>
-<p>這裡就來簡單做個筆記</p>
-<ol>
-<li><p>首先在 <code>Package Manager Console</code> 輸入指令安裝 EFCore Tool</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Microsoft.EntityFrameworkCore.Tools</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>若為 Win7 需要先裝 <code>Windows Management Framework 3.0</code> 否則會跟我一樣出現下面的錯誤<br><img src="/images/auto-save/pasted-0.png" alt="錯誤畫面"></p>
-</li>
-<li><p>檔案可以在 <a href="https://support.microsoft.com/en-us/help/2506143/description-of-windows-management-framework-3-0-for-windows-7-sp1-and" target="_blank" rel="noopener">這裡</a> 找到下載安裝並重開機。</p>
-</li>
-<li><p>產生 Model 前需注意一件事情就是密碼不能有 <code>$</code> 符號，不然會跟我一樣鬼打牆一小時都找不到問題，我有嘗試使用單引號包起來，但依然無法成功連線</p>
-</li>
-<li><p>接著在 <code>Package Manager Console</code> 輸入指令 (適用於 Azure SQL DataBase)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=&#123;ip&#125;;Initial Catalog=&#123;dbName&#125;;Persist Security Info=False;User ID=&#123;Account&#125;;Password=&#123;Password&#125;;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir &#123;Path&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>接著就可以看到 VS 裡面跑出 DbModel 與 DbContext 囉 !!</p>
-</li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2078,7 +2064,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">147</span>
+                  <span class="site-state-item-count">148</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2089,7 +2075,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2100,7 +2086,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">160</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
