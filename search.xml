@@ -3,9 +3,45 @@
   
     
     <entry>
+      <title>[IIS][GitLab] 利用 IIS Reverse Proxy 將 GitLab 藏在內部網路</title>
+      <url>/2018/09/iis-gitlab-hiding-gitlab-on-private-network-with-iis-reverse-proxy/</url>
+      <content type="html"><![CDATA[<p>最近工作上有個需求要將 GitLab 掛上 SSL 憑證，原本就有一台 Windows Server 在管理所有的 SSL 憑證，於是乎就想到可以利用 IIS Reverse Proxy 的方式將憑證集中管理在這台，這樣管理起來也比較方便。</p><h1 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h1><p>首先需要安裝兩個模組</p><ol><li><a href="https://www.iis.net/downloads/microsoft/url-rewrite" target="_blank" rel="noopener">URL Rewrite</a></li><li><a href="https://www.iis.net/downloads/microsoft/application-request-routing" target="_blank" rel="noopener">Application Request Routing</a></li></ol><p>安裝 URL Rewrite 的時候有踩到一個地雷，詳情請見 <a href="https://blog.exfast.me/2018/09/iis-windows-server-2016-installation-url-rewrite-credentials-expired/">[IIS] Windows Server 2016 安裝 URL Rewrite 憑證失效</a></p><h1 id="開始設定"><a href="#開始設定" class="headerlink" title="開始設定"></a>開始設定</h1><ol><li><p>建立一個新站台並設定好 SSL 憑證 (由於這邊我只是測試用，所以我自己簽一個自我憑證)<br><img src="/images/auto-save/pasted-12.png" alt=""></p></li><li><p>選擇 <code>URL Rewrite</code><br><img src="/images/auto-save/pasted-13.png" alt=""></p></li><li><p>選擇 <code>新增規則</code> -&gt; <code>反向 Proxy</code><br><img src="/images/auto-save/pasted-14.png" alt=""></p></li><li><p>選擇 <code>確定</code> 啟用 Proxy<br><img src="/images/auto-save/pasted-15.png" alt=""></p></li><li><p><code>1</code> 的地方輸入 GitLab 的位置，<code>2</code> 的位置輸入欲對外的 Domain<br><img src="/images/auto-save/pasted-16.png" alt=""></p></li><li><p>當我以為簡單就完成開啟網頁試試時卻噴錯誤給我看</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP 錯誤 500.52 - URL Rewrite Module Error.</span><br><span class="line">當 HTTP 回應的內容經過編碼 (&quot;gzip&quot;) 時，無法套用輸出重寫規則。</span><br></pre></td></tr></table></figure></li></ol><p><img src="/images/auto-save/pasted-17.png" alt=""><br>原因是因為 GitLab 有開啟壓縮，但使用了反向 Proxy 無法將已壓縮的檔案進行修改，所以就噴了這個錯誤</p><ol><li><p>解決方法是在 <code>伺服器變數</code> 做調整<br><img src="/images/auto-save/pasted-18.png" alt=""></p></li><li><p>新增兩個變數分別是 <code>HTTP_ACCEPT_ENCODING</code> 與 <code>HTTP_X_ORIGINAL_ACCEPT_ENCODING</code><br><img src="/images/auto-save/pasted-19.png" alt=""></p></li><li><p>編輯輸入規則<br><img src="/images/auto-save/pasted-20.png" alt=""></p></li><li><p>新增兩個伺服器變數，伺服器變數名稱選擇剛剛加入的 <code>HTTP_X_ORIGINAL_ACCEPT_ENCODING</code>，值輸入 <code>{HTTP_ACCEPT_ENCODING}</code><br><img src="/images/auto-save/pasted-21.png" alt=""></p></li><li><p>我們已經將 <code>HTTP_ACCEPT_ENCODING</code> 放到 <code>HTTP_X_ORIGINAL_ACCEPT_ENCODING</code> 裡面，原本的值就可以清空清空，但因為 UI 不允許輸入空值，所以這邊我就隨便打個值<br><img src="/images/auto-save/pasted-22.png" alt=""><br>如果跟我一樣很在意的話可以去站台底下的 <code>web.config</code> 清空剛剛的值<br><img src="/images/auto-save/pasted-23.png" alt=""></p></li><li><p>終於可以開起來囉 ~<br><img src="/images/auto-save/pasted-24.png" alt=""></p></li></ol><h1 id="顯示調整"><a href="#顯示調整" class="headerlink" title="顯示調整"></a>顯示調整</h1><p>雖然已經可以正常開啟網頁了，但網址還是會顯示錯誤<br><img src="/images/auto-save/pasted-25.png" alt=""></p><ol><li>新增兩個伺服器變數 <code>HTTP_X_FORWARDED_HOST</code> 與 <code>HTTP_X_FORWARDED_PROTO</code></li><li><code>HTTP_X_FORWARDED_HOST</code> 輸入 Domain，<code>HTTP_X_FORWARDED_PROTO</code> 輸入 https<br><img src="/images/auto-save/pasted-26.png" alt=""></li></ol><h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol><li><a href="https://support.sonatype.com/hc/en-us/articles/115005086988-How-to-Configure-IIS-as-a-Reverse-Proxy-for-Sonatype-Products" target="_blank" rel="noopener">How to Configure IIS as a Reverse Proxy for Sonatype Products</a></li><li><a href="https://blogs.msdn.microsoft.com/friis/2016/08/25/iis-with-url-rewrite-as-a-reverse-proxy-part-2-dealing-with-500-52-status-codes/" target="_blank" rel="noopener">IIS with URL Rewrite as a reverse proxy – part 2 – dealing with 500.52 status codes</a></li><li><a href="https://blog.miniasp.com/post/2010/11/24/Setting-the-right-REMOTE_ADDR-behind-the-Reverse-Proxy-using-IIS-URL-Rewrite-Module.aspx" target="_blank" rel="noopener">如何讓在 Reverse Proxy 之後的網站正常運行 (URL Rewrite)</a></li><li><a href="https://blog.miniasp.com/post/2009/04/13/Using-ARR-to-implement-Reverse-Proxy.aspx" target="_blank" rel="noopener">如何利用 IIS7 的 ARR 模組實做 Reverse Proxy 機制</a></li></ol>]]></content>
+      
+      <categories>
+          
+          <category> IIS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> IIS </tag>
+            
+            <tag> Server </tag>
+            
+            <tag> SSL </tag>
+            
+            <tag> Git </tag>
+            
+            <tag> GitLab </tag>
+            
+            <tag> Reverse Proxy </tag>
+            
+            <tag> Proxy </tag>
+            
+            <tag> Windows Server </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>[IIS] Windows Server 2016 安裝 URL Rewrite 憑證失效</title>
       <url>/2018/09/iis-windows-server-2016-installation-url-rewrite-credentials-expired/</url>
-      <content type="html"><![CDATA[<p>2016 年的時候我筆記過一篇 <a href="https://blog.exfast.me/2016/12/iis-windows-server-2016-unable-to-install-url-rewrite/">[IIS] Windows Server 2016 無法安裝 URL Rewrite !?</a><br>想不到現在 2018 年了再次安裝 URL Rewrite 時又遇到新問題，微軟爸爸不要亂放地雷好嗎？</p><p>我是從 <a href="https://www.iis.net/downloads/microsoft/url-rewrite" target="_blank" rel="noopener">這邊</a> 下載的 <a href="http://download.microsoft.com/download/C/D/C/CDCB8096-BF26-4EE2-9DF0-E22B570D51D3/rewrite_amd64_zh-TW.msi" target="_blank" rel="noopener">這個版本</a> 安裝時會出現下面這張圖的狀況</p><p><img src="/images/auto-save/pasted-11.png" alt=""></p><p>經過千辛萬苦的餵狗後發現是微軟在 2018/09/12 發布的版本帶了時間戳，而這個時間戳卻造成無法安裝的問題，這邊我有找到一個舊版本給大家急救一下 <a href="/files/rewrite_amd64_en-US.zip">點我下載</a> (密碼：<a href="https://blog.exfast.me/">https://blog.exfast.me/</a>)</p><p>參考資料：<br><a href="https://forums.iis.net/t/1239468.aspx?URL+rewrite+installation+failing+due+to+signature+verification+failure" target="_blank" rel="noopener">URL rewrite installation failing due to signature verification failure</a></p>]]></content>
+      <content type="html"><![CDATA[<p>2016 年的時候我筆記過一篇 <a href="https://blog.exfast.me/2016/12/iis-windows-server-2016-unable-to-install-url-rewrite/">[IIS] Windows Server 2016 無法安裝 URL Rewrite !?</a><br>想不到現在 2018 年了再次安裝 URL Rewrite 時又遇到新問題，微軟爸爸不要亂放地雷好嗎？</p><p>我是從 <a href="https://www.iis.net/downloads/microsoft/url-rewrite" target="_blank" rel="noopener">這邊</a> 下載的 <a href="http://download.microsoft.com/download/C/D/C/CDCB8096-BF26-4EE2-9DF0-E22B570D51D3/rewrite_amd64_zh-TW.msi" target="_blank" rel="noopener">這個版本</a> 安裝時會出現下面這張圖的狀況</p><p><img src="/images/auto-save/pasted-11.png" alt=""></p><p>經過千辛萬苦的餵狗後發現是微軟在 2018/09/12 發布的版本帶了時間戳，而這個時間戳卻造成無法安裝的問題，這邊我有找到一個舊版本給大家急救一下 <a href="/files/rewrite_amd64_en-US.zip">點我下載</a> (密碼：<code>https://blog.exfast.me/</code>)</p><p>參考資料：<br><a href="https://forums.iis.net/t/1239468.aspx?URL+rewrite+installation+failing+due+to+signature+verification+failure" target="_blank" rel="noopener">URL rewrite installation failing due to signature verification failure</a></p>]]></content>
       
       <categories>
           
@@ -240,9 +276,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
         </tags>
       
@@ -262,9 +298,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Medium </tag>
             
@@ -286,9 +322,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
         </tags>
       
@@ -308,9 +344,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Linq </tag>
             
@@ -592,9 +628,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -680,9 +716,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -708,9 +744,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -766,9 +802,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1162,9 +1198,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1190,9 +1226,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1218,9 +1254,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1246,9 +1282,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1274,9 +1310,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1302,9 +1338,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1330,9 +1366,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1384,9 +1420,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1680,9 +1716,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1708,9 +1744,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1854,9 +1890,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1888,9 +1924,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> 遞迴 </tag>
             
@@ -1922,9 +1958,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -1956,9 +1992,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> 遞迴 </tag>
             
@@ -1988,9 +2024,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2046,9 +2082,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> 遞迴 </tag>
             
@@ -2134,9 +2170,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2166,9 +2202,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2196,9 +2232,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2224,9 +2260,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2254,9 +2290,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2282,9 +2318,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2338,9 +2374,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2364,9 +2400,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2390,9 +2426,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> LeetCode </tag>
+            
+            <tag> C# </tag>
             
             <tag> Easy </tag>
             
@@ -2462,9 +2498,9 @@
             
             <tag> 教學 </tag>
             
-            <tag> URL Rewrite </tag>
-            
             <tag> Windows Server 2016 </tag>
+            
+            <tag> URL Rewrite </tag>
             
         </tags>
       

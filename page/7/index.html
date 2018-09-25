@@ -308,6 +308,216 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-easy-181-employees-earning-more-than-their-managers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/mysql-leetcode-easy-181-employees-earning-more-than-their-managers/" itemprop="url">[MySQL][LeetCode][Easy] 181. Employees Earning More Than Their Managers</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-11T15:05:42+08:00">
+                2017-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/mysql-leetcode-easy-181-employees-earning-more-than-their-managers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/mysql-leetcode-easy-181-employees-earning-more-than-their-managers/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>心得：</p>
+<p>題目要求找出有哪些人的薪水比主管高，找出名字並修改欄位名稱為<code>Employee</code>。</p>
+<p>題目：</p>
+<blockquote>
+<p>The <code>Employee</code> table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+-------+--------+-----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | Name  | Salary | ManagerId |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+--------+-----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  | Joe   | 70000  | 3         |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  | Henry | 80000  | 4         |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3  | Sam   | 60000  | NULL      |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4  | Max   | 90000  | NULL      |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+--------+-----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Given the <code>Employee</code> table, write a SQL query that finds out employees who earn more than their managers. For the above table, Joe is the only employee who earns more than his manager.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Employee |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Joe      |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<ol>
+<li>Sub Select</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT  a.Name AS Employee</span><br><span class="line">FROM    Employee AS a</span><br><span class="line">WHERE   a.Salary &amp;gt; (SELECT  z.Salary </span><br><span class="line">                    FROM    Employee AS z</span><br><span class="line">                    WHERE   z.Id = a.ManagerId);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Join</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT  a.Name AS Employee</span><br><span class="line">FROM    Employee AS a</span><br><span class="line">JOIN    Employee AS b</span><br><span class="line">ON      a.ManagerId = b.Id</span><br><span class="line">WHERE   a.Salary &amp;gt; b.Salary</span><br></pre></td></tr></table></figure>
+<ol>
+<li>From</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT  a.Name AS Employee</span><br><span class="line">FROM    Employee AS a, Employee AS b</span><br><span class="line">WHERE   a.ManagerId = b.Id</span><br><span class="line">AND     a.Salary &amp;gt; b.Salary</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-easy-175-combine-two-tables/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2151,237 +2361,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/c-sharp-convert-transition-parse-forced-transition-tryparse-security-transition-and-the-operator-of-the-difference-between-transformation-performance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/c-sharp-convert-transition-parse-forced-transition-tryparse-security-transition-and-the-operator-of-the-difference-between-transformation-performance/" itemprop="url">[C#] Convert(轉型)、Parse(強制轉型)、TryParse(安全轉型)與運算子轉型的差別、效能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-04T14:55:00+08:00">
-                2017-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/c-sharp-convert-transition-parse-forced-transition-tryparse-security-transition-and-the-operator-of-the-difference-between-transformation-performance/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/01/c-sharp-convert-transition-parse-forced-transition-tryparse-security-transition-and-the-operator-of-the-difference-between-transformation-performance/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近再磨練基本功的時候複習了常用到的「轉型」，找一找資料後統整了一下才比較搞懂這些差異。</p>
-<p>轉型別基本上分為下列五種：</p>
-<ol>
-<li>Convert(轉型)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Convert.ToInt32(&quot;5.5&quot;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Parse(強制轉型)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(int)(5.5);</span><br><span class="line">int.Parse(&quot;5.5&quot;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li>TryParse(安全轉型)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int i = 0;</span><br><span class="line">int.TryParse(&quot;5.5&quot;, out i)</span><br></pre></td></tr></table></figure>
-<ol>
-<li>運算子 - as</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CustomModel model = obj as CustomModel</span><br></pre></td></tr></table></figure>
-<ol>
-<li>運算子 - is</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CustomModel model = obj is CustomModel</span><br></pre></td></tr></table></figure>
-<p>根據參考資料差異如下：</p>
-<ol>
-<li>Convert 是將值轉換成最接近的 32 位元帶正負號的整數</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Console.WriteLine(Convert.ToInt32(&quot;4.5&quot;)); //result = 4</span><br><span class="line">Console.WriteLine(Convert.ToInt32(&quot;4.51&quot;));//result = 5</span><br><span class="line">Console.WriteLine(Convert.ToInt32(&quot;5.4&quot;)); //result = 5</span><br><span class="line">Console.WriteLine(Convert.ToInt32(&quot;5.5&quot;)); //result = 6</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Parse 則是無條件捨去( long、float、double、或 decimal )</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Console.WriteLine((int)(4.5)); //result = 4</span><br><span class="line">Console.WriteLine((int)(4.51));//result = 4</span><br><span class="line">Console.WriteLine((int)(5.4)); //result = 5</span><br><span class="line">Console.WriteLine((int)(5.5)); //result = 5</span><br></pre></td></tr></table></figure>
-<ol>
-<li>TryParse 會回傳一布林值來判斷是否轉換成功</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">string s1 = &quot;1234&quot;; </span><br><span class="line">string s2 = &quot;1234.65&quot;; </span><br><span class="line">string s3 = null; </span><br><span class="line">string s4 = &quot;123456789123456789123456789123456789123456789&quot;; </span><br><span class="line">bool success = false;    </span><br><span class="line">int result = 0; </span><br><span class="line">success = Int32.TryParse(s1, out result); //-- success =&amp;gt; true;  result =&amp;gt; 1234 </span><br><span class="line">success = Int32.TryParse(s2, out result); //-- success =&amp;gt; false; result =&amp;gt; 0 </span><br><span class="line">success = Int32.TryParse(s3, out result); //-- success =&amp;gt; false; result =&amp;gt; 0 </span><br><span class="line">success = Int32.TryParse(s4, out result); //-- success =&amp;gt; false; result =&amp;gt; 0</span><br></pre></td></tr></table></figure>
-<ol>
-<li>as 若轉型失敗會回傳null，且只能用於參考類型，不能應用於值類型(除非是Nullable的值類型)。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CustomModel model = obj as CustomModel;</span><br><span class="line">if(model  != null)</span><br><span class="line">&#123;</span><br><span class="line">    //轉型成功</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    //轉型失敗</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>is 若轉型失敗則會跳Exception</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">    CustomModelt = obj is CustomModel;</span><br><span class="line">&#125;</span><br><span class="line">catch</span><br><span class="line">&#123;</span><br><span class="line">    //轉型失敗</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<p><span style="color: #ff0000;">2017/09/24 更新</span></p>
-<p>(Net Core 2.0)效能上 Parse &gt; TryParse &gt; Convert。</p>
-<p><img src="/images/wordpress/2017/01/21ccd8fb7a531d29930c34383d48f421.png" alt=""></p>
-<p>測試程式碼：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Program</span><br><span class="line">&#123;</span><br><span class="line">    static void Main(string[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        Stopwatch sw = new Stopwatch();</span><br><span class="line"></span><br><span class="line">        sw.Start();</span><br><span class="line">        for (int i = 0; i &amp;lt; 10000000; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            Convert.ToInt32(i.ToString());</span><br><span class="line">        &#125;</span><br><span class="line">        sw.Stop();</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(string.Format(&quot;Convert.ToInt32 = &#123;0&#125; ms&quot;, sw.ElapsedMilliseconds));</span><br><span class="line">        sw.Reset();</span><br><span class="line"></span><br><span class="line">        sw.Start();</span><br><span class="line">        for (int i = 0; i &amp;lt; 10000000; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int.Parse(i.ToString());</span><br><span class="line">        &#125;</span><br><span class="line">        sw.Stop();</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(string.Format(&quot;int.Parse = &#123;0&#125; ms&quot;, sw.ElapsedMilliseconds));</span><br><span class="line">        sw.Reset();</span><br><span class="line"></span><br><span class="line">        sw.Start();</span><br><span class="line">        for (int i = 0; i &amp;lt; 10000000; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            int.TryParse(i.ToString(), out int tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        sw.Stop();</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(string.Format(&quot;int.TryParse = &#123;0&#125; ms&quot;, sw.ElapsedMilliseconds));</span><br><span class="line">        sw.Reset();</span><br><span class="line"></span><br><span class="line">        object model = new TestModel</span><br><span class="line">        &#123;</span><br><span class="line">            Tmp = 100</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        sw.Start();</span><br><span class="line">        for (int i = 0; i &amp;lt; 10000000; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            var tmp = model as TestModel;</span><br><span class="line">        &#125;</span><br><span class="line">        sw.Stop();</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(string.Format(&quot;as = &#123;0&#125; ms&quot;, sw.ElapsedMilliseconds));</span><br><span class="line">        sw.Reset();</span><br><span class="line"></span><br><span class="line">        sw.Start();</span><br><span class="line">        for (int i = 0; i &amp;lt; 10000000; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            var tmp = model is TestModel;</span><br><span class="line">        &#125;</span><br><span class="line">        sw.Stop();</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(string.Format(&quot;is = &#123;0&#125; ms&quot;, sw.ElapsedMilliseconds));</span><br><span class="line">        sw.Reset();</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public class TestModel</span><br><span class="line">    &#123;</span><br><span class="line">        public int Tmp &#123; get; set; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;</p>
-<p>參考：</p>
-<ol>
-<li><a href="http://unicorntudo.blogspot.tw/2013/12/convertint32.html" target="_blank" rel="noopener">Convert(轉型)與Int32(強制轉型)的差別、效能</a></li>
-<li><a href="https://dotblogs.com.tw/lapland/2015/12/10/161527" target="_blank" rel="noopener">[C#]Convert.ToInt32()與int.Parse()的差別</a></li>
-<li><a href="http://unicorntudo.blogspot.tw/2013/12/convertparsetryparse.html" target="_blank" rel="noopener">[C#]Convert、Parse、TryParse 差異</a></li>
-<li><a href="https://dotblogs.com.tw/larrynung/archive/2009/09/30/10834.aspx" target="_blank" rel="noopener">[C#]Effective C# 條款三： 運算子is或as優於強制轉型</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2436,7 +2415,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2458,7 +2437,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">163</span>
+                  <span class="site-state-item-count">166</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

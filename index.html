@@ -308,6 +308,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/iis-gitlab-hiding-gitlab-on-private-network-with-iis-reverse-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/iis-gitlab-hiding-gitlab-on-private-network-with-iis-reverse-proxy/" itemprop="url">[IIS][GitLab] 利用 IIS Reverse Proxy 將 GitLab 藏在內部網路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-09-26T00:09:00+08:00">
+                2018-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IIS/" itemprop="url" rel="index">
+                    <span itemprop="name">IIS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/iis-gitlab-hiding-gitlab-on-private-network-with-iis-reverse-proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/iis-gitlab-hiding-gitlab-on-private-network-with-iis-reverse-proxy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近工作上有個需求要將 GitLab 掛上 SSL 憑證，原本就有一台 Windows Server 在管理所有的 SSL 憑證，於是乎就想到可以利用 IIS Reverse Proxy 的方式將憑證集中管理在這台，這樣管理起來也比較方便。</p>
+<h1 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h1><p>首先需要安裝兩個模組</p>
+<ol>
+<li><a href="https://www.iis.net/downloads/microsoft/url-rewrite" target="_blank" rel="noopener">URL Rewrite</a></li>
+<li><a href="https://www.iis.net/downloads/microsoft/application-request-routing" target="_blank" rel="noopener">Application Request Routing</a></li>
+</ol>
+<p>安裝 URL Rewrite 的時候有踩到一個地雷，詳情請見 <a href="https://blog.exfast.me/2018/09/iis-windows-server-2016-installation-url-rewrite-credentials-expired/">[IIS] Windows Server 2016 安裝 URL Rewrite 憑證失效</a></p>
+<h1 id="開始設定"><a href="#開始設定" class="headerlink" title="開始設定"></a>開始設定</h1><ol>
+<li><p>建立一個新站台並設定好 SSL 憑證 (由於這邊我只是測試用，所以我自己簽一個自我憑證)<br><img src="/images/auto-save/pasted-12.png" alt=""></p>
+</li>
+<li><p>選擇 <code>URL Rewrite</code><br><img src="/images/auto-save/pasted-13.png" alt=""></p>
+</li>
+<li><p>選擇 <code>新增規則</code> -&gt; <code>反向 Proxy</code><br><img src="/images/auto-save/pasted-14.png" alt=""></p>
+</li>
+<li><p>選擇 <code>確定</code> 啟用 Proxy<br><img src="/images/auto-save/pasted-15.png" alt=""></p>
+</li>
+<li><p><code>1</code> 的地方輸入 GitLab 的位置，<code>2</code> 的位置輸入欲對外的 Domain<br><img src="/images/auto-save/pasted-16.png" alt=""></p>
+</li>
+<li><p>當我以為簡單就完成開啟網頁試試時卻噴錯誤給我看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP 錯誤 500.52 - URL Rewrite Module Error.</span><br><span class="line">當 HTTP 回應的內容經過編碼 (&quot;gzip&quot;) 時，無法套用輸出重寫規則。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="/images/auto-save/pasted-17.png" alt=""><br>原因是因為 GitLab 有開啟壓縮，但使用了反向 Proxy 無法將已壓縮的檔案進行修改，所以就噴了這個錯誤</p>
+<ol>
+<li><p>解決方法是在 <code>伺服器變數</code> 做調整<br><img src="/images/auto-save/pasted-18.png" alt=""></p>
+</li>
+<li><p>新增兩個變數分別是 <code>HTTP_ACCEPT_ENCODING</code> 與 <code>HTTP_X_ORIGINAL_ACCEPT_ENCODING</code><br><img src="/images/auto-save/pasted-19.png" alt=""></p>
+</li>
+<li><p>編輯輸入規則<br><img src="/images/auto-save/pasted-20.png" alt=""></p>
+</li>
+<li><p>新增兩個伺服器變數，伺服器變數名稱選擇剛剛加入的 <code>HTTP_X_ORIGINAL_ACCEPT_ENCODING</code>，值輸入 <code>{HTTP_ACCEPT_ENCODING}</code><br><img src="/images/auto-save/pasted-21.png" alt=""></p>
+</li>
+<li><p>我們已經將 <code>HTTP_ACCEPT_ENCODING</code> 放到 <code>HTTP_X_ORIGINAL_ACCEPT_ENCODING</code> 裡面，原本的值就可以清空清空，但因為 UI 不允許輸入空值，所以這邊我就隨便打個值<br><img src="/images/auto-save/pasted-22.png" alt=""><br>如果跟我一樣很在意的話可以去站台底下的 <code>web.config</code> 清空剛剛的值<br><img src="/images/auto-save/pasted-23.png" alt=""></p>
+</li>
+<li><p>終於可以開起來囉 ~<br><img src="/images/auto-save/pasted-24.png" alt=""></p>
+</li>
+</ol>
+<h1 id="顯示調整"><a href="#顯示調整" class="headerlink" title="顯示調整"></a>顯示調整</h1><p>雖然已經可以正常開啟網頁了，但網址還是會顯示錯誤<br><img src="/images/auto-save/pasted-25.png" alt=""></p>
+<ol>
+<li>新增兩個伺服器變數 <code>HTTP_X_FORWARDED_HOST</code> 與 <code>HTTP_X_FORWARDED_PROTO</code></li>
+<li><code>HTTP_X_FORWARDED_HOST</code> 輸入 Domain，<code>HTTP_X_FORWARDED_PROTO</code> 輸入 https<br><img src="/images/auto-save/pasted-26.png" alt=""></li>
+</ol>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li><a href="https://support.sonatype.com/hc/en-us/articles/115005086988-How-to-Configure-IIS-as-a-Reverse-Proxy-for-Sonatype-Products" target="_blank" rel="noopener">How to Configure IIS as a Reverse Proxy for Sonatype Products</a></li>
+<li><a href="https://blogs.msdn.microsoft.com/friis/2016/08/25/iis-with-url-rewrite-as-a-reverse-proxy-part-2-dealing-with-500-52-status-codes/" target="_blank" rel="noopener">IIS with URL Rewrite as a reverse proxy – part 2 – dealing with 500.52 status codes</a></li>
+<li><a href="https://blog.miniasp.com/post/2010/11/24/Setting-the-right-REMOTE_ADDR-behind-the-Reverse-Proxy-using-IIS-URL-Rewrite-Module.aspx" target="_blank" rel="noopener">如何讓在 Reverse Proxy 之後的網站正常運行 (URL Rewrite)</a></li>
+<li><a href="https://blog.miniasp.com/post/2009/04/13/Using-ARR-to-implement-Reverse-Proxy.aspx" target="_blank" rel="noopener">如何利用 IIS7 的 ARR 模組實做 Reverse Proxy 機制</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/iis-windows-server-2016-installation-url-rewrite-credentials-expired/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -415,7 +626,7 @@
             <p>2016 年的時候我筆記過一篇 <a href="https://blog.exfast.me/2016/12/iis-windows-server-2016-unable-to-install-url-rewrite/">[IIS] Windows Server 2016 無法安裝 URL Rewrite !?</a><br>想不到現在 2018 年了再次安裝 URL Rewrite 時又遇到新問題，微軟爸爸不要亂放地雷好嗎？</p>
 <p>我是從 <a href="https://www.iis.net/downloads/microsoft/url-rewrite" target="_blank" rel="noopener">這邊</a> 下載的 <a href="http://download.microsoft.com/download/C/D/C/CDCB8096-BF26-4EE2-9DF0-E22B570D51D3/rewrite_amd64_zh-TW.msi" target="_blank" rel="noopener">這個版本</a> 安裝時會出現下面這張圖的狀況</p>
 <p><img src="/images/auto-save/pasted-11.png" alt=""></p>
-<p>經過千辛萬苦的餵狗後發現是微軟在 2018/09/12 發布的版本帶了時間戳，而這個時間戳卻造成無法安裝的問題，這邊我有找到一個舊版本給大家急救一下 <a href="/files/rewrite_amd64_en-US.zip">點我下載</a> (密碼：<a href="https://blog.exfast.me/">https://blog.exfast.me/</a>)</p>
+<p>經過千辛萬苦的餵狗後發現是微軟在 2018/09/12 發布的版本帶了時間戳，而這個時間戳卻造成無法安裝的問題，這邊我有找到一個舊版本給大家急救一下 <a href="/files/rewrite_amd64_en-US.zip">點我下載</a> (密碼：<code>https://blog.exfast.me/</code>)</p>
 <p>參考資料：<br><a href="https://forums.iis.net/t/1239468.aspx?URL+rewrite+installation+failing+due+to+signature+verification+failure" target="_blank" rel="noopener">URL rewrite installation failing due to signature verification failure</a></p>
 
           
@@ -1847,173 +2058,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/05/C-Sharp-LeetCode-8-String-to-Integer-atoi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/C-Sharp-LeetCode-8-String-to-Integer-atoi/" itemprop="url">[C#][LeetCode] 8. String to Integer (atoi)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-05-12T20:35:00+08:00">
-                2018-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/C-Sharp-LeetCode-8-String-to-Integer-atoi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/05/C-Sharp-LeetCode-8-String-to-Integer-atoi/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>外部輸入一個字串，若開頭為數字的話或 <code>+-</code> 符號的話則轉換為 <code>int</code> 的型態，且若超過 <code>int</code> 的最大或最小值則取極限值為準。</p>
-<p>我的第一版答案如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public int MyAtoi(string str) &#123;</span><br><span class="line">        var arrNum = &quot;0123456789&quot;.ToList();</span><br><span class="line">        var arrSymbol = &quot;-&quot;.ToList();</span><br><span class="line"></span><br><span class="line">        if (string.IsNullOrWhiteSpace(str))</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            str = str.Trim();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bool isFirstAddSymbol = (str[0] == &apos;+&apos;);</span><br><span class="line"></span><br><span class="line">        if (isFirstAddSymbol)</span><br><span class="line">        &#123;</span><br><span class="line">            str = str.Substring(1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (string.IsNullOrWhiteSpace(str))</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bool isFirstNum = (arrNum.IndexOf(str[0]) != -1);</span><br><span class="line">        bool isFirstSymbol = (arrSymbol.IndexOf(str[0]) != -1);</span><br><span class="line"></span><br><span class="line">        if ((isFirstAddSymbol &amp;&amp; isFirstSymbol) ||</span><br><span class="line">            (!isFirstNum &amp;&amp; !isFirstSymbol) ||</span><br><span class="line">            (isFirstSymbol &amp;&amp; str.All(x =&gt; arrNum.IndexOf(x) == -1)) ||</span><br><span class="line">            (isFirstSymbol &amp;&amp; str.Length &gt; 1 &amp;&amp; (arrNum.IndexOf(str[1]) == -1)))</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        string numString = string.Empty;</span><br><span class="line">        str = isFirstSymbol ? str.Substring(1) : str;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; str.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            bool isNum = (arrNum.IndexOf(str[i]) != -1);</span><br><span class="line"></span><br><span class="line">            if (!isNum)</span><br><span class="line">            &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (numString == &quot;0&quot;)</span><br><span class="line">            &#123;</span><br><span class="line">                numString = str[i].ToString();</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                numString += str[i].ToString();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int maxValueLength = int.MaxValue.ToString().Length;</span><br><span class="line">        long ans = int.MaxValue;</span><br><span class="line"></span><br><span class="line">        bool isMoreMax = (numString.Length &gt; maxValueLength) || (long.Parse(numString) &gt; int.MaxValue);</span><br><span class="line"></span><br><span class="line">        if (!isMoreMax)</span><br><span class="line">        &#123;</span><br><span class="line">            ans = long.Parse(numString);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (isFirstSymbol &amp;&amp; isMoreMax)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += 1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return Convert.ToInt32(isFirstSymbol ? -ans : ans);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>參考最佳解答後的優化版：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public int MyAtoi(string str) &#123;</span><br><span class="line">        str = (str ?? string.Empty).Trim();</span><br><span class="line">        </span><br><span class="line">        if (string.IsNullOrWhiteSpace(str))</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        bool isMinusSign = (str[0] == &apos;-&apos;);</span><br><span class="line">        if (isMinusSign || (str[0] == &apos;+&apos;))</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            if ((str.Length == 1) ||</span><br><span class="line">                ((str.Length &gt; 1) &amp;&amp; (str[1] &lt; &apos;0&apos; || str[1] &gt; &apos;9&apos;)))</span><br><span class="line">            &#123;</span><br><span class="line">                return 0;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            str = str.Substring(1);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        string numString = string.Empty;</span><br><span class="line">        foreach (var item in str)</span><br><span class="line">        &#123;</span><br><span class="line">            bool isNum = (item &gt;= &apos;0&apos; &amp;&amp; item &lt;= &apos;9&apos;);</span><br><span class="line">            </span><br><span class="line">            if (!isNum) &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            if (numString == &quot;0&quot;)</span><br><span class="line">            &#123;</span><br><span class="line">                numString = item.ToString();</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                numString += item.ToString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if (numString == string.Empty)</span><br><span class="line">        &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int maxValueLength = int.MaxValue.ToString().Length;</span><br><span class="line">        long ans = int.MaxValue;</span><br><span class="line"></span><br><span class="line">        bool isMoreMax = (numString.Length &gt; maxValueLength) || (long.Parse(numString) &gt; int.MaxValue);</span><br><span class="line"></span><br><span class="line">        if (!isMoreMax)</span><br><span class="line">        &#123;</span><br><span class="line">            ans = long.Parse(numString);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (isMinusSign &amp;&amp; isMoreMax)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += 1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return Convert.ToInt32(isMinusSign ? -ans : ans);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2068,7 +2112,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2090,7 +2134,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">163</span>
+                  <span class="site-state-item-count">166</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
