@@ -308,6 +308,214 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-easy-175-combine-two-tables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/mysql-leetcode-easy-175-combine-two-tables/" itemprop="url">[MySQL][LeetCode][Easy] 175. Combine Two Tables</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-10T19:21:59+08:00">
+                2017-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/mysql-leetcode-easy-175-combine-two-tables/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/mysql-leetcode-easy-175-combine-two-tables/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>心得：</p>
+<p>題目要求找出<code>Person</code>表內所有人員的地址，就算是空的也無所謂，所以不用理會<code>Address</code>表內是否有<code>Person</code>表的資料，這題必須使用<code>LEFT JOIN</code>來關聯。</p>
+<p>問題：</p>
+<blockquote>
+<p>Table: <code>Person</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+-------------+---------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Column Name | Type    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-------------+---------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | PersonId    | int     |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | FirstName   | varchar |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | LastName    | varchar |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-------------+---------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; PersonId is the primary key column for this table.</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Table: <code>Address</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+-------------+---------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Column Name | Type    |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-------------+---------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | AddressId   | int     |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | PersonId    | int     |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | City        | varchar |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | State       | varchar |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-------------+---------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; AddressId is the primary key column for this table.</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Write a SQL query for a report that provides the following information for</p>
+<p>each person in the Person table, regardless if there is an address for each</p>
+<p>of those people:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">FirstName, LastName, City, State</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>答案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT      a.FirstName, a.LastName, b.City, b.State</span><br><span class="line">FROM        Person AS a</span><br><span class="line">LEFT JOIN   Address AS b</span><br><span class="line">ON          a.PersonId = b.PersonId</span><br></pre></td></tr></table></figure>
+<p>參考：</p>
+<ol>
+<li><a href="https://blog.exfast.me/2016/12/sql-a-picture-explaining-join/">[SQL] 一張圖片解釋 JOIN</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-476-number-complement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2174,219 +2382,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-204-count-primes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/c-sharp-leetcode-easy-204-count-primes/" itemprop="url">[C#][LeetCode][Easy] 204. Count Primes</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-04T14:29:00+08:00">
-                2017-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/c-sharp-leetcode-easy-204-count-primes/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/01/c-sharp-leetcode-easy-204-count-primes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>心得：</p>
-<p>題目要求找出小於N(不包括N)的所有質數，由於N從3開始才會有質數(1非質數)所以直接回傳0，但是嘗試了很多方法都TimeOut，最後只好拜狗大神了。</p>
-<p>最後找到了Eratosthenes演算法，小於等於根號N的所有質數去除N，若均無法整除則N為質數，有了這個觀念程式速度就快多了！</p>
-<p>問題：</p>
-<blockquote>
-<p>Count the number of prime numbers less than a non-negative number, n.<br>答案：</p>
-</blockquote>
-<ol>
-<li>Eratosthenes演算法</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int CountPrimes(int n) &#123;</span><br><span class="line">        if (n &amp;lt; 3) &#123; return 0; &#125;</span><br><span class="line"></span><br><span class="line">        int count = 0;</span><br><span class="line">        for (int i = 2; i &amp;lt; n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            bool IsPrime = true;</span><br><span class="line">            //開根號取最大值+1</span><br><span class="line">            int sqrt = Convert.ToInt32(Math.Sqrt(i)) + 1;</span><br><span class="line">            for (int j = 2; j &amp;lt;= sqrt; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                if (i != j &amp;amp;&amp;amp; i % j == 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    IsPrime = false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (IsPrime) &#123; count++; &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>LinQ (Time Limit Exceeded)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int CountPrimes(int n) &#123;</span><br><span class="line">        if(n &amp;lt; 3)&#123; return 0; &#125;</span><br><span class="line">        var arr = Enumerable.Range(2, n);</span><br><span class="line">        return arr.Count(x =&amp;gt; x &amp;lt; n &amp;amp;&amp;amp; !arr.Where(y =&amp;gt; x &amp;gt; y).Any(y =&amp;gt; x % y == 0));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Nomal -  硬幹(Time Limit Exceeded)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution</span><br><span class="line">&#123;</span><br><span class="line">    public int CountPrimes(int n)</span><br><span class="line">    &#123;</span><br><span class="line">        if (n &amp;lt; 3) &#123; return 0; &#125;</span><br><span class="line"></span><br><span class="line">        int count = 0;</span><br><span class="line">        for (int i = 2; i &amp;lt; n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            bool IsPrime = true;</span><br><span class="line">            for (int j = 2; j &amp;lt; i; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                if (i % j == 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    IsPrime = false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (IsPrime) &#123; count++; &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Nomal -  稍微聰明一點的硬幹(Time Limit Exceeded)<br>由於可以知道只要是2的倍數絕對不會是質數，所以迴圈就直接<code>i+=2</code>了，殊不知還是Time Out…</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int CountPrimes(int n) &#123;</span><br><span class="line">        if (n &amp;lt; 3) &#123; return 0; &#125;</span><br><span class="line"></span><br><span class="line">        int count = 1;</span><br><span class="line">        for (int i = 3; i &amp;lt; n; i += 2)</span><br><span class="line">        &#123;</span><br><span class="line">            bool IsPrime = true;</span><br><span class="line">            for (int j = 3; j &amp;lt; i; j += 2)</span><br><span class="line">            &#123;</span><br><span class="line">                if (i % j == 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    IsPrime = false;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (IsPrime) &#123; count++; &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>參考：</p>
-<ol>
-<li><a href="https://skyyen999.gitbooks.io/-leetcode-with-javascript/content/questions/204md.html" target="_blank" rel="noopener">https://skyyen999.gitbooks.io/-leetcode-with-javascript/content/questions/204md.html</a></li>
-<li><a href="http://unicorntudo.blogspot.tw/2013/12/c_18.html" target="_blank" rel="noopener">[C#]輸出數字範圍內所有的質數</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2441,7 +2436,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-count">149</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2452,7 +2447,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2463,7 +2458,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

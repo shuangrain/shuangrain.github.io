@@ -3,6 +3,36 @@
   
     
     <entry>
+      <title>[IIS] Windows Server 2016 安裝 URL Rewrite 憑證失效</title>
+      <url>/2018/09/iis-windows-server-2016-installation-url-rewrite-credentials-expired/</url>
+      <content type="html"><![CDATA[<p>2016 年的時候我筆記過一篇 <a href="https://blog.exfast.me/2016/12/iis-windows-server-2016-unable-to-install-url-rewrite/">[IIS] Windows Server 2016 無法安裝 URL Rewrite !?</a><br>想不到現在 2018 年了再次安裝 URL Rewrite 時又遇到新問題，微軟爸爸不要亂放地雷好嗎？</p><p>我是從 <a href="https://www.iis.net/downloads/microsoft/url-rewrite" target="_blank" rel="noopener">這邊</a> 下載的 <a href="http://download.microsoft.com/download/C/D/C/CDCB8096-BF26-4EE2-9DF0-E22B570D51D3/rewrite_amd64_zh-TW.msi" target="_blank" rel="noopener">這個版本</a> 安裝時會出現下面這張圖的狀況</p><p><img src="/images/auto-save/pasted-11.png" alt=""></p><p>經過千辛萬苦的餵狗後發現是微軟在 2018/09/12 發布的版本帶了時間戳，而這個時間戳卻造成無法安裝的問題，這邊我有找到一個舊版本給大家急救一下 <a href="/files/rewrite_amd64_en-US.zip">點我下載</a> (密碼：<a href="https://blog.exfast.me/">https://blog.exfast.me/</a>)</p><p>參考資料：<br><a href="https://forums.iis.net/t/1239468.aspx?URL+rewrite+installation+failing+due+to+signature+verification+failure" target="_blank" rel="noopener">URL rewrite installation failing due to signature verification failure</a></p>]]></content>
+      
+      <categories>
+          
+          <category> IIS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> IIS </tag>
+            
+            <tag> Server </tag>
+            
+            <tag> Windows Server </tag>
+            
+            <tag> Windows Server 2016 </tag>
+            
+            <tag> Win </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>[C#][.NETCore] 壓縮檔案 &amp; 解壓縮檔案</title>
       <url>/2018/09/c-sharp-netcore-compressed-files-and-unzipped-files/</url>
       <content type="html"><![CDATA[<p>在 .NET Framework 的時候有好用的 <a href="https://www.nuget.org/packages/DotNetZip/" target="_blank" rel="noopener">DotNetZip</a> 可以快速壓縮&amp;解壓縮檔案<br>但在寫 .NET Core 的時候發現這個套件不能使用，那只好默默地自己寫了</p><p>這邊就用 <code>System.IO.Compression</code> 提供的 <code>ZipArchive</code> 來簡單寫個壓縮 &amp; 解壓縮範例</p><p>壓縮檔案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">string rootPath = AppDomain.CurrentDomain.BaseDirectory;</span><br><span class="line">string saveFileName = Path.Combine(rootPath, &quot;test.zip&quot;);</span><br><span class="line">string zipFileName = Path.Combine(rootPath, &quot;123.txt&quot;);</span><br><span class="line"></span><br><span class="line">using (var fs = new FileStream(saveFileName, FileMode.OpenOrCreate))</span><br><span class="line">&#123;</span><br><span class="line">    using (ZipArchive zipArchive = new ZipArchive(fs, ZipArchiveMode.Create))</span><br><span class="line">    &#123;</span><br><span class="line">        string fileName = Path.GetFileName(zipFileName);</span><br><span class="line"></span><br><span class="line">        var zipArchiveEntry = zipArchive.CreateEntry(fileName);</span><br><span class="line">        using (var zipStream = zipArchiveEntry.Open())</span><br><span class="line">        &#123;</span><br><span class="line">            byte[] bytes = File.ReadAllBytes(zipFileName);</span><br><span class="line">            zipStream.Write(bytes, 0, bytes.Length);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>解壓縮檔案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">string rootPath = AppDomain.CurrentDomain.BaseDirectory;</span><br><span class="line">string zipFileName = Path.Combine(rootPath, &quot;test.zip&quot;);</span><br><span class="line">string saveFolder = rootPath;</span><br><span class="line"></span><br><span class="line">using (var fs = new FileStream(zipFileName, FileMode.Open))</span><br><span class="line">&#123;</span><br><span class="line">    using (ZipArchive zipArchive = new ZipArchive(fs, ZipArchiveMode.Read))</span><br><span class="line">    &#123;</span><br><span class="line">        foreach (ZipArchiveEntry zipArchiveEntry in zipArchive.Entries)</span><br><span class="line">        &#123;</span><br><span class="line">            string temp = Path.Combine(saveFolder, zipArchiveEntry.FullName);</span><br><span class="line">            zipArchiveEntry.ExtractToFile(temp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>解壓縮的時候最好可以將 <code>zipArchiveEntry.FullName</code> 再做一層處理，避免產生資安問題 <a href="http://cyrilwang.blogspot.com/2014/01/path-traversal-attack.html" target="_blank" rel="noopener">(詳情)</a></p>]]></content>

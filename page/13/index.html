@@ -308,6 +308,238 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/centos-install-7-x-vpn-pptp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/centos-install-7-x-vpn-pptp/" itemprop="url">CentOS 7.X 安裝VPN PPTP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-11T11:37:25+08:00">
+                2016-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
+                    <span itemprop="name">OS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/centos-install-7-x-vpn-pptp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/centos-install-7-x-vpn-pptp/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>安裝yum第三方EPEL套件庫</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install epel-release -y</span><br></pre></td></tr></table></figure>
+<p>清除快取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum clean all -y</span><br></pre></td></tr></table></figure>
+<p>更新套件庫</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum update -y</span><br></pre></td></tr></table></figure>
+<ol>
+<li>安裝PPTP</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install ppp pptpd -y</span><br></pre></td></tr></table></figure>
+<p><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-2.jpg" alt="01"></p>
+<ol>
+<li>備份設定擋</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp /etc/pptpd.conf /etc/pptpd.conf.bak</span><br></pre></td></tr></table></figure>
+<ol>
+<li>打開<code>/etc/pptpd.conf</code>，拉到最下面新增</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">localip 10.0.10.1</span><br><span class="line">remoteip 10.0.10.2-254</span><br></pre></td></tr></table></figure>
+<ol>
+<li>備份設定擋</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp /etc/ppp/options.pptpd /etc/ppp/options.pptpd.bak</span><br></pre></td></tr></table></figure>
+<ol>
+<li>搜尋<code>ms-dns</code>，將前面#去掉如下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ms-dns 8.8.8.8</span><br><span class="line">ms-dns 8.8.4.4</span><br></pre></td></tr></table></figure>
+<ol>
+<li>備份設定擋</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp /etc/sysctl.conf /etc/sysctl.conf.bak</span><br></pre></td></tr></table></figure>
+<ol>
+<li>將下面的設定貼上去</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net.core.wmem_max = 12582912</span><br><span class="line">net.core.rmem_max = 12582912</span><br><span class="line">net.ipv4.tcp_rmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.tcp_wmem = 10240 87380 12582912</span><br><span class="line">net.core.wmem_max = 12582912</span><br><span class="line">net.core.rmem_max = 12582912</span><br><span class="line">net.ipv4.tcp_rmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.tcp_wmem = 10240 87380 12582912</span><br><span class="line">net.core.wmem_max = 12582912</span><br><span class="line">net.core.rmem_max = 12582912</span><br><span class="line">net.ipv4.tcp_rmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.tcp_wmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+<ol>
+<li>打開<code>/etc/rc.d/rc.local</code>，新增設定</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">iptables -t nat -A POSTROUTING -s 10.0.10.0/24 -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<ol>
+<li>設定防火牆</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -i eth0 -p tcp --dport 1723 -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o eth0 -j MASQUERADE</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o eth0 -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i eth0 -o ppp+ -j ACCEPT</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<ol>
+<li>設定帳號密碼<code>/etc/ppp/chap-secrets</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">username pptpd password *</span><br></pre></td></tr></table></figure>
+<ol>
+<li>啟動pptp</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">service pptpd start</span><br><span class="line">chkconfig pptpd on</span><br></pre></td></tr></table></figure>
+<p>參考：</p>
+<ol>
+<li><a href="http://technote.aven-network.com/762/centos7-fast-deploy-pptpd-vpn" target="_blank" rel="noopener">CentOS 7 快速部署 PPTP VPN 服務</a></li>
+<li><a href="http://www.lightning-ashe.com/develop/setup-pptp-server-on-centos/" target="_blank" rel="noopener">Setup PPTP Server on CentOS</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/wordpress-modify-the-table-name-prefix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2089,198 +2321,6 @@ To push the current branch and set the remote as upstream, use</code></p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/apache-ssl-use-lets-encrypt-free-voucher/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/apache-ssl-use-lets-encrypt-free-voucher/" itemprop="url">Apache 使用 Let's Encrypt 的 SSL 免費憑證</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-04T04:01:49+08:00">
-                2016-05-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
-                    <span itemprop="name">OS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/apache-ssl-use-lets-encrypt-free-voucher/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/apache-ssl-use-lets-encrypt-free-voucher/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>SSL憑證服務，用於建立瀏覽器和網站伺服器之間的安全通道，提供伺服器身分鑑別及資料傳輸加密。 透過SSL機制建立一個安全通道，保護網路使用者所傳輸的個人資料(如信用卡號、帳號、密碼等)在傳輸過程中不被駭客截取或竄改，保護網站用戶個人資料，強化網路使用者對於網路交易信心。</p>
-<ol>
-<li>下載官方自動安裝憑證程式</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt</span><br></pre></td></tr></table></figure>
-<ol>
-<li>進入剛剛下載的資料夾</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd letsencrypt</span><br></pre></td></tr></table></figure>
-<ol>
-<li>將網域輸入(如有多網址則輸入多次，批量會出錯)</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./letsencrypt-auto --apache -d example.com</span><br></pre></td></tr></table></figure>
-<ol>
-<li>程式會幫你自動加載SSL資料進conf，所以無需做任何設定<br>&nbsp;</li>
-</ol>
-<p>若無則手動加入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;IfModule mod_ssl.c&amp;gt;</span><br><span class="line">    &amp;lt;VirtualHost www.example.com:443&amp;gt;	</span><br><span class="line">	#管理者郵箱 </span><br><span class="line">	ServerAdmin abc@example.com</span><br><span class="line">	#網站名稱 </span><br><span class="line">	ServerName abc</span><br><span class="line">	#網站別名</span><br><span class="line">	ServerAlias www.example.com</span><br><span class="line">	#網站的根目錄</span><br><span class="line">	DocumentRoot /var/www/example.com/public_html/</span><br><span class="line">	#網站的錯誤日誌檔存放的位置與檔名</span><br><span class="line">	ErrorLog /var/www/example.com/logs/error.log</span><br><span class="line">	#網站日誌檔存放的位置與檔名</span><br><span class="line">	CustomLog /var/www/example.com/logs/access.log combined</span><br><span class="line">	SSLEngine on</span><br><span class="line">	# Let&apos;s encrypt</span><br><span class="line">        SSLCertificateFile /etc/letsencrypt/live/example.com/fullchain.pem</span><br><span class="line">        SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem</span><br><span class="line">        SSLCACertificateFile /etc/letsencrypt/live/example.com/fullchain.pem</span><br><span class="line">    &amp;lt;/VirtualHost&amp;gt;</span><br><span class="line">&amp;lt;/IfModule&amp;gt;</span><br></pre></td></tr></table></figure>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2335,7 +2375,7 @@ To push the current branch and set the remote as upstream, use</code></p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-count">149</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2346,7 +2386,7 @@ To push the current branch and set the remote as upstream, use</code></p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2357,7 +2397,7 @@ To push the current branch and set the remote as upstream, use</code></p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

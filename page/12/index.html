@@ -308,6 +308,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/06/c-asp-net-mvc5-use-the-httppostedfilebase-file-upload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/c-asp-net-mvc5-use-the-httppostedfilebase-file-upload/" itemprop="url">[C#][ASP.NET MVC5] 使用 HttpPostedFileBase 檔案上傳</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-06-07T02:11:09+08:00">
+                2016-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/c-asp-net-mvc5-use-the-httppostedfilebase-file-upload/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/06/c-asp-net-mvc5-use-the-httppostedfilebase-file-upload/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>檔案上傳功能在網頁中常常出現，在ASP.NET MVC裡面要上傳檔案非常簡單，這裡簡單筆記一下有關 ASP.NET MVC 的檔案上傳基本操作方法。</p>
+<ul>
+<li>Controller</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[HttpPost]</span><br><span class="line">public ActionResult Upload(HttpPostedFileBase file)</span><br><span class="line">&#123;</span><br><span class="line">	if (file != null &amp;amp;&amp;amp; file.ContentLength &amp;gt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		var fileName = Path.GetFileName(file.FileName);</span><br><span class="line">		var path = Server.MapPath(&quot;~/App_Data/FileUploads&quot;);</span><br><span class="line">		//若該資料夾不存在，則新增一個</span><br><span class="line">		if (!Directory.Exists(path))</span><br><span class="line">		&#123;</span><br><span class="line">			Directory.CreateDirectory(path);</span><br><span class="line">		&#125;</span><br><span class="line">		path = Path.Combine(path, fileName);</span><br><span class="line">		file.SaveAs(path);</span><br><span class="line">	&#125;</span><br><span class="line">	return RedirectToAction(&quot;Upload&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>View</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@using (Html.BeginForm(&quot;Upload&quot;, &quot;Home&quot;, FormMethod.Post, new &#123; enctype = &quot;multipart/form-data&quot; &#125;))</span><br><span class="line">&#123;</span><br><span class="line">    &amp;lt;div class=&quot;form-horizontal&quot;&amp;gt;</span><br><span class="line">        &amp;lt;div class=&quot;form-group&quot;&amp;gt;</span><br><span class="line">            &amp;lt;label class=&quot;control-label col-sm-2&quot;&amp;gt;選擇檔案&amp;lt;/label&amp;gt;</span><br><span class="line">            &amp;lt;div class=&quot;col-sm-10&quot;&amp;gt;</span><br><span class="line">                &amp;lt;input type=&quot;file&quot; name=&quot;file&quot;&amp;gt;</span><br><span class="line">            &amp;lt;/div&amp;gt;</span><br><span class="line">        &amp;lt;/div&amp;gt;</span><br><span class="line">        &amp;lt;div class=&quot;form-group&quot;&amp;gt;</span><br><span class="line">            &amp;lt;div class=&quot;col-sm-offset-2 col-sm-10&quot;&amp;gt;</span><br><span class="line">                &amp;lt;input type=&quot;submit&quot; value=&quot;提交&quot; class=&quot;btn btn-primary&quot; /&amp;gt;</span><br><span class="line">            &amp;lt;/div&amp;gt;</span><br><span class="line">        &amp;lt;/div&amp;gt;</span><br><span class="line">    &amp;lt;/div&amp;gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊要注意的是，如需要使用<code>HttpPostedFileBase</code>上傳檔案的話，則必須添加<code>enctype = &quot;multipart/form-data&quot;</code>，不然怎麼樣都沒辦法正常收到資料！<br>另外如果使用下列語法是無法接收資料的，因這樣表單並沒有含<code>enctype = &quot;multipart/form-data&quot;</code>這項</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@using (Html.BeginForm(&quot;Upload&quot;, &quot;Home&quot;, new &#123; enctype = &quot;multipart/form-data&quot; &#125;))</span><br></pre></td></tr></table></figure>
+<p>一定要用改為下面的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@using (Html.BeginForm(&quot;Upload&quot;, &quot;Home&quot;, FormMethod.Post, new &#123; enctype = &quot;multipart/form-data&quot; &#125;))</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>範例程式：<a href="https://github.com/shuangrain/WebApplication_Upload" target="_blank" rel="noopener">https://github.com/shuangrain/WebApplication_Upload</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/06/c-check-that-the-folder-exists-such-as-the-new-folder-does-not-exist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1923,238 +2112,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/centos-install-7-x-vpn-pptp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/centos-install-7-x-vpn-pptp/" itemprop="url">CentOS 7.X 安裝VPN PPTP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-11T11:37:25+08:00">
-                2016-05-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
-                    <span itemprop="name">OS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/centos-install-7-x-vpn-pptp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/centos-install-7-x-vpn-pptp/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>安裝yum第三方EPEL套件庫</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install epel-release -y</span><br></pre></td></tr></table></figure>
-<p>清除快取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum clean all -y</span><br></pre></td></tr></table></figure>
-<p>更新套件庫</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum update -y</span><br></pre></td></tr></table></figure>
-<ol>
-<li>安裝PPTP</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install ppp pptpd -y</span><br></pre></td></tr></table></figure>
-<p><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-2.jpg" alt="01"></p>
-<ol>
-<li>備份設定擋</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp /etc/pptpd.conf /etc/pptpd.conf.bak</span><br></pre></td></tr></table></figure>
-<ol>
-<li>打開<code>/etc/pptpd.conf</code>，拉到最下面新增</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">localip 10.0.10.1</span><br><span class="line">remoteip 10.0.10.2-254</span><br></pre></td></tr></table></figure>
-<ol>
-<li>備份設定擋</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp /etc/ppp/options.pptpd /etc/ppp/options.pptpd.bak</span><br></pre></td></tr></table></figure>
-<ol>
-<li>搜尋<code>ms-dns</code>，將前面#去掉如下</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ms-dns 8.8.8.8</span><br><span class="line">ms-dns 8.8.4.4</span><br></pre></td></tr></table></figure>
-<ol>
-<li>備份設定擋</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp /etc/sysctl.conf /etc/sysctl.conf.bak</span><br></pre></td></tr></table></figure>
-<ol>
-<li>將下面的設定貼上去</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net.core.wmem_max = 12582912</span><br><span class="line">net.core.rmem_max = 12582912</span><br><span class="line">net.ipv4.tcp_rmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.tcp_wmem = 10240 87380 12582912</span><br><span class="line">net.core.wmem_max = 12582912</span><br><span class="line">net.core.rmem_max = 12582912</span><br><span class="line">net.ipv4.tcp_rmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.tcp_wmem = 10240 87380 12582912</span><br><span class="line">net.core.wmem_max = 12582912</span><br><span class="line">net.core.rmem_max = 12582912</span><br><span class="line">net.ipv4.tcp_rmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.tcp_wmem = 10240 87380 12582912</span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
-<ol>
-<li>打開<code>/etc/rc.d/rc.local</code>，新增設定</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">iptables -t nat -A POSTROUTING -s 10.0.10.0/24 -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
-<ol>
-<li>設定防火牆</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -i eth0 -p tcp --dport 1723 -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o eth0 -j MASQUERADE</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o eth0 -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i eth0 -o ppp+ -j ACCEPT</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-<ol>
-<li>設定帳號密碼<code>/etc/ppp/chap-secrets</code></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">username pptpd password *</span><br></pre></td></tr></table></figure>
-<ol>
-<li>啟動pptp</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">service pptpd start</span><br><span class="line">chkconfig pptpd on</span><br></pre></td></tr></table></figure>
-<p>參考：</p>
-<ol>
-<li><a href="http://technote.aven-network.com/762/centos7-fast-deploy-pptpd-vpn" target="_blank" rel="noopener">CentOS 7 快速部署 PPTP VPN 服務</a></li>
-<li><a href="http://www.lightning-ashe.com/develop/setup-pptp-server-on-centos/" target="_blank" rel="noopener">Setup PPTP Server on CentOS</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2209,7 +2166,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-count">149</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2220,7 +2177,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -2231,7 +2188,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
