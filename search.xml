@@ -3,8 +3,8 @@
   
     
     <entry>
-      <title>[IIS][.NETCore] 利用 IIS Reverse Proxy 但 RemoteIpAddress 取值錯誤 !?</title>
-      <url>/2018/09/iis-netcore-using-iis-reverse-proxy-but-remoteipaddress-is-wrong/</url>
+      <title>[IIS][.NETCore] IIS Reverse Proxy 後 RemoteIpAddress 取值錯誤 !?</title>
+      <url>/2018/09/iis-netcore-remoteipaddress-is-wrong-after-iis-reverse-proxy/</url>
       <content type="html"><![CDATA[<p>今天試著把 ASP.NET Core 放在 Docker Container 再利用 IIS Reverse Proxy 來對外但發生 IP 取值錯誤的問題<br><code>Request.HttpContext.Connection.RemoteIpAddress.ToString()</code> 總是取到 Docker Host 的 IP  </p><p>奮鬥了數個小時終於找到了一篇可以用的解答 <a href="https://stackoverflow.com/questions/43749236/net-core-x-forwarded-proto-not-working/44390593#44390593" target="_blank" rel="noopener">.net Core X Forwarded Proto not working</a></p><p><code>Startup.cs</code> 加上這段即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var forwardingOptions = new ForwardedHeadersOptions()</span><br><span class="line">&#123;</span><br><span class="line">    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto</span><br><span class="line">&#125;;</span><br><span class="line">// its loopback by default</span><br><span class="line">forwardingOptions.KnownNetworks.Clear(); </span><br><span class="line">forwardingOptions.KnownProxies.Clear();</span><br><span class="line"></span><br><span class="line">app.UseForwardedHeaders(forwardingOptions);</span><br></pre></td></tr></table></figure></p>]]></content>
       
       <categories>
