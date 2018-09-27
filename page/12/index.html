@@ -308,6 +308,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/06/c-asp-net-mvc5-mysql-entity-framework-study-notes-a-the-environmental-setting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/c-asp-net-mvc5-mysql-entity-framework-study-notes-a-the-environmental-setting/" itemprop="url">[C#][ASP.NET MVC5] MySQL Entity Framework 學習筆記(一) - 環境設定</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-06-08T12:08:37+08:00">
+                2016-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/06/c-asp-net-mvc5-mysql-entity-framework-study-notes-a-the-environmental-setting/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/06/c-asp-net-mvc5-mysql-entity-framework-study-notes-a-the-environmental-setting/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>剛開始在碰ASP.NET MVC的時候，查詢該如何連結資料庫時常常會聽到Entity Framework這個方法，但由於那時沒有太多時間，沒去查太多資料都用SQL自幹，現在閒下來了，就來玩玩看這個東西，首先是環境設定：</p>
+<ol>
+<li><p>從<code>NuGet</code>安裝MySQL使用Entity Framework時所需要的套件<br><img src="/images/wordpress/2016/06/96a3be3cf272e017046d1b2674a52bd3.jpg" alt="01"><br>&nbsp;</p>
+</li>
+<li><p>總共有三個東西要安裝，分別是</p>
+<ul>
+<li>MySql.Data</li>
+<li>MySql.Data.Entity</li>
+<li>MySql.Web<br><img src="/images/wordpress/2016/06/96a3be3cf272e017046d1b2674a52bd3-2.jpg" alt="01"></li>
+</ul>
+</li>
+<li>安裝完畢後就要開始設定連結字串，打開<code>Web.config</code>新增連結字串</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;connectionStrings&amp;gt;</span><br><span class="line">	&amp;lt;add name=&quot;MySqlConnectionString&quot; providerName=&quot;MySql.Data.MySqlClient&quot; connectionString=&quot;Server=server;Database=dbname;UID=username;Password=password&quot; /&amp;gt;</span><br><span class="line">&amp;lt;/connectionStrings&amp;gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/wordpress/2016/06/a2ef406e2c2351e0b9e80029c909242d-2.jpg" alt="02"></p>
+<ol>
+<li>建立<code>MySqlContext.cs</code>並繼承<code>DbContext</code>供後續使用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class MySqlContext : DbContext</span><br><span class="line">&#123;</span><br><span class="line">	public MySqlContext() : base(&quot;MySqlConnectionString&quot;) &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>結論：</p>
+<p>這樣環境就建置完成囉，後續就可以開始使用Entity Framework了！</p>
+<p>&nbsp;</p>
+<p>參考：</p>
+<ol>
+<li><a href="http://blog.kkbruce.net/2016/02/aspnet-mvc-entity-framework-code-first-mysql.html" target="_blank" rel="noopener">ASP.NET MVC, ENTITY FRAMEWORK CODE FIRST與MYSQL筆記</a></li>
+<li><a href="http://blog.miniasp.com/post/2009/03/02/Entity-Framework-Quick-Start-and-Leaning-Resources.aspx" target="_blank" rel="noopener">Entity Framework 快速上手與學習資源整理</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/06/c-asp-net-mvc5-fileupload-upload-file-size-limit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1930,189 +2132,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/c-uses-the-google-maps-geocoding-api-to-address-to-latitude/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/c-uses-the-google-maps-geocoding-api-to-address-to-latitude/" itemprop="url">[C#] 使用 Google Maps Geocoding API 將地址轉換為經緯度</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-12T06:57:27+08:00">
-                2016-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/c-uses-the-google-maps-geocoding-api-to-address-to-latitude/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/c-uses-the-google-maps-geocoding-api-to-address-to-latitude/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本來是使用Google Map JavaScript API的<code>google.maps.Geocoder</code>，但發現Google似乎有對查詢間隔做限制，Code常常一下可以一下又不行，找了很久終於找到了不錯的C#解決方案，而且似乎沒有任何限制唷！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var address = &quot;台中市沙鹿區台灣大道六段1018號&quot;;</span><br><span class="line">var requestUri = string.Format(&quot;http://maps.googleapis.com/maps/api/geocode/xml?address=&#123;0&#125;&quot;, Uri.EscapeDataString(address));</span><br><span class="line"></span><br><span class="line">var request = WebRequest.Create(requestUri);</span><br><span class="line">var response = request.GetResponse();</span><br><span class="line">var xdoc = XDocument.Load(response.GetResponseStream());</span><br><span class="line"></span><br><span class="line">var result = xdoc.Element(&quot;GeocodeResponse&quot;).Element(&quot;result&quot;);</span><br><span class="line">var locationElement = result.Element(&quot;geometry&quot;).Element(&quot;location&quot;);</span><br><span class="line">var lat = locationElement.Element(&quot;lat&quot;);</span><br><span class="line">var lng = locationElement.Element(&quot;lng&quot;);</span><br></pre></td></tr></table></figure>
-<p>如果回傳格式想要是Json的話把requestUri的xml改成json就好囉！</p>
-<p>來源：<a href="http://stackoverflow.com/questions/16274508/how-to-call-google-geocoding-service-from-c-sharp-code" target="_blank" rel="noopener">How to call Google Geocoding service from C# code</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2162,7 +2186,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2184,7 +2208,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">167</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

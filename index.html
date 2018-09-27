@@ -308,6 +308,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/iis-netcore-using-iis-reverse-proxy-but-remoteipaddress-is-wrong/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/iis-netcore-using-iis-reverse-proxy-but-remoteipaddress-is-wrong/" itemprop="url">[IIS][.NETCore] 利用 IIS Reverse Proxy 但 RemoteIpAddress 取值錯誤 !?</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-09-28T00:31:00+08:00">
+                2018-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/IIS/" itemprop="url" rel="index">
+                    <span itemprop="name">IIS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/iis-netcore-using-iis-reverse-proxy-but-remoteipaddress-is-wrong/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/iis-netcore-using-iis-reverse-proxy-but-remoteipaddress-is-wrong/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天試著把 ASP.NET Core 放在 Docker Container 再利用 IIS Reverse Proxy 來對外但發生 IP 取值錯誤的問題<br><code>Request.HttpContext.Connection.RemoteIpAddress.ToString()</code> 總是取到 Docker Host 的 IP  </p>
+<p>奮鬥了數個小時終於找到了一篇可以用的解答 <a href="https://stackoverflow.com/questions/43749236/net-core-x-forwarded-proto-not-working/44390593#44390593" target="_blank" rel="noopener">.net Core X Forwarded Proto not working</a></p>
+<p><code>Startup.cs</code> 加上這段即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var forwardingOptions = new ForwardedHeadersOptions()</span><br><span class="line">&#123;</span><br><span class="line">    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto</span><br><span class="line">&#125;;</span><br><span class="line">// its loopback by default</span><br><span class="line">forwardingOptions.KnownNetworks.Clear(); </span><br><span class="line">forwardingOptions.KnownProxies.Clear();</span><br><span class="line"></span><br><span class="line">app.UseForwardedHeaders(forwardingOptions);</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/iis-gitlab-using-iis-reverse-proxy-to-add-gitlab-to-https/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1891,178 +2057,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/" itemprop="url">[C#][LeetCode] 2. Add Two Numbers</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-05-14T00:01:00+08:00">
-                2018-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>輸入兩個 <code>ListNode</code> 物件並將兩個相同層數的數值加總，其值若超過 10 需進位到下個節點，這題我覺得迴圈解法比遞迴更讓人腦袋卡住，可能是我功力不夠吧。</p>
-<p>我的遞迴解答：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     public int val;</span><br><span class="line"> *     public ListNode next;</span><br><span class="line"> *     public ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">        return Add(l1, l2, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public ListNode Add(ListNode l1, ListNode l2, int addNum = 0)</span><br><span class="line">    &#123;</span><br><span class="line">        if(l1 == null &amp;&amp; l2 == null)</span><br><span class="line">        &#123;</span><br><span class="line">            return null;                 </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        l1 = l1 ?? new ListNode(0);</span><br><span class="line">        l2 = l2 ?? new ListNode(0);</span><br><span class="line">        </span><br><span class="line">        int i = (l1.val + l2.val) + addNum;</span><br><span class="line">        ListNode totalNode = new ListNode(i % 10);</span><br><span class="line">        if(l1.next != null || l2.next != null)</span><br><span class="line">        &#123;</span><br><span class="line">            totalNode.next = Add(l1.next, l2.next, (i / 10));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if(i &gt;= 10 &amp;&amp; totalNode.next == null)</span><br><span class="line">        &#123;</span><br><span class="line">            totalNode.next = new ListNode(1);</span><br><span class="line">        &#125;</span><br><span class="line">             </span><br><span class="line">        return totalNode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我的迴圈作法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     public int val;</span><br><span class="line"> *     public ListNode next;</span><br><span class="line"> *     public ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">        </span><br><span class="line">        int sumValue = 0;</span><br><span class="line">        int carryValue = 0;</span><br><span class="line">        </span><br><span class="line">        ListNode ansNode = new ListNode(-1);</span><br><span class="line">        </span><br><span class="line">        // 將 ansNode 的記憶體位置指向給 node</span><br><span class="line">        ListNode node = ansNode;</span><br><span class="line">        </span><br><span class="line">        while(l1 != null || l2 != null)</span><br><span class="line">        &#123;</span><br><span class="line">            sumValue = carryValue;</span><br><span class="line">            </span><br><span class="line">            if(l1 != null)</span><br><span class="line">            &#123;</span><br><span class="line">                sumValue += l1.val;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            if(l2 != null)</span><br><span class="line">            &#123;</span><br><span class="line">                sumValue += l2.val;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            carryValue = (sumValue / 10);</span><br><span class="line">            if(carryValue &gt; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                sumValue = (sumValue % 10);</span><br><span class="line">                </span><br><span class="line">                // 若大於 10 且 l1 與 l2 都沒有下個節點，那就自己創造一個</span><br><span class="line">                if(l1 == null &amp;&amp; l2 == null)</span><br><span class="line">                &#123;</span><br><span class="line">                    l1 = new ListNode(0);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">                        </span><br><span class="line">            if(ansNode.val == -1)</span><br><span class="line">            &#123;</span><br><span class="line">                ansNode.val = sumValue;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;                </span><br><span class="line">                node.next = new ListNode(sumValue);</span><br><span class="line">                </span><br><span class="line">                // 將當前物件 node.next 的記憶體位置指向到 node，這樣就可以達到一層一層改變 ansNode.next 值的效果</span><br><span class="line">                node = node.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return ansNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2112,7 +2111,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2134,7 +2133,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">167</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

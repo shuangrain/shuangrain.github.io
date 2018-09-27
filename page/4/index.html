@@ -308,6 +308,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/05/c-sharp-asp-net-mvc5-autofac-di-framework-autofac-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/c-sharp-asp-net-mvc5-autofac-di-framework-autofac-config/" itemprop="url">[C#][ASP.NET MVC5][Autofac] DI Framework - AutofacConfig.cs</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-05-15T17:44:16+08:00">
+                2017-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/應用/" itemprop="url" rel="index">
+                    <span itemprop="name">應用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/c-sharp-asp-net-mvc5-autofac-di-framework-autofac-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/05/c-sharp-asp-net-mvc5-autofac-di-framework-autofac-config/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前嘗試很多次都失敗，這次終於成功註冊Controller、Service與Repository了，來記錄一下設定檔。</p>
+<ul>
+<li>AutofacConfig.cs</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/// &amp;lt;summary&amp;gt;</span><br><span class="line">/// DI設定檔</span><br><span class="line">/// &amp;lt;/summary&amp;gt;</span><br><span class="line">public class AutofacConfig</span><br><span class="line">&#123;</span><br><span class="line">	/// &amp;lt;summary&amp;gt;</span><br><span class="line">	/// 註冊DI注入物件資料</span><br><span class="line">	/// &amp;lt;/summary&amp;gt;</span><br><span class="line">	public static void Register()</span><br><span class="line">	&#123;</span><br><span class="line">		// 容器建立者</span><br><span class="line">		ContainerBuilder builder = new ContainerBuilder();</span><br><span class="line"></span><br><span class="line">		// 註冊Controllers</span><br><span class="line">		builder.RegisterControllers(Assembly.GetExecutingAssembly());</span><br><span class="line"></span><br><span class="line">		// 註冊Service</span><br><span class="line">		builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())</span><br><span class="line">			   .Where(t =&amp;gt; t.Name.EndsWith(&quot;Service&quot;))</span><br><span class="line">			   .AsSelf();</span><br><span class="line"></span><br><span class="line">		// 註冊Repository</span><br><span class="line">		builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())</span><br><span class="line">			   .Where(t =&amp;gt; t.Name.EndsWith(&quot;Repository&quot;))</span><br><span class="line">			   .AsSelf();</span><br><span class="line"></span><br><span class="line">		// 建立容器</span><br><span class="line">		IContainer container = builder.Build();</span><br><span class="line"></span><br><span class="line">		// 解析容器內的型別</span><br><span class="line">		AutofacDependencyResolver resolver = new AutofacDependencyResolver(container);</span><br><span class="line"></span><br><span class="line">		// 建立相依解析器</span><br><span class="line">		DependencyResolver.SetResolver(resolver);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Global.asax</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">protected void Application_Start()</span><br><span class="line">&#123;</span><br><span class="line">    //加入這行</span><br><span class="line">    AutofacConfig.Register();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/05/apache-restricted-directory-list/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2143,207 +2337,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/02/c-sharp-leetcode-easy-409-longest-palindrome/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/c-sharp-leetcode-easy-409-longest-palindrome/" itemprop="url">[C#][LeetCode][Easy] 409. Longest Palindrome</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-02-25T00:35:27+08:00">
-                2017-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/c-sharp-leetcode-easy-409-longest-palindrome/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/02/c-sharp-leetcode-easy-409-longest-palindrome/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>獲得字串並判斷字串內的字母能組成最長的回文大小為多少，例如傳入<code>asdasdAAAvzxh</code>則答案為9，字串為<code>asdAvAdsa</code>，其中<code>v</code>可替換成任意一位使用字母。</p>
-<h1 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h1><blockquote>
-<p>Given a string which consists of lowercase or uppercase letters, find the length of the longest palindromes that can be built with those letters.</p>
-<p>This is case sensitive, for example <code>&quot;Aa&quot;</code> is not considered a palindrome here.</p>
-<p><strong>Note:</strong></p>
-<p>Assume the length of given string will not exceed 1,010.</p>
-<p><strong>Example: </strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Input:</span><br><span class="line">&gt; </span><br><span class="line">&gt; &quot;abccccdd&quot;</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; Output:</span><br><span class="line">&gt; </span><br><span class="line">&gt; 7</span><br><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; Explanation:</span><br><span class="line">&gt; </span><br><span class="line">&gt; One longest palindrome that can be built is &quot;dccaccd&quot;, whose length is 7.</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public int LongestPalindrome(string s) &#123;</span><br><span class="line">        int ans = 0;</span><br><span class="line">        int[] lower = new int[26];</span><br><span class="line">        int[] upper = new int[26];</span><br><span class="line">        foreach (var item in s)</span><br><span class="line">        &#123;</span><br><span class="line">            if (item &amp;gt; &apos;Z&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                lower[item - &apos;a&apos;]++;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                upper[item - &apos;A&apos;]++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 0; i &amp;lt; lower.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += lower[i] / 2;</span><br><span class="line">            ans += upper[i] / 2;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ans = ans * 2;</span><br><span class="line">        return ans &amp;lt; s.Length ? ans + 1 : ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2393,7 +2391,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2415,7 +2413,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">167</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

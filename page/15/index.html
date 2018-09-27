@@ -308,6 +308,202 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/remove-the-ugly-index-php-wordpress-web-site-for-linux-apache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/remove-the-ugly-index-php-wordpress-web-site-for-linux-apache/" itemprop="url">WordPress 網址刪除醜醜的index.php For Linux - Apache</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-03T12:47:49+08:00">
+                2016-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index">
+                    <span itemprop="name">OS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/remove-the-ugly-index-php-wordpress-web-site-for-linux-apache/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/remove-the-ugly-index-php-wordpress-web-site-for-linux-apache/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>環境：Ubuntu Server 15.10 x64</p>
+<ol>
+<li>首先，確定 mod_rewrite 已經開啟。<br>Apache 的 mod_rewrite 功能預設是關閉的，透過以下指令來啟動覆寫功能。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo a2enmod rewrite</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接著，修改 Apache 的主要設定檔。<br>如果伺服器 Apache 配置多個網域，請找到 WordPress 對應的設定檔。<br>如果沒有修改過，設定檔在 Ubuntu 的預設路徑為：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/etc/apache2/sites-available/000-default.conf</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用 vi 或 nano 指令編輯檔案，<br>主要設定檔的開頭應該是 在它上方加入這段：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;Directory &quot;/var/www/wordpress/&quot;&amp;gt;</span><br><span class="line">    AllowOverride All</span><br><span class="line">&amp;lt;/Directory&amp;gt;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接者重新啟動Apache</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改.htaccess檔案，內容如下</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># BEGIN WordPress</span><br><span class="line">&amp;lt;IfModule mod_rewrite.c&amp;gt;</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteBase /wordpress/</span><br><span class="line">RewriteRule ^index\.php$ - [L]</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">RewriteRule . /wordpress/index.php [L]</span><br><span class="line">&amp;lt;/IfModule&amp;gt;</span><br><span class="line"># END WordPress</span><br></pre></td></tr></table></figure>
+<p>轉：<a href="http://diary.taskinghouse.com/posts/664222-resolved-wordpress-permalinks-404-error" target="_blank" rel="noopener">http://diary.taskinghouse.com/posts/664222-resolved-wordpress-permalinks-404-error</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/linux-notes-restart-instructions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1940,203 +2136,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/04/remove-the-ugly-index-php-wordpress-web-site-for-win10-iis10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/04/remove-the-ugly-index-php-wordpress-web-site-for-win10-iis10/" itemprop="url">WordPress 網址刪除醜醜的index.php For Win10 - IIS10</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-04-18T10:03:49+08:00">
-                2016-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index">
-                    <span itemprop="name">Windows</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/04/remove-the-ugly-index-php-wordpress-web-site-for-win10-iis10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/04/remove-the-ugly-index-php-wordpress-web-site-for-win10-iis10/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>爬文爬了很久，終於找到一個給Win10 IIS用的方案如下：</p>
-<p>&nbsp;</p>
-<ol>
-<li><p>首先下載此套件Download URL Rewrite Module 2.0</p>
-<ul>
-<li>English: <a href="http://go.microsoft.com/?linkid=9722531" target="_blank" rel="noopener">WebPI</a> / <a href="http://go.microsoft.com/?linkid=9722533" target="_blank" rel="noopener">x86</a> / <a href="http://go.microsoft.com/?linkid=9722532" target="_blank" rel="noopener">x64</a></li>
-<li>French: <a href="http://www.microsoft.com/web/gallery/install.aspx?appid=UrlRewrite2%3f%3ffr" target="_blank" rel="noopener">WebPI</a> / <a href="http://download.microsoft.com/download/1/2/9/129A2686-9654-4B2A-82ED-FC7BCE2BCE93/rewrite_x86_fr-FR.msi" target="_blank" rel="noopener">x86</a> / <a href="http://download.microsoft.com/download/3/D/3/3D359CD6-147B-42E9-BD5B-407D3A1F0B97/rewrite_x64_fr-FR.msi" target="_blank" rel="noopener">x64</a><br><a href="http://www.iis.net/downloads/microsoft/url-rewrite#additionalDownloads" target="_blank" rel="noopener">http://www.iis.net/downloads/microsoft/url-rewrite#additionalDownloads</a></li>
-</ul>
-</li>
-<li>停用IIS</li>
-<li>Win+R 輸入<code>regedit</code></li>
-<li>找到<code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp</code></li>
-<li>將<code>MajorVersion</code>修改為9(十進位)<br>就可以進行安裝了！安裝完畢後記得將原本的10修改回來</li>
-</ol>
-<p>&nbsp;</p>
-<p>轉載：<a href="http://forums.iis.net/t/1223421.aspx?Can+not+install+rewrite+module+on+windows+10+10041+build+IIS10" target="_blank" rel="noopener">http://forums.iis.net/t/1223421.aspx?Can+not+install+rewrite+module+on+windows+10+10041+build+IIS10</a></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2186,7 +2190,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2208,7 +2212,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">167</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

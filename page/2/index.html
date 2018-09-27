@@ -308,6 +308,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/" itemprop="url">[C#][LeetCode] 2. Add Two Numbers</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-05-14T00:01:00+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/C-Sharp-LeetCode-2-Add-Two-Numbers/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>輸入兩個 <code>ListNode</code> 物件並將兩個相同層數的數值加總，其值若超過 10 需進位到下個節點，這題我覺得迴圈解法比遞迴更讓人腦袋卡住，可能是我功力不夠吧。</p>
+<p>我的遞迴解答：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     public int val;</span><br><span class="line"> *     public ListNode next;</span><br><span class="line"> *     public ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">        return Add(l1, l2, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public ListNode Add(ListNode l1, ListNode l2, int addNum = 0)</span><br><span class="line">    &#123;</span><br><span class="line">        if(l1 == null &amp;&amp; l2 == null)</span><br><span class="line">        &#123;</span><br><span class="line">            return null;                 </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        l1 = l1 ?? new ListNode(0);</span><br><span class="line">        l2 = l2 ?? new ListNode(0);</span><br><span class="line">        </span><br><span class="line">        int i = (l1.val + l2.val) + addNum;</span><br><span class="line">        ListNode totalNode = new ListNode(i % 10);</span><br><span class="line">        if(l1.next != null || l2.next != null)</span><br><span class="line">        &#123;</span><br><span class="line">            totalNode.next = Add(l1.next, l2.next, (i / 10));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if(i &gt;= 10 &amp;&amp; totalNode.next == null)</span><br><span class="line">        &#123;</span><br><span class="line">            totalNode.next = new ListNode(1);</span><br><span class="line">        &#125;</span><br><span class="line">             </span><br><span class="line">        return totalNode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我的迴圈作法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     public int val;</span><br><span class="line"> *     public ListNode next;</span><br><span class="line"> *     public ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">        </span><br><span class="line">        int sumValue = 0;</span><br><span class="line">        int carryValue = 0;</span><br><span class="line">        </span><br><span class="line">        ListNode ansNode = new ListNode(-1);</span><br><span class="line">        </span><br><span class="line">        // 將 ansNode 的記憶體位置指向給 node</span><br><span class="line">        ListNode node = ansNode;</span><br><span class="line">        </span><br><span class="line">        while(l1 != null || l2 != null)</span><br><span class="line">        &#123;</span><br><span class="line">            sumValue = carryValue;</span><br><span class="line">            </span><br><span class="line">            if(l1 != null)</span><br><span class="line">            &#123;</span><br><span class="line">                sumValue += l1.val;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            if(l2 != null)</span><br><span class="line">            &#123;</span><br><span class="line">                sumValue += l2.val;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            carryValue = (sumValue / 10);</span><br><span class="line">            if(carryValue &gt; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                sumValue = (sumValue % 10);</span><br><span class="line">                </span><br><span class="line">                // 若大於 10 且 l1 與 l2 都沒有下個節點，那就自己創造一個</span><br><span class="line">                if(l1 == null &amp;&amp; l2 == null)</span><br><span class="line">                &#123;</span><br><span class="line">                    l1 = new ListNode(0);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">                        </span><br><span class="line">            if(ansNode.val == -1)</span><br><span class="line">            &#123;</span><br><span class="line">                ansNode.val = sumValue;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;                </span><br><span class="line">                node.next = new ListNode(sumValue);</span><br><span class="line">                </span><br><span class="line">                // 將當前物件 node.next 的記憶體位置指向到 node，這樣就可以達到一層一層改變 ansNode.next 值的效果</span><br><span class="line">                node = node.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return ansNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/05/C-Sharp-LeetCode-8-String-to-Integer-atoi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2089,213 +2256,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/10/c-sharp-leetcode-easy-657-judge-route-circle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/c-sharp-leetcode-easy-657-judge-route-circle/" itemprop="url">[C#][LeetCode][Easy] 657. Judge Route Circle</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-19T11:38:17+08:00">
-                2017-10-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/c-sharp-leetcode-easy-657-judge-route-circle/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/10/c-sharp-leetcode-easy-657-judge-route-circle/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>心得：</p>
-<p>控制機器人走路，且最後必須回到起點，把它當作XY軸來理解的話很快就可以解答。<br>右 X + 1, 左 X - 1, 上 Y + 1, 下 Y - 1，最後 X 與 Y 皆為0則回傳true</p>
-<p>問題：</p>
-<blockquote>
-<p>Initially, there is a Robot at position (0, 0). Given a sequence of its moves, judge if this robot makes a circle, which means it moves back to <strong>the original place</strong>.</p>
-<p>The move sequence is represented by a string. And each move is represent by a character. The valid robot moves are <code>R</code> (Right), <code>L</code> (Left), <code>U</code> (Up) and <code>D</code> (down). The output should be true or false representing whether the robot makes a circle.</p>
-<p><strong>Example 1:</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**Input:** &quot;UD&quot;</span><br><span class="line">&gt; </span><br><span class="line">&gt; **Output:** true</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>Example 2:</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**Input:** &quot;LL&quot;</span><br><span class="line">&gt; </span><br><span class="line">&gt; **Output:** false</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<p>答案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">    public bool JudgeCircle(string moves) &#123;</span><br><span class="line">        int x = 0;</span><br><span class="line">        int y = 0;</span><br><span class="line"></span><br><span class="line">        foreach (var item in moves)</span><br><span class="line">        &#123;</span><br><span class="line">            switch (item)</span><br><span class="line">            &#123;</span><br><span class="line">                case &apos;U&apos;:</span><br><span class="line">                    &#123;</span><br><span class="line">                        y++;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                case &apos;D&apos;:</span><br><span class="line">                    &#123;</span><br><span class="line">                        y--;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                case &apos;R&apos;:</span><br><span class="line">                    &#123;</span><br><span class="line">                        x++;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                case &apos;L&apos;:</span><br><span class="line">                    &#123;</span><br><span class="line">                        x--;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return (x == 0 &amp;amp;&amp;amp; y == 0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
-<p>答案 - Linq：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public bool JudgeCircle(string moves) &#123;</span><br><span class="line">        int x = moves.Where(p =&amp;gt; p == &apos;U&apos; || p == &apos;D&apos;).Sum(p =&amp;gt; (p == &apos;U&apos;) ? 1 : -1);</span><br><span class="line">        int y = moves.Where(p =&amp;gt; p == &apos;R&apos; || p == &apos;L&apos;).Sum(p =&amp;gt; (p == &apos;R&apos;) ? 1 : -1);</span><br><span class="line">        return x == 0 &amp;amp;&amp;amp; y == 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&nbsp;</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2345,7 +2310,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -2367,7 +2332,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">167</span>
+                  <span class="site-state-item-count">170</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
