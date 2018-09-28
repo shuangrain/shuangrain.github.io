@@ -102,7 +102,7 @@
 <meta property="og:image" content="https://blog.exfast.me/images/auto-save/pasted-24.png">
 <meta property="og:image" content="https://blog.exfast.me/images/auto-save/pasted-25.png">
 <meta property="og:image" content="https://blog.exfast.me/images/auto-save/pasted-26.png">
-<meta property="og:updated_time" content="2018-09-25T19:06:29.419Z">
+<meta property="og:updated_time" content="2018-09-28T16:54:56.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[IIS][GitLab] 利用 IIS Reverse Proxy 將 GitLab 加上 Https">
 <meta name="twitter:description" content="最近工作上有個需求要將 GitLab 掛上 SSL 憑證，原本就有一台 Windows Server 在管理所有的 SSL 憑證，於是乎就想到可以利用 IIS Reverse Proxy 的方式將憑證集中管理在這台，這樣管理起來也比較方便。 前置作業首先需要安裝兩個模組  URL Rewrite Application Request Routing  安裝 URL Rewrite 的時候有踩到一">
@@ -469,12 +469,16 @@
 <ol>
 <li>新增兩個伺服器變數 <code>HTTP_X_FORWARDED_HOST</code> 與 <code>HTTP_X_FORWARDED_PROTO</code></li>
 <li><code>HTTP_X_FORWARDED_HOST</code> 輸入 Domain，<code>HTTP_X_FORWARDED_PROTO</code> 輸入 https<br><img src="/images/auto-save/pasted-26.png" alt=""></li>
+<li>修改 <code>/etc/gitlab/gitlab.rb</code> 加上這段<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">external_url &apos;https://gitlab.exfast.me&apos;</span><br><span class="line">nginx[&apos;listen_port&apos;] = 80</span><br><span class="line">nginx[&apos;listen_https&apos;] = false</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
+<p>這樣頁面顯示的網址就正常囉，不過 <code>https://gitlab.exfast.me/profile/active_sessions</code> 這邊顯示的 IP會是 IIS 那台的位址，所以還必須調整 <code>/etc/gitlab/gitlab.rb</code> 加上這段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Each address is added to the the NGINX config as &apos;set_real_ip_from &lt;address&gt;;&apos;</span><br><span class="line">nginx[&apos;real_ip_trusted_addresses&apos;] = [ &apos;127.0.0.1&apos;, &apos;192.168.56.106&apos; ]</span><br><span class="line"># other real_ip config options</span><br><span class="line">nginx[&apos;real_ip_header&apos;] = &apos;X-Forwarded-For&apos;</span><br><span class="line">nginx[&apos;real_ip_recursive&apos;] = &apos;on&apos;</span><br></pre></td></tr></table></figure></p>
 <h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
 <li><a href="https://support.sonatype.com/hc/en-us/articles/115005086988-How-to-Configure-IIS-as-a-Reverse-Proxy-for-Sonatype-Products" target="_blank" rel="noopener">How to Configure IIS as a Reverse Proxy for Sonatype Products</a></li>
 <li><a href="https://blogs.msdn.microsoft.com/friis/2016/08/25/iis-with-url-rewrite-as-a-reverse-proxy-part-2-dealing-with-500-52-status-codes/" target="_blank" rel="noopener">IIS with URL Rewrite as a reverse proxy – part 2 – dealing with 500.52 status codes</a></li>
 <li><a href="https://blog.miniasp.com/post/2010/11/24/Setting-the-right-REMOTE_ADDR-behind-the-Reverse-Proxy-using-IIS-URL-Rewrite-Module.aspx" target="_blank" rel="noopener">如何讓在 Reverse Proxy 之後的網站正常運行 (URL Rewrite)</a></li>
 <li><a href="https://blog.miniasp.com/post/2009/04/13/Using-ARR-to-implement-Reverse-Proxy.aspx" target="_blank" rel="noopener">如何利用 IIS7 的 ARR 模組實做 Reverse Proxy 機制</a></li>
+<li><a href="https://docs.gitlab.com/omnibus/settings/nginx.html#configuring-gitlab-trusted_proxies-and-the-nginx-real_ip-module" target="_blank" rel="noopener">Configuring GitLab trusted_proxies and the NGINX real_ip module</a></li>
 </ol>
 
            
