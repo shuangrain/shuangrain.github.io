@@ -308,6 +308,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-medium-180-consecutive-numbers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/mysql-leetcode-medium-180-consecutive-numbers/" itemprop="url">[MySQL][LeetCode][Medium] 180. Consecutive Numbers</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-16T10:15:25+08:00">
+                2017-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/Program/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/mysql-leetcode-medium-180-consecutive-numbers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/mysql-leetcode-medium-180-consecutive-numbers/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>心得</p>
+<p>這題要找出連續三次重複出現的數字，我原本一直在想如果中間有斷層(中間有資料被刪除)的話是否要先自己排序一次，結果看了一下Top Solutions才發現根本不用考慮這個問題，直接ID+1尋找下筆資料即可，既然這麼單純的話也沒什麼問題了。</p>
+<p>問題</p>
+<blockquote>
+<p>Write a SQL query to find all numbers that appear at least three times consecutively.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+-----+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | Num |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-----+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  |  1  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  |  1  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3  |  1  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4  |  2  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 5  |  1  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 6  |  2  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 7  |  2  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-----+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>For example, given the above <code>Logs</code> table, <code>1</code> is the only number that appears consecutively for at least three times.<br>答案</p>
+</blockquote>
+<ol>
+<li>方法對，但會TimeOut</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT DISTINCT(a.Num) AS ConsecutiveNums</span><br><span class="line">FROM Logs AS a</span><br><span class="line">WHERE ( SELECT z.Num</span><br><span class="line">        FROM Logs AS z</span><br><span class="line">        WHERE z.Id = a.Id + 1) = a.Num</span><br><span class="line">AND (   SELECT z.Num</span><br><span class="line">        FROM Logs AS z</span><br><span class="line">        WHERE z.Id = a.Id + 2) = a.Num</span><br></pre></td></tr></table></figure>
+<ol>
+<li>通過</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT DISTINCT(a.Num) AS ConsecutiveNums</span><br><span class="line">FROM Logs AS a</span><br><span class="line">JOIN Logs AS b</span><br><span class="line">ON a.Id = b.Id - 1</span><br><span class="line">JOIN Logs AS c</span><br><span class="line">ON b.Id = c.Id - 1</span><br><span class="line">WHERE a.Num = b.Num</span><br><span class="line">AND b.Num = c.Num</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-hard-185-department-top-three-salaries/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2121,213 +2325,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/mysql-leetcode-easy-183-customers-who-never-order/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/mysql-leetcode-easy-183-customers-who-never-order/" itemprop="url">[MySQL][LeetCode][Easy] 183. Customers Who Never Order</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-13T09:13:02+08:00">
-                2017-01-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/Program/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/01/mysql-leetcode-easy-183-customers-who-never-order/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/01/mysql-leetcode-easy-183-customers-who-never-order/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>這題要show出沒有訂過東西的客戶，所以可以使用<code>LEFT JOIN</code>來關聯兩張表。</p>
-<h1 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h1><blockquote>
-<p>Suppose that a website contains two tables, the <code>Customers</code> table and the <code>Orders</code> table. Write a SQL query to find all customers who never order anything.</p>
-<p>Table: <code>Customers</code>.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+-------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | Name  |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  | Joe   |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  | Henry |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 3  | Sam   |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 4  | Max   |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+-------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Table: <code>Orders</code>.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+----+------------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Id | CustomerId |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+------------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 1  | 3          |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | 2  | 1          |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +----+------------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Using the above tables as example, return the following:</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+-----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Customers |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Henry     |</span><br><span class="line">&gt; </span><br><span class="line">&gt; | Max       |</span><br><span class="line">&gt; </span><br><span class="line">&gt; +-----------+</span><br><span class="line">&gt; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><ol>
-<li><code>LEFT JOIN</code></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT      a.Name AS Customers</span><br><span class="line">FROM        Customers AS a</span><br><span class="line">LEFT JOIN   Orders AS b</span><br><span class="line">ON          a.Id = b.CustomerId</span><br><span class="line">WHERE       b.CustomerId IS NULL</span><br></pre></td></tr></table></figure>
-<ol>
-<li><code>Sub Query</code></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Write your MySQL query statement below</span><br><span class="line">SELECT  a.Name AS Customers</span><br><span class="line">FROM    Customers AS a</span><br><span class="line">WHERE   (   SELECT  COUNT(1)</span><br><span class="line">            FROM    Orders AS z</span><br><span class="line">            WHERE   z.CustomerId = a.Id) = 0</span><br></pre></td></tr></table></figure>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2382,7 +2379,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-count">152</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

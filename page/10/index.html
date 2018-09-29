@@ -308,6 +308,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/09/c-sharp-asp-net-mvc-5-inherited-validationattribute-simple-implementation-form-fields-validation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/c-sharp-asp-net-mvc-5-inherited-validationattribute-simple-implementation-form-fields-validation/" itemprop="url">[C#][ASP.NET MVC5] 繼承 ValidationAttribute 簡單實作表單欄位驗證</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-09-27T00:01:49+08:00">
+                2016-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/c-sharp-asp-net-mvc-5-inherited-validationattribute-simple-implementation-form-fields-validation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/09/c-sharp-asp-net-mvc-5-inherited-validationattribute-simple-implementation-form-fields-validation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有用過MVC的人一定都知道只要在Model上面加標籤<code>[Required]</code>，即可達到前後端驗證欄位必填的效果，無聊研究了一下來簡單實作自定義的表單欄位驗證 !!</p>
+<p>&nbsp;</p>
+<ol>
+<li>首先建立一個類別，繼承<code>ValidationAttribute</code>，宣告<code>m_BaseText</code>變數來儲存預設禁止的文字，而<code>m_Text</code>則是用來儲存禁止其他文字用的變數。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class ExampleAttribute : ValidationAttribute</span><br><span class="line">&#123;</span><br><span class="line">	private string[] m_Text;</span><br><span class="line">	private string[] m_BaseText = new string[] &#123; @&quot;\&quot;, @&quot;/&quot;, @&quot;&amp;lt;&quot;, @&quot;&amp;gt;&quot; &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接下來利用多載宣告兩個建構子，一個是不帶參數的，另一則是型別為<code>string[]</code>的<code>Text</code>變數，並放到剛剛宣告的<code>m_Text</code>裡面。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public ExampleAttribute()</span><br><span class="line">&#123;</span><br><span class="line">	m_Text = new string[] &#123; &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public ExampleAttribute(string[] Text)</span><br><span class="line">&#123;</span><br><span class="line">	this.m_Text = Text;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接下來把<code>IsValid</code>方法<code>override</code>掉，並實作驗證機制。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">protected override ValidationResult IsValid(object value, ValidationContext validationContext)</span><br><span class="line">&#123;</span><br><span class="line">	string strValue = (string)value;</span><br><span class="line">	string[] strBaseError = m_BaseText.Where(x =&amp;gt; strValue.Contains(x)).ToArray();</span><br><span class="line">	string[] strCustomError = m_Text.Where(x =&amp;gt; strValue.Contains(x)).ToArray();</span><br><span class="line"></span><br><span class="line">	if (strBaseError.Count() == 0 &amp;amp;&amp;amp; strCustomError.Count() == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		return ValidationResult.Success;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		List&amp;lt;string&amp;gt; temp = new List&amp;lt;string&amp;gt;();</span><br><span class="line">		temp.AddRange(m_BaseText.ToList());</span><br><span class="line">		temp.AddRange(m_Text.ToList());</span><br><span class="line">		string errorMsg = $&quot;禁止輸入 [&#123;string.Join(&quot;, &quot;, temp.ToArray())&#125;] !!&quot;;</span><br><span class="line">		return new ValidationResult(errorMsg);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>完成 !!<br><img src="/images/wordpress/2016/09/9272daa250781f9be0ca77c0dd2d0029.jpg" alt="2016-09-26-23_22_37-example-%e6%88%91%e7%9a%84-asp-net-%e6%87%89%e7%94%a8%e7%a8%8b%e5%bc%8f"></li>
+</ol>
+<p><img src="/images/wordpress/2016/09/04d6d375db7d4ff67546e71e80188e70.jpg" alt="2016-09-26-23_29_45-example-%e6%88%91%e7%9a%84-asp-net-%e6%87%89%e7%94%a8%e7%a8%8b%e5%bc%8f"><br>原始碼：<a href="https://github.com/shuangrain/WebApplication_CustomAttribute" target="_blank" rel="noopener">https://github.com/shuangrain/WebApplication_CustomAttribute</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/09/c-sharp-asp-net-webapi-how-to-make-webapi-support-session/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2040,199 +2232,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/" itemprop="url">[C#] 使用 AutoMapper 快速轉換有相同資料的 Model</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-07-26T22:16:12+08:00">
-                2016-07-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>因為工作因素發生了需要將兩個具有相同資料的Model進行轉換，但是如果手動轉換的話太累了，工程師就是懶嘛~<br>於是乎就拜了Google大神找到了一個名叫<code>AutoMapper</code>套件。</p>
-<p>&nbsp;</p>
-<ol>
-<li>從NuGet下載AutoMapper<br><img src="/images/wordpress/2016/07/01-4.jpg" alt="01"></li>
-<li>新增兩組相同的Model</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Model_1</span><br><span class="line">&#123;</span><br><span class="line">	public string Name &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public int Year &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public DateTime Date &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Model_2</span><br><span class="line">&#123;</span><br><span class="line">	public string Name &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public int Year &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public DateTime Date &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>轉換用的方法</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static TModel_2 ConvertModelToModel&amp;lt;TModel_1, TModel_2&amp;gt;(TModel_1 list)</span><br><span class="line">&#123;</span><br><span class="line">	Mapper.Initialize(cfg =&amp;gt;</span><br><span class="line">	&#123;</span><br><span class="line">		cfg.CreateMissingTypeMaps = true;</span><br><span class="line">		cfg.CreateMap&amp;lt;TModel_1, TModel_2&amp;gt;().ReverseMap();</span><br><span class="line">	&#125;);</span><br><span class="line">	Mapper.Configuration.AssertConfigurationIsValid();</span><br><span class="line"></span><br><span class="line">	var converted = Mapper.Map&amp;lt;TModel_2&amp;gt;(list);</span><br><span class="line">	return converted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>轉換</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">	Model_1 model1 = new Model_1();</span><br><span class="line">	Model_2 model2 = new Model_2();</span><br><span class="line"></span><br><span class="line">	model1.Name = &quot;王小明&quot;;</span><br><span class="line">	model1.Year = 2016;</span><br><span class="line">	model1.Date = DateTime.UtcNow.AddHours(8);</span><br><span class="line"></span><br><span class="line">	Console.WriteLine(&quot;=== 轉換前 ===&quot;);</span><br><span class="line">	Console.WriteLine(&quot;model1=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model1.Name, model1.Year, model1.Date, model1.GetType());</span><br><span class="line">	Console.WriteLine(&quot;model2=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model2.Name, model2.Year, model2.Date, model2.GetType());</span><br><span class="line"></span><br><span class="line">	model2 = ConvertModelToModel&amp;lt;Model_1, Model_2&amp;gt;(model1);</span><br><span class="line"></span><br><span class="line">	Console.WriteLine(&quot;=== 轉換後 ===&quot;);</span><br><span class="line">	Console.WriteLine(&quot;model1=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model1.Name, model1.Year, model1.Date, model1.GetType());</span><br><span class="line">	Console.WriteLine(&quot;model2=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model2.Name, model2.Year, model2.Date, model2.GetType());</span><br><span class="line"></span><br><span class="line">	Console.ReadLine();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>結果<br><img src="/images/wordpress/2016/07/02-1.jpg" alt="02"><br>&nbsp;</li>
-</ol>
-<p>原始碼：<a href="https://github.com/shuangrain/ConsoleApplication_AutoMapper" target="_blank" rel="noopener">https://github.com/shuangrain/ConsoleApplication_AutoMapper</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2287,7 +2286,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-count">152</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

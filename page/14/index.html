@@ -308,6 +308,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/iis-lets-encrypt-ssl-free-certificates/" itemprop="url">IIS 使用 Let’s Encrypt 的 SSL 免費憑證</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-06T00:44:47+08:00">
+                2016-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/iis-lets-encrypt-ssl-free-certificates/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/iis-lets-encrypt-ssl-free-certificates/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>首先在你的IIS伺服器上新增一個<code>web.config</code>檔案，這樣他才可以識別等等要新增的驗證檔案，加以確認這個網域是你的。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;</span><br><span class="line">&amp;lt;configuration&amp;gt;</span><br><span class="line">    &amp;lt;system.webServer&amp;gt;</span><br><span class="line">        &amp;lt;staticContent&amp;gt;</span><br><span class="line">            &amp;lt;mimeMap fileExtension=&quot;.&quot; mimeType=&quot;text/plain&quot; /&amp;gt;</span><br><span class="line">        &amp;lt;/staticContent&amp;gt;</span><br><span class="line">    &amp;lt;/system.webServer&amp;gt;</span><br><span class="line">&amp;lt;/configuration&amp;gt;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接著到<a href="https://github.com/Lone-Coder/letsencrypt-win-simple/releases" target="_blank" rel="noopener">這個</a>下載<code>letsencrypt-win-simple.v1.9.0.zip</code>，解壓縮到你的Server上面，對著解壓縮後的資料夾按著<code>Shift+右鍵</code>選擇<code>在此處開啟命令視窗(W)</code><br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3.jpg" alt="圖一"></li>
+<li>輸入指令如圖二(<a href="https://github.com/Lone-Coder/letsencrypt-win-simple/wiki/How-to-Run" target="_blank" rel="noopener">Help</a>)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">letsencrypt.exe --accepttos --manualhost 網域名稱 --webroot wwwroot路徑</span><br></pre></td></tr></table></figure>
+<p><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-1.jpg" alt="圖二"></p>
+<ol>
+<li>結果如圖三，這裡顯示是否替換現有的憑證，我選擇Y (沒出現這段沒關係，可能是我已經安裝過)<br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-2.jpg" alt="圖三"></li>
+<li>這裡詢問是否要指定使用者，選擇N<br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-3.jpg" alt="圖四"></li>
+<li>看到圖五這裡就表示憑證已經自動放入你的IIS裡面了<br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-4.jpg" alt="圖五"></li>
+<li>開啟IIS管理介面<code>繫結-&amp;gt;新增-&amp;gt;類型(https)-&amp;gt;連接埠(443)-&amp;gt;主機名稱(剛剛申請的網域名稱)-&amp;gt;SSL(剛剛產生的新憑證)</code><br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-5.jpg" alt="圖六"></li>
+<li>測試一下SSL是否正常顯示吧！<br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-6.jpg" alt="圖七"><br>延伸閱讀：<a href="https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/">IIS 使用 Let’s Encrypt 的 SSL 免費憑證 - 多站台申請</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/modified-mysql-timeout-time-to-improve-performance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1921,198 +2101,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/wordpress-data-permissions-repair/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/wordpress-data-permissions-repair/" itemprop="url">Wordpress 資料權限修復</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-03T12:56:10+08:00">
-                2016-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OS/" itemprop="url" rel="index">
-                    <span itemprop="name">OS</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OS/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/wordpress-data-permissions-repair/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/wordpress-data-permissions-repair/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>先進入到wordpress資料夾，以下為我的路徑</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cd /var/www/html/wordpress</span><br></pre></td></tr></table></figure>
-<ol>
-<li>接著輸入以下指令修復資料夾</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo chown www-data:www-data -R *</span><br></pre></td></tr></table></figure>
-<p><code>www-data</code>是Apache使用者<br><code>-R</code>所有次目錄或檔案同時更改檔案擁有者</p>
-<ol>
-<li>修復資料夾權限</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo find . -type d -exec chmod 755 &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>修復檔案權限</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo find . -type f -exec chmod 644 &#123;&#125; \;</span><br></pre></td></tr></table></figure>
-<p>參考：<a href="http://stackoverflow.com/questions/18352682/correct-file-permissions-for-wordpress" target="_blank" rel="noopener">http://stackoverflow.com/questions/18352682/correct-file-permissions-for-wordpress</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2167,7 +2155,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-count">152</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

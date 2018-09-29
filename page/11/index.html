@@ -308,6 +308,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/" itemprop="url">[C#] 使用 AutoMapper 快速轉換有相同資料的 Model</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-07-26T22:16:12+08:00">
+                2016-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/07/c-using-automapper-quick-transformation-has-the-same-data-model/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>因為工作因素發生了需要將兩個具有相同資料的Model進行轉換，但是如果手動轉換的話太累了，工程師就是懶嘛~<br>於是乎就拜了Google大神找到了一個名叫<code>AutoMapper</code>套件。</p>
+<p>&nbsp;</p>
+<ol>
+<li>從NuGet下載AutoMapper<br><img src="/images/wordpress/2016/07/01-4.jpg" alt="01"></li>
+<li>新增兩組相同的Model</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Model_1</span><br><span class="line">&#123;</span><br><span class="line">	public string Name &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public int Year &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public DateTime Date &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Model_2</span><br><span class="line">&#123;</span><br><span class="line">	public string Name &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public int Year &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public DateTime Date &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>轉換用的方法</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static TModel_2 ConvertModelToModel&amp;lt;TModel_1, TModel_2&amp;gt;(TModel_1 list)</span><br><span class="line">&#123;</span><br><span class="line">	Mapper.Initialize(cfg =&amp;gt;</span><br><span class="line">	&#123;</span><br><span class="line">		cfg.CreateMissingTypeMaps = true;</span><br><span class="line">		cfg.CreateMap&amp;lt;TModel_1, TModel_2&amp;gt;().ReverseMap();</span><br><span class="line">	&#125;);</span><br><span class="line">	Mapper.Configuration.AssertConfigurationIsValid();</span><br><span class="line"></span><br><span class="line">	var converted = Mapper.Map&amp;lt;TModel_2&amp;gt;(list);</span><br><span class="line">	return converted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>轉換</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">	Model_1 model1 = new Model_1();</span><br><span class="line">	Model_2 model2 = new Model_2();</span><br><span class="line"></span><br><span class="line">	model1.Name = &quot;王小明&quot;;</span><br><span class="line">	model1.Year = 2016;</span><br><span class="line">	model1.Date = DateTime.UtcNow.AddHours(8);</span><br><span class="line"></span><br><span class="line">	Console.WriteLine(&quot;=== 轉換前 ===&quot;);</span><br><span class="line">	Console.WriteLine(&quot;model1=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model1.Name, model1.Year, model1.Date, model1.GetType());</span><br><span class="line">	Console.WriteLine(&quot;model2=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model2.Name, model2.Year, model2.Date, model2.GetType());</span><br><span class="line"></span><br><span class="line">	model2 = ConvertModelToModel&amp;lt;Model_1, Model_2&amp;gt;(model1);</span><br><span class="line"></span><br><span class="line">	Console.WriteLine(&quot;=== 轉換後 ===&quot;);</span><br><span class="line">	Console.WriteLine(&quot;model1=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model1.Name, model1.Year, model1.Date, model1.GetType());</span><br><span class="line">	Console.WriteLine(&quot;model2=name:&#123;0&#125;, year:&#123;1&#125;, date:&#123;2&#125;, type:&#123;3&#125;&quot;, model2.Name, model2.Year, model2.Date, model2.GetType());</span><br><span class="line"></span><br><span class="line">	Console.ReadLine();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>結果<br><img src="/images/wordpress/2016/07/02-1.jpg" alt="02"><br>&nbsp;</li>
+</ol>
+<p>原始碼：<a href="https://github.com/shuangrain/ConsoleApplication_AutoMapper" target="_blank" rel="noopener">https://github.com/shuangrain/ConsoleApplication_AutoMapper</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/c-asp-net-mvc5-inherit-authorizeattribute-to-implement-custom-validation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2030,184 +2223,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/06/wordpress-using-disqus-comment-system-in-windows-server-2012-r2-link-account-failed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/wordpress-using-disqus-comment-system-in-windows-server-2012-r2-link-account-failed/" itemprop="url">[Wordpress] 在Windows Server 2012 R2中使用 Disqus Comment System 連結帳號失敗</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-06-09T01:05:22+08:00">
-                2016-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index">
-                    <span itemprop="name">Windows</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/06/wordpress-using-disqus-comment-system-in-windows-server-2012-r2-link-account-failed/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/06/wordpress-using-disqus-comment-system-in-windows-server-2012-r2-link-account-failed/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近手賤把Disqus解除帳號連結，卻發現怎麼樣都無法連結帳號，一直顯示<code>Unable to connect to the Disqus API servers</code>如下：</p>
-<p><img src="/images/wordpress/2016/06/96a3be3cf272e017046d1b2674a52bd3-3.jpg" alt="01"></p>
-<p>拜了Google大神很久都找不到原因，無論重新安裝Windows Server還是使用國外HostGator Web Hosting(Windows)都發生同樣錯誤，忽然想起之前安裝這個外掛的時候也有發生這個問題，後來改用Linux後就正常了，於是乎懷疑是否是作業系統的問題，立即開了虛擬機安裝一台Linux測試，在Linux底下沒有做什麼特別的設定，按下登入馬上就連結成功到Disqus。</p>
-<p>個人猜測在Windows裡安裝的php套件少了什麼東西，導致外掛無法正常運作，雖然切回Windows後無法同步留言回Wordpress，但是此外掛還是有正常在運作中可以正常留言，那就先這樣結案吧！</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2262,7 +2277,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-count">152</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
