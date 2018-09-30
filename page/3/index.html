@@ -308,6 +308,298 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/11/linux-install-jenkins-ci-server-to-bulid-netcore-2-0-on-ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/linux-install-jenkins-ci-server-to-bulid-netcore-2-0-on-ubuntu/" itemprop="url">[Linux] 在 Ubuntu 上安裝 Jenkins CI Server 來 Bulid NetCore 2.0</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-10T13:12:14+08:00">
+                2017-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/Linux/OS/" itemprop="url" rel="index">
+                    <span itemprop="name">OS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/Linux/OS/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/Linux/OS/Other/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/Linux/OS/Other/Program/心得/" itemprop="url" rel="index">
+                    <span itemprop="name">心得</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Git/Linux/OS/Other/Program/心得/應用/" itemprop="url" rel="index">
+                    <span itemprop="name">應用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/linux-install-jenkins-ci-server-to-bulid-netcore-2-0-on-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/linux-install-jenkins-ci-server-to-bulid-netcore-2-0-on-ubuntu/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>近期都在研究 NetCore 但如果要上 Linux 的話就變成每次都要下指令重建專案 ，剛好有看到 Jenkins 支援 NetCore 且可以省去我在 SSH 上自己下指令的動作，於是乎就跑去研究了一下這塊，這邊留個筆記方便日後查閱。</p>
+<h1 id="Jenkins-安裝"><a href="#Jenkins-安裝" class="headerlink" title="Jenkins 安裝"></a>Jenkins 安裝</h1><ol>
+<li>下載套件清單 (否則搜尋不到)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -</span><br><span class="line">sudo sh -c &apos;echo deb http://pkg.jenkins.io/debian-stable binary/ &amp;gt; /etc/apt/sources.list.d/jenkins.list&apos;</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<ol>
+<li>安裝 Jenkins</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get install jenkins</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接著輸入 <code>http://localhost:8080</code> 並在 <code>/var/lib/jenkins/secrets/initialAdminPassword</code> 找到的你管理員密碼<br><img src="/images/wordpress/2017/11/b51b89342ae4fbf50e09080e0348b70a.png" alt=""></li>
+<li>這邊可以選擇要安裝社群建議的套件還是自訂套件，因為我是第一次安裝所以先選擇左邊<br><img src="/images/wordpress/2017/11/c037420a96594fc9ddd08ee44d8162d2.png" alt=""><br><img src="/images/wordpress/2017/11/f5a02a7eb99bdb0970c32ed08654f432.png" alt=""></li>
+<li>安裝完後會要求你設定管理員帳號密碼，設定完後就安裝完畢囉 !!<br><img src="/images/wordpress/2017/11/313f74806f11fafa23df1b57ab71b7d2.png" alt=""><br><img src="/images/wordpress/2017/11/f8b8c80689585164c1bf308e58d01bbc.png" alt=""></li>
+<li>接著從左邊選單點選 <code>管理 Jenkins -&amp;gt; 設定全域安全性</code><br><img src="/images/wordpress/2017/11/553995ffb6cc1232b20b4ce16b787fe0.png" alt=""></li>
+<li>確認 <code>Allow anonymous read access</code> 是沒有打勾的，否則大家都可以亂搞囉<br><img src="/images/wordpress/2017/11/ed07b97a9681a63b124cbef205742058.png" alt=""><!--nextpage-->
+</li>
+</ol>
+<h1 id="安裝NetCore-2-0-Node-js-npm"><a href="#安裝NetCore-2-0-Node-js-npm" class="headerlink" title="安裝NetCore 2.0 + Node.js + npm"></a>安裝NetCore 2.0 + Node.js + npm</h1><ol>
+<li>下載 Node.js 套件清單 (若無額外下載清單則會安裝到很舊的版本，且會有各種奇奇怪怪的錯誤跑出來)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh sudo bash nodesource_setup.sh</span><br><span class="line">sudo bash nodesource_setup.sh</span><br></pre></td></tr></table></figure>
+<ol>
+<li>安裝 Node.js + npm</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get install nodejs</span><br></pre></td></tr></table></figure>
+<ol>
+<li>下載 NetCore 套件清單</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor &amp;gt; microsoft.gpg</span><br><span class="line">sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg</span><br><span class="line">sudo sh -c &apos;echo &quot;deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main&quot; &amp;gt; /etc/apt/sources.list.d/dotnetdev.list&apos;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>開始安裝 NetCore 2.0</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install dotnet-sdk-2.0.2</span><br></pre></td></tr></table></figure>
+<ol>
+<li>等他跑完就可以囉<br><img src="/images/wordpress/2017/11/692cc2485f0d15b921b1de8823380deb.png" alt=""><!--nextpage-->
+</li>
+</ol>
+<h1 id="設定-Jenkins-建置-NetCore"><a href="#設定-Jenkins-建置-NetCore" class="headerlink" title="設定 Jenkins 建置 .NetCore"></a>設定 Jenkins 建置 .NetCore</h1><ol>
+<li>首先要先設定環境變數，否則 Jenkins 找不到 dotnet<br><code>管理 Jenkins -&amp;gt; 設定系統 -&amp;gt; 全域屬性 -&amp;gt; 環境變數</code> 這邊打勾 Key 輸入 PATH<br>其值可以在 Linux 主機上下 <code>echo $PATH</code> 得到<br><img src="/images/wordpress/2017/11/5b998ec5e8d7f301db95a417752ca3e9.png" alt=""></li>
+<li>接著選擇左邊選單的 新增作業<br><img src="/images/wordpress/2017/11/6ca5aee3222205a4e9fb1f4edc594baf.png" alt=""></li>
+<li>選擇第一個 <code>建置 Free-Style 軟體專案</code><br><img src="/images/wordpress/2017/11/d9f803ffa12b86b0adbf15338525ed08.png" alt=""></li>
+<li>因為我要從git上面抓取檔案下來，所以要在 <code>原始碼管理</code> 設定 git 位置<br><img src="/images/wordpress/2017/11/50cfb17f2e8438b9cbb481cff8ff4f17.png" alt=""></li>
+<li>在 <code>建置 -&amp;gt; 執行 Shell -&amp;gt; 指令</code> 輸入下方指令，就可以順利建置囉 !!<br><img src="/images/wordpress/2017/11/0ebd880dfa625bf57f764d1a97a516ee.png" alt=""></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">dotnet --info</span><br><span class="line">dotnet --version</span><br><span class="line"></span><br><span class="line">cd ./src/NetCoreWebApp</span><br><span class="line">dotnet restore</span><br><span class="line"></span><br><span class="line">rm -rf $WORKSPACE/jenkins_publish</span><br><span class="line">mkdir $WORKSPACE/jenkins_publish</span><br><span class="line"></span><br><span class="line">dotnet publish ./NetCoreWebApp.csproj -c:Release -o $WORKSPACE/jenkins_publish</span><br></pre></td></tr></table></figure>
+<p>&nbsp;<br>&nbsp;</p>
+<p>參考：</p>
+<ol>
+<li><a href="http://blog.changyy.org/2015/11/linux-jenkins-git-plugin-php.html" target="_blank" rel="noopener">[Linux] 架設 Jenkins 筆記，以 Git plugin 與 PHP CodeIgniter - command-line interface (CLI) 定期任務為例 @ Ubuntu 14.04</a></li>
+<li><a href="http://www.cnblogs.com/calvinK/p/6836373.html" target="_blank" rel="noopener">.Net Core Linux centos7行—jenkins linux 构建.net core web app</a></li>
+<li><a href="https://blog.camel2243.com/2016/05/13/ubuntu-%E5%AE%89%E8%A3%9D-nodejs-%E8%88%87-npm/" target="_blank" rel="noopener">[ubuntu] 安裝 nodejs 與 npm</a><br>&nbsp;</li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/10/linux-mysql-phpmyadmin-the-default-language-is-modified-to-utf8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2049,196 +2341,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/06/javascript-exfast-comic-scroll-watch-to-comic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/javascript-exfast-comic-scroll-watch-to-comic/" itemprop="url">[JavaScript] exFastComic 來滾滾滾看漫畫吧 v20170612</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-06-12T21:54:15+08:00">
-                2017-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/javascript-exfast-comic-scroll-watch-to-comic/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/06/javascript-exfast-comic-scroll-watch-to-comic/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>這是一個為了看漫畫又不想點下一頁的產物，需要的人請搭配油猴食用。</p>
-<p>支援網站：</p>
-<ol>
-<li>Dm5</li>
-<li><p>Wnacg<br>油猴：</p>
-</li>
-<li><p>Chrmoe安裝擴充套件<a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" rel="noopener">Tampermonkey</a></p>
-</li>
-<li><p>Firefox安裝擴充套件<a href="https://addons.mozilla.org/zh-tw/firefox/addon/greasemonkey/" target="_blank" rel="noopener">Greasemonkey</a><br>腳本：</p>
-</li>
-<li><p><a href="https://openuserjs.org/scripts/shuangrain07gmail.com/exFastComic_-_Dm5" target="_blank" rel="noopener">Dm5</a></p>
-</li>
-<li><a href="https://openuserjs.org/scripts/shuangrain07gmail.com/exFastComic_-_Wnacg" target="_blank" rel="noopener">Wnacg</a><br>&nbsp;</li>
-</ol>
-<p>&nbsp;</p>
-<p>原始碼：<a href="https://github.com/shuangrain/exFastComic" target="_blank" rel="noopener">https://github.com/shuangrain/exFastComic</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2293,7 +2395,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">152</span>
+                  <span class="site-state-item-count">153</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
