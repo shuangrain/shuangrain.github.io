@@ -298,6 +298,357 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/11/mssql-some-know-how-of-sql-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/mssql-some-know-how-of-sql-server/" itemprop="url">[MSSQL] SQL Server 的一些眉眉角角 (2018/11/01)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-11-01T21:33:00+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/mssql-some-know-how-of-sql-server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/mssql-some-know-how-of-sql-server/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>目前工作 Database 方面主要都在使用 SQL Server，寫了近兩年的 Stored Procedure 也遇到了許多的問題，在這裡簡單筆記一下。</p>
+<ol>
+<li><p>使用暫存資料表 <code>#</code> 或 <code>##</code> 建立的暫存資料表，可從 <code>tempdb.暫存資料表</code> 找到。</p>
+<ul>
+<li><code>#</code> 建立的暫存資料表只有該連線可以取用；<code>##</code> 則是全部連線均可使用。</li>
+<li>連線結束時皆會自動刪除，若程式中有 Connection Pool 來管理連線則不會立刻刪除。</li>
+</ul>
+</li>
+<li><p>若開啟交易 (Transaction) 但無提交異動 (Commit) 會發生資料表鎖死 (Table Lock) 的問題，切記要提交異動 (Commit)。</p>
+</li>
+<li><p>使用主鍵來 <code>UPDATE</code> 為資料鎖 (Row Lock)，若使用其他條件則有可能會升級成資料頁鎖(Page Lock) 或資料表鎖 (Table Lock)。</p>
+</li>
+<li><p>交易 (Transaction) 具有復原機制 (RollBack)，但實際上資料表中的資料已經被異動且鎖定的關係所以無法取得，可利用 <code>WITH(NOLOCK)</code> 來取得被鎖定的髒資料。</p>
+</li>
+<li><p>使用 <code>CURSOR</code> 或 <code>UPDATE FROM</code> 若超過五千筆時可能會造成資料表鎖定，可使用 <code>ROW_NUMBER()</code> 排序資料塞入暫存資料表並使用 <code>WHILE</code> 來一筆一筆更新資料避開鎖定，速度雖慢但能減少鎖死。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">SET NOCOUNT ON</span><br><span class="line"></span><br><span class="line">DECLARE</span><br><span class="line">	@RowNum			INT,</span><br><span class="line">	@RowCount		INT,</span><br><span class="line">	@Temp_Id		INT</span><br><span class="line"></span><br><span class="line">SELECT</span><br><span class="line">	ROW_NUMBER() OVER(ORDER BY [Id]) AS RowNum,</span><br><span class="line">	[Id],</span><br><span class="line">	[Name]</span><br><span class="line">INTO</span><br><span class="line">	#Temp</span><br><span class="line">FROM</span><br><span class="line">	[exfast].[dbo].[TableA] WITH(NOLOCK)</span><br><span class="line"></span><br><span class="line">SELECT</span><br><span class="line">	@RowNum = 1,</span><br><span class="line">	@RowCount = (SELECT SUM(1) FROM #Temp)</span><br><span class="line"></span><br><span class="line">WHILE(@RowNum &lt;= @RowCount)</span><br><span class="line">BEGIN</span><br><span class="line"></span><br><span class="line">	SELECT</span><br><span class="line">		@Temp_Id = [Id]</span><br><span class="line">	FROM</span><br><span class="line">		#Temp</span><br><span class="line">	WHERE</span><br><span class="line">		RowNum = @RowNum</span><br><span class="line"></span><br><span class="line">	UPDATE</span><br><span class="line">		[exfast].[dbo].[TableA]</span><br><span class="line">	SET</span><br><span class="line">		[Name] = &apos;dddd&apos;</span><br><span class="line">	WHERE</span><br><span class="line">		[Id] = @Temp_Id</span><br><span class="line"></span><br><span class="line">	SET @RowNum = @RowNum + 1</span><br><span class="line"></span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">DROP TABLE #Temp</span><br></pre></td></tr></table></figure>
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/10/C-sharp-LeetCode-479-Largest-Palindrome-Product/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/C-sharp-LeetCode-479-Largest-Palindrome-Product/" itemprop="url">[C#][LeetCode] 479. Largest Palindrome Product</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-10-01T23:25:00+08:00">
+                2018-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/C-sharp-LeetCode-479-Largest-Palindrome-Product/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/10/C-sharp-LeetCode-479-Largest-Palindrome-Product/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h1><blockquote>
+<p>Find the largest palindrome made from the product of two n-digit numbers.<br>Since the result could be very large, you should return the largest palindrome mod 1337.</p>
+<p>Example:</p>
+<p>Input: 2<br>Output: 987<br>Explanation: 99 x 91 = 9009, 9009 % 1337 = 987</p>
+<p>Note:<br>The range of n is [1,8].</p>
+</blockquote>
+<h1 id="解題過程"><a href="#解題過程" class="headerlink" title="解題過程"></a>解題過程</h1><p>這題要找出 N 位數相乘後且結果是迴文的數字<br>例如：N = 2 最大數字等於 99，那就要找出最大 99 最小 10 的兩位數相乘後且結果是迴文的數字。</p>
+<p>最初我用一個很笨的方法迴圈慢慢跑，最後當然是直接逾時，後來改成先取最大數字相乘後的前半段數字，再用迴圈去產生迴文並篩選資料，這樣比前面的笨方法快非常多。</p>
+<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public int Solution2(int n)</span><br><span class="line">&#123;</span><br><span class="line">    if (n == 1)</span><br><span class="line">    &#123;</span><br><span class="line">        return 9;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int maxBound = (int)Math.Pow(10, n) - 1;</span><br><span class="line">    int minBound = (int)Math.Pow(10, n - 1);</span><br><span class="line">    long maxNum = (long)maxBound * (long)maxBound;</span><br><span class="line"></span><br><span class="line">    string str = maxNum.ToString();</span><br><span class="line">    long maxFront = long.Parse(str.Substring(0, str.Length / 2));</span><br><span class="line"></span><br><span class="line">    for (long i = maxFront; i &gt; 0; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        long palindrome = long.Parse(i.ToString() + Reverse(i.ToString()));</span><br><span class="line"></span><br><span class="line">        for (long j = maxBound; j &gt; minBound; j--)</span><br><span class="line">        &#123;</span><br><span class="line">            // 避免超出 N 位數</span><br><span class="line">            if (palindrome / j &gt; maxBound)</span><br><span class="line">            &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (palindrome % j == 0)</span><br><span class="line">            &#123;</span><br><span class="line">                return (int)(palindrome % 1337);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public string Reverse(string s)</span><br><span class="line">&#123;</span><br><span class="line">    char[] charArray = s.ToCharArray();</span><br><span class="line">    Array.Reverse(charArray);</span><br><span class="line">    return new string(charArray);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/09/C-sharp-LeetCode-515-Find-Largest-Value-in-Each-Tree-Row/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1713,368 +2064,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/" itemprop="url">[C#][DI] 相互依賴造成循環注入死結</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-08-29T19:22:00+08:00">
-                2018-08-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="問題緣由"><a href="#問題緣由" class="headerlink" title="問題緣由"></a>問題緣由</h1><p>最近在寫 .NET Core 的時候遇到了一個問題</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A circular dependency was detected for the service of type &apos;WebApplication1.Service.A1Service&apos;</span><br></pre></td></tr></table></figure>
-<h2 id="A1Service"><a href="#A1Service" class="headerlink" title="A1Service"></a>A1Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A1Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly A2Service _a2Service = null;</span><br><span class="line"></span><br><span class="line">    public A1Service(A2Service a2Service)</span><br><span class="line">    &#123;</span><br><span class="line">        _a2Service = a2Service;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A1Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _a2Service.Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這是網路教學文章上常見的從建構子中依賴注入 <code>A2Service</code> 的程式<br>接著我們再來看看另外一支程式</p>
-<h2 id="A2Service"><a href="#A2Service" class="headerlink" title="A2Service"></a>A2Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A2Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly A1Service _a1Service = null;</span><br><span class="line"></span><br><span class="line">    public A2Service(A1Service a1Service)</span><br><span class="line">    &#123;</span><br><span class="line">        _a1Service = a1Service;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A2Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _a1Service.Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>這裡就發生了一個循環依賴的問題 <code>A1Service</code> 在建構子中注入了 <code>A2Service</code>，而 <code>A2Service</code> 也在建構子中注入了 <code>A1Service</code>，造成兩個物件互相依賴造成 Exception</p>
-<h1 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h1><p>改成不直接在建構子中注入 Service ，改注入 <code>IServiceProvider</code>，再利用 <code>GetService</code> 這個方法來取得物件，這樣就可以順利解決這個問題囉。</p>
-<h2 id="A3Service"><a href="#A3Service" class="headerlink" title="A3Service"></a>A3Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A3Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly IServiceProvider _serviceProvider = null;</span><br><span class="line"></span><br><span class="line">    public A3Service(IServiceProvider serviceProvider)</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider = serviceProvider;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A3Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider.GetService&lt;A4Service&gt;().Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="A4Service"><a href="#A4Service" class="headerlink" title="A4Service"></a>A4Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A4Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly IServiceProvider _serviceProvider = null;</span><br><span class="line"></span><br><span class="line">    public A4Service(IServiceProvider serviceProvider)</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider = serviceProvider;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A4Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider.GetService&lt;A3Service&gt;().Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/" itemprop="url">[iOS] 越獄後 Whoscall 老是更新失敗無法使用？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-07-22T22:53:00+08:00">
-                2018-07-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/應用/" itemprop="url" rel="index">
-                    <span itemprop="name">應用</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/應用/筆記/" itemprop="url" rel="index">
-                    <span itemprop="name">筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>不知道有沒有人跟我一樣手賤去點更新 Whoscall，來電辨識功能就掛掉了，無法開啟識別也無法更新資料庫，嘗試過無數次重新安裝與重開機都出現下圖狀況</p>
-<p><img src="/images/auto-save/pasted-5.png" alt=""></p>
-<p>今天剛好看到瘋先生 <a href="https://mrmad.com.tw/app-admin" target="_blank" rel="noopener">免電腦！直接用App Store替iOS App 將版/降回舊版教學</a> 這篇文章，就趕快在我的手機上降級 App 版本看看還有沒有救，最後結果當然是…復活拉 ~</p>
-<h1 id="實測裝置"><a href="#實測裝置" class="headerlink" title="實測裝置"></a>實測裝置</h1><ul>
-<li>Device：Apple iPhone 7</li>
-<li>Version：iOS 10.1.1</li>
-</ul>
-<h1 id="教學步驟"><a href="#教學步驟" class="headerlink" title="教學步驟"></a>教學步驟</h1><ol>
-<li>從 Cydia 安裝 App Admin (<a href="https://mrmad.com.tw/app-admin" target="_blank" rel="noopener">教學</a>)</li>
-<li><p>在 AppStore 找到 Whoscall <code>長按開啟</code> 並點選 <code>Downgrade</code><br><img src="/images/auto-save/pasted-6.png" alt=""></p>
-</li>
-<li><p>選擇 <code>2.2.16</code> (最後一版可以成功啟用的版本)<br><img src="/images/auto-save/pasted-7.png" alt=""></p>
-</li>
-<li><p>大功告成 !!<br><img src="/images/auto-save/pasted-8.png" alt=""></p>
-</li>
-</ol>
-<p>不知道 Whoscall 是為了防堵越獄還是程式本身的 Bug，有回報粉絲團許久都沒有修正這個問題，在程式修復以前目前只好用降版的方式了。</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2129,7 +2118,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

@@ -298,6 +298,420 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/11/ng2-understands-angular-cli-generated-project-directory-structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/ng2-understands-angular-cli-generated-project-directory-structure/" itemprop="url">[NG2] 了解 Angular CLI 產生的專案目錄結構</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-11-14T02:25:30+08:00">
+                2016-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/ng2-understands-angular-cli-generated-project-directory-structure/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/11/ng2-understands-angular-cli-generated-project-directory-structure/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>來源：<a href="https://dotblogs.com.tw/wellwind/2016/10/15/angular-cli-project-structure" target="_blank" rel="noopener">[Angular2速成班]了解Angular CLI產生的專案目錄結構</a></p>
+<p>透過Angular CLI我們可以很容易的建立一個具有一致性的專案架構，今天我們就來簡單介紹一下使用ng new指令產生的專案目錄內容，讓以後在開發Angular2專案時可以很清楚知道檔案的存放位置。</p>
+<p>&nbsp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/protractor.conf.js</span><br><span class="line">/e2e</span><br></pre></td></tr></table></figure>
+<p>e2e這個資料夾主要用來存放end to end的測試案例，Angular2 CLI產生的專案會使用protractor來進行end to end測試，protractor是angular開發團隊推出的end to end測試框架，自然跟Angular2最match啦！關於測試相關的設定，則是存放在/protractor.conf.js這個檔案中。<br>我們可以透過 <code>ng e2e</code> 指令來進行end to end的測試。</p>
+<p>&nbsp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/node_modules</span><br></pre></td></tr></table></figure>
+<p>我想不用介紹太多，只要對前端工程有一定熟悉的人都知道這個目錄是用來幹嘛的，簡單來說就是所有相關會用到的模組都在這個資料夾裡啦！</p>
+<p>&nbsp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/src</span><br></pre></td></tr></table></figure>
+<p>這個目錄非常重要，因為它就是我們未來所有撰寫的程式碼會存放的目錄，所以以後會常常近來這個目錄操作哩；當我們使用Angular CLI產生需要的檔案時，也都會存放在這個目錄之中。</p>
+<p>&nbsp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/.editorconfig</span><br></pre></td></tr></table></figure>
+<p>EditorConfig是專門給IDE看的一個檔案，用來告知IDE該如何調整專案目錄下的程式碼風格，如果IDE支援的話，就能夠針對.editorconfig這個檔案的設定來調整你的程式碼風格，如果不支援的話，這個檔案就可有可無囉。</p>
+<blockquote>
+<p>如果是使用Visual Studio Code開發的話，可以安裝EditorConfig for VS Code這個外掛來讓它支援EditorConfig<br>&nbsp;</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./angular-cli.json</span><br></pre></td></tr></table></figure>
+<p>給Angular CLI看的設定檔，基本上就是一些目錄及打包程式時的設定，如果團隊開發對於檔案存放目錄有特別設定的需求，或打包程式時需要引入額外的程式庫，都可以在這個檔案中設定。</p>
+<p>&nbsp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./karma.conf.js</span><br></pre></td></tr></table></figure>
+<p>Angular CLI產生的專案使用Karma作為unit test的測試框架，因此相關設定都寫在這裡囉。要進行unit test時，可以使用 <code>ng test</code> 指令。</p>
+<p>&nbsp;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">./tslint.json</span><br></pre></td></tr></table></figure>
+<p>用來針對TypeScript的程式撰寫風格進行規範(linter)的設定檔，就如同CSSLint、ESLint等，我們也可以透過TSLint來檢查TypeScript的coding style，只要執行 <code>ng lint</code> 來檢查就可以了。</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/10/apply-ssd-4k-alignment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/10/apply-ssd-4k-alignment/" itemprop="url">[應用] SSD 4K對齊</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-10-17T14:40:19+08:00">
+                2016-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/應用/" itemprop="url" rel="index">
+                    <span itemprop="name">應用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/apply-ssd-4k-alignment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/10/apply-ssd-4k-alignment/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Windows安裝前，先按下<code>Shift+F10</code>進入Command模式，並輸入<code>diskpart</code>即可開始進行分割磁區！</p>
+<p>&nbsp;</p>
+<ol>
+<li>列出硬碟清單，找出要操作的編號</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">list disk</span><br></pre></td></tr></table></figure>
+<ol>
+<li>選擇硬碟</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select disk 0</span><br></pre></td></tr></table></figure>
+<ol>
+<li>清除硬碟</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">clean</span><br></pre></td></tr></table></figure>
+<ol>
+<li>初始化磁區</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">create partition primary align=1024</span><br></pre></td></tr></table></figure>
+<ol>
+<li>列出磁區，找出要操作的編號</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">list partition</span><br></pre></td></tr></table></figure>
+<ol>
+<li>選擇磁區</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select partition 1</span><br></pre></td></tr></table></figure>
+<ol>
+<li>啟用磁區</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">active</span><br></pre></td></tr></table></figure>
+<ol>
+<li>格式化</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">format fs=ntfs unit=4096 quick</span><br></pre></td></tr></table></figure>
+<ol>
+<li>完成！<br>&nbsp;</li>
+</ol>
+<p>&nbsp;</p>
+<ul>
+<li>來源：<a href="http://www.techbang.com/posts/10651-ssd-tuning-practice-3-4k-alignment-upgrade-ssd-performance-cheat-secretly-reported-63-issues-cover-story" target="_blank" rel="noopener">SSD 新手使用須知：4K 對齊調教實戰，提昇 SSD 效能</a></li>
+</ul>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/09/regex-knowing-these-20-regular-expressions-allows-you-to-write-as-little-as-1000-lines-of-code/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1940,412 +2354,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/08/c-replication-model-changes-will-lead-each-other-rings/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/c-replication-model-changes-will-lead-each-other-rings/" itemprop="url">[C#] 複製 Model 後異動時會互相引響</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-08-25T22:22:11+08:00">
-                2016-08-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/08/c-replication-model-changes-will-lead-each-other-rings/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/08/c-replication-model-changes-will-lead-each-other-rings/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>有一需求必須複製一個Model，這時如果異動Model_Copy時會造成Model_Source也跟著被更動，爬文後找到了一些方法來測試，問題依然存在…</p>
-<p>&nbsp;</p>
-<ol>
-<li><p>用等於(=)的方式取值</p>
-<ul>
-<li>程式碼<br><img src="/images/wordpress/2016/08/547f61f703c6cfc8a8115a2555e8ea0d.jpg" alt="2016-08-25 22_03_12-ConsoleApplication1 - Microsoft Visual Studio"></li>
-<li>結果：<br><img src="/images/wordpress/2016/08/535506879e7cfaec4da28a7ad2c2e90e.jpg" alt="2016-08-25 22_03_39-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"></li>
-</ul>
-</li>
-<li><p>用new建立新的物件的方式取值</p>
-<ul>
-<li>程式碼<br><img src="/images/wordpress/2016/08/48fa67c63b65bea025238feb134b2c2e.jpg" alt="2016-08-25 22_06_46-ConsoleApplication1 [執行] - Microsoft Visual Studio"></li>
-<li>結果<br><img src="/images/wordpress/2016/08/535506879e7cfaec4da28a7ad2c2e90e.jpg" alt="2016-08-25 22_03_39-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"></li>
-</ul>
-</li>
-<li><p>利用LINQ的方式取值</p>
-<ul>
-<li>程式碼<br><img src="/images/wordpress/2016/08/51b104b3f58c0041a06300d91d616f7b.jpg" alt="2016-08-25 22_08_09-ConsoleApplication1 [執行] - Microsoft Visual Studio"></li>
-<li>結果<br><img src="/images/wordpress/2016/08/535506879e7cfaec4da28a7ad2c2e90e.jpg" alt="2016-08-25 22_03_39-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"><br>&nbsp;</li>
-</ul>
-</li>
-</ol>
-<p>最後終於找到了一個方法可以用，那就是讓Model繼承<code>ICloneable</code>並使用<code>Object</code>中的<code>MemberwiseClone()來實作Clone()</code>，就可以順利Copy啦！</p>
-<ul>
-<li><p>程式碼</p>
-<ol>
-<li>Model<br><img src="/images/wordpress/2016/08/55738d89ff448294b2c2a3e756d67796.jpg" alt="2016-08-25 22_11_30-ConsoleApplication1 [執行] - Microsoft Visual Studio"></li>
-<li>利用LINQ來呼叫<code>Clone()方法</code><br><img src="/images/wordpress/2016/08/95382c9f25eaa3681ba31fa35e8f25fe.jpg" alt="2016-08-25 22_46_21-ConsoleApplication1 - Microsoft Visual Studio"></li>
-</ol>
-</li>
-<li><p>結果<br><img src="/images/wordpress/2016/08/329c707602e796fcbddf9b9feb105c38.jpg" alt="2016-08-25 22_15_03-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"><br>&nbsp;</p>
-</li>
-<li><p>原始碼：<a href="https://github.com/shuangrain/ConsoleApplication_ModelClone" target="_blank" rel="noopener">https://github.com/shuangrain/ConsoleApplication_ModelClone</a></p>
-</li>
-<li><p>參考：</p>
-<ol>
-<li><a href="http://www.cnblogs.com/zhangji/archive/2011/02/23/1961897.html" target="_blank" rel="noopener">C# 之 类复制 MemberwiseClone与Clone(深 浅 Clone)</a></li>
-<li><a href="https://dotblogs.com.tw/yc421206/archive/2011/06/17/28785.aspx" target="_blank" rel="noopener">[C#.NET] 淺複製與深複製</a></li>
-</ol>
-</li>
-</ul>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/" itemprop="url">[MSSQL] SQL Server Management Studio 連線非預設 1433 port 埠號</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-08-20T18:15:25+08:00">
-                2016-08-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/Program/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>參考：<a href="http://blog.miniasp.com/post/2009/03/29/How-to-connect-to-SQL-Server-using-non-default-1433-port.aspx" target="_blank" rel="noopener">SQL Server 透過 TCP/IP 遠端連線時如何使用非 1433 埠號</a></p>
-<p>&nbsp;</p>
-<p><img src="/images/wordpress/2016/08/34844e063030bf987c070e7ab679e0b7.jpg" alt="未命名"></p>
-<p>自從把SQL Server放到公用網路上的時候，就常常被人暴力破解Try我的密碼，雖然不至於被猜到，但是看了總是不太開心，於是乎就把預設的Port修改掉了，卻發生使用SQL Server Management Studio無法連線的問題，之前用MySQL時格式不外乎就是在後面加上<code>:port</code>但轉來MSSQL卻發生無法連線的問題…</p>
-<p>&nbsp;</p>
-<p>爬了一下文才發現，使用<code>ip,port(127.0.0.1,4321)</code>這種格式就可以正常連線囉！<br><img src="/images/wordpress/2016/08/4a2dc1d14487ec94534d580b9d47c842.jpg" alt="2016-08-20 18_18_00-連接到伺服器"></p>
-<div class="video-container"><iframe src="//www.youtube.com/embed/RYhfDe5DKPI" frameborder="0" allowfullscreen></iframe></div>
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2400,7 +2408,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

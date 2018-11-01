@@ -3,6 +3,52 @@
   
     
     <entry>
+      <title>[MSSQL] SQL Server 的一些眉眉角角 (2018/11/01)</title>
+      <url>/2018/11/mssql-some-know-how-of-sql-server/</url>
+      <content type="html"><![CDATA[<p>目前工作 Database 方面主要都在使用 SQL Server，寫了近兩年的 Stored Procedure 也遇到了許多的問題，在這裡簡單筆記一下。</p><ol><li><p>使用暫存資料表 <code>#</code> 或 <code>##</code> 建立的暫存資料表，可從 <code>tempdb.暫存資料表</code> 找到。</p><ul><li><code>#</code> 建立的暫存資料表只有該連線可以取用；<code>##</code> 則是全部連線均可使用。</li><li>連線結束時皆會自動刪除，若程式中有 Connection Pool 來管理連線則不會立刻刪除。</li></ul></li><li><p>若開啟交易 (Transaction) 但無提交異動 (Commit) 會發生資料表鎖死 (Table Lock) 的問題，切記要提交異動 (Commit)。</p></li><li><p>使用主鍵來 <code>UPDATE</code> 為資料鎖 (Row Lock)，若使用其他條件則有可能會升級成資料頁鎖(Page Lock) 或資料表鎖 (Table Lock)。</p></li><li><p>交易 (Transaction) 具有復原機制 (RollBack)，但實際上資料表中的資料已經被異動且鎖定的關係所以無法取得，可利用 <code>WITH(NOLOCK)</code> 來取得被鎖定的髒資料。</p></li><li><p>使用 <code>CURSOR</code> 或 <code>UPDATE FROM</code> 若超過五千筆時可能會造成資料表鎖定，可使用 <code>ROW_NUMBER()</code> 排序資料塞入暫存資料表並使用 <code>WHILE</code> 來一筆一筆更新資料避開鎖定，速度雖慢但能減少鎖死。</p></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">SET NOCOUNT ON</span><br><span class="line"></span><br><span class="line">DECLARE</span><br><span class="line">@RowNumINT,</span><br><span class="line">@RowCountINT,</span><br><span class="line">@Temp_IdINT</span><br><span class="line"></span><br><span class="line">SELECT</span><br><span class="line">ROW_NUMBER() OVER(ORDER BY [Id]) AS RowNum,</span><br><span class="line">[Id],</span><br><span class="line">[Name]</span><br><span class="line">INTO</span><br><span class="line">#Temp</span><br><span class="line">FROM</span><br><span class="line">[exfast].[dbo].[TableA] WITH(NOLOCK)</span><br><span class="line"></span><br><span class="line">SELECT</span><br><span class="line">@RowNum = 1,</span><br><span class="line">@RowCount = (SELECT SUM(1) FROM #Temp)</span><br><span class="line"></span><br><span class="line">WHILE(@RowNum &lt;= @RowCount)</span><br><span class="line">BEGIN</span><br><span class="line"></span><br><span class="line">SELECT</span><br><span class="line">@Temp_Id = [Id]</span><br><span class="line">FROM</span><br><span class="line">#Temp</span><br><span class="line">WHERE</span><br><span class="line">RowNum = @RowNum</span><br><span class="line"></span><br><span class="line">UPDATE</span><br><span class="line">[exfast].[dbo].[TableA]</span><br><span class="line">SET</span><br><span class="line">[Name] = &apos;dddd&apos;</span><br><span class="line">WHERE</span><br><span class="line">[Id] = @Temp_Id</span><br><span class="line"></span><br><span class="line">SET @RowNum = @RowNum + 1</span><br><span class="line"></span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">DROP TABLE #Temp</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> SQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SQL </tag>
+            
+            <tag> SQL Server </tag>
+            
+            <tag> MSSQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>[C#][LeetCode] 479. Largest Palindrome Product</title>
+      <url>/2018/10/C-sharp-LeetCode-479-Largest-Palindrome-Product/</url>
+      <content type="html"><![CDATA[<h1 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h1><blockquote><p>Find the largest palindrome made from the product of two n-digit numbers.<br>Since the result could be very large, you should return the largest palindrome mod 1337.</p><p>Example:</p><p>Input: 2<br>Output: 987<br>Explanation: 99 x 91 = 9009, 9009 % 1337 = 987</p><p>Note:<br>The range of n is [1,8].</p></blockquote><h1 id="解題過程"><a href="#解題過程" class="headerlink" title="解題過程"></a>解題過程</h1><p>這題要找出 N 位數相乘後且結果是迴文的數字<br>例如：N = 2 最大數字等於 99，那就要找出最大 99 最小 10 的兩位數相乘後且結果是迴文的數字。</p><p>最初我用一個很笨的方法迴圈慢慢跑，最後當然是直接逾時，後來改成先取最大數字相乘後的前半段數字，再用迴圈去產生迴文並篩選資料，這樣比前面的笨方法快非常多。</p><h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public int Solution2(int n)</span><br><span class="line">&#123;</span><br><span class="line">    if (n == 1)</span><br><span class="line">    &#123;</span><br><span class="line">        return 9;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int maxBound = (int)Math.Pow(10, n) - 1;</span><br><span class="line">    int minBound = (int)Math.Pow(10, n - 1);</span><br><span class="line">    long maxNum = (long)maxBound * (long)maxBound;</span><br><span class="line"></span><br><span class="line">    string str = maxNum.ToString();</span><br><span class="line">    long maxFront = long.Parse(str.Substring(0, str.Length / 2));</span><br><span class="line"></span><br><span class="line">    for (long i = maxFront; i &gt; 0; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        long palindrome = long.Parse(i.ToString() + Reverse(i.ToString()));</span><br><span class="line"></span><br><span class="line">        for (long j = maxBound; j &gt; minBound; j--)</span><br><span class="line">        &#123;</span><br><span class="line">            // 避免超出 N 位數</span><br><span class="line">            if (palindrome / j &gt; maxBound)</span><br><span class="line">            &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (palindrome % j == 0)</span><br><span class="line">            &#123;</span><br><span class="line">                return (int)(palindrome % 1337);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public string Reverse(string s)</span><br><span class="line">&#123;</span><br><span class="line">    char[] charArray = s.ToCharArray();</span><br><span class="line">    Array.Reverse(charArray);</span><br><span class="line">    return new string(charArray);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>[C#][LeetCode] 515. Find Largest Value in Each Tree Row</title>
       <url>/2018/09/C-sharp-LeetCode-515-Find-Largest-Value-in-Each-Tree-Row/</url>
       <content type="html"><![CDATA[<h1 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h1><blockquote><p>You need to find the largest value in each row of a binary tree.</p></blockquote><p>Example:</p><pre><b>Input:</b>           1         / \        3   2       / \   \        5   3   9 <b>Output:</b> [1, 3, 9]</pre><h1 id="解題過程"><a href="#解題過程" class="headerlink" title="解題過程"></a>解題過程</h1><p>這題要找出二元樹中同階層最大的數字，我的作法是先將每層的數字收集起來，最後再一起比較。</p><h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">Dictionary&lt;int, List&lt;int&gt;&gt; dict = new Dictionary&lt;int, List&lt;int&gt;&gt;();</span><br><span class="line"></span><br><span class="line">public IList&lt;int&gt; LargestValues(TreeNode root)</span><br><span class="line">&#123;</span><br><span class="line">    List&lt;int&gt; list = new List&lt;int&gt;();</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">    &#123;</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    list.Add(root.val);</span><br><span class="line">    FindNum(0, root.left, root.right);</span><br><span class="line">    list.AddRange(dict.Keys.Select(x =&gt; dict[x].Max()));</span><br><span class="line"></span><br><span class="line">    return list;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void FindNum(int idx, TreeNode left, TreeNode right)</span><br><span class="line">&#123;</span><br><span class="line">    if (left == null &amp;&amp; right == null)</span><br><span class="line">    &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!dict.ContainsKey(idx))</span><br><span class="line">    &#123;</span><br><span class="line">        dict[idx] = new List&lt;int&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (left != null)</span><br><span class="line">    &#123;</span><br><span class="line">        dict[idx].Add(left.val);</span><br><span class="line">        FindNum(idx + 1, left.left, left.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (right != null)</span><br><span class="line">    &#123;</span><br><span class="line">        dict[idx].Add(right.val);</span><br><span class="line">        FindNum(idx + 1, right.left, right.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
@@ -16,9 +62,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
       
@@ -38,9 +84,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
       
@@ -62,9 +108,9 @@
             
             <tag> C# </tag>
             
-            <tag> IP </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> IP </tag>
             
             <tag> IIS </tag>
             
@@ -102,13 +148,13 @@
             
             <tag> Git </tag>
             
-            <tag> Windows Server </tag>
-            
             <tag> GitLab </tag>
             
             <tag> Reverse Proxy </tag>
             
             <tag> Proxy </tag>
+            
+            <tag> Windows Server </tag>
             
             <tag> https </tag>
             
@@ -188,13 +234,13 @@
       
         <tags>
             
-            <tag> SQL </tag>
-            
-            <tag> SQL Server </tag>
-            
             <tag> Docker </tag>
             
             <tag> Linux </tag>
+            
+            <tag> SQL </tag>
+            
+            <tag> SQL Server </tag>
             
         </tags>
       
@@ -354,9 +400,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
       
@@ -376,9 +422,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Medium </tag>
             
@@ -400,9 +446,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
         </tags>
       
@@ -422,9 +468,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Linq </tag>
             
@@ -706,9 +752,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -794,9 +840,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -822,9 +868,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -880,9 +926,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1010,9 +1056,9 @@
             
             <tag> MVC5 </tag>
             
-            <tag> DI </tag>
-            
             <tag> Autofac </tag>
+            
+            <tag> DI </tag>
             
             <tag> DI Framework </tag>
             
@@ -1250,9 +1296,9 @@
             
             <tag> Server </tag>
             
-            <tag> .NET Core </tag>
-            
             <tag> Ubuntu </tag>
+            
+            <tag> .NET Core </tag>
             
         </tags>
       
@@ -1276,9 +1322,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1304,9 +1350,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1332,9 +1378,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1360,9 +1406,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1388,9 +1434,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1416,9 +1462,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1444,9 +1490,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1498,9 +1544,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1794,9 +1840,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1822,9 +1868,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -1968,9 +2014,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2002,9 +2048,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> 遞迴 </tag>
             
@@ -2036,9 +2082,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2070,9 +2116,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> 遞迴 </tag>
             
@@ -2102,9 +2148,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2160,9 +2206,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> 遞迴 </tag>
             
@@ -2248,9 +2294,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2280,9 +2326,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2310,9 +2356,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2338,9 +2384,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2368,9 +2414,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2396,9 +2442,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2452,9 +2498,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2478,9 +2524,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2504,9 +2550,9 @@
       
         <tags>
             
-            <tag> LeetCode </tag>
-            
             <tag> C# </tag>
+            
+            <tag> LeetCode </tag>
             
             <tag> Easy </tag>
             
@@ -2570,11 +2616,11 @@
             
             <tag> Windows </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> Windows Server 2016 </tag>
             
@@ -2630,9 +2676,9 @@
             
             <tag> 教學 </tag>
             
-            <tag> ASP.NET MVC </tag>
-            
             <tag> 轉載 </tag>
+            
+            <tag> ASP.NET MVC </tag>
             
             <tag> ASP.NET WebAPI </tag>
             
@@ -2692,11 +2738,11 @@
             
             <tag> 筆記 </tag>
             
+            <tag> 教學 </tag>
+            
             <tag> 4K </tag>
             
             <tag> SSD </tag>
-            
-            <tag> 教學 </tag>
             
         </tags>
       
@@ -2894,9 +2940,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
         </tags>
       
@@ -3282,9 +3328,9 @@
             
             <tag> Windows </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> PPTP </tag>
             
@@ -3312,13 +3358,13 @@
             
             <tag> Windows </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
             
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> CentOS </tag>
             
@@ -3376,9 +3422,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> ASP.NET MVC </tag>
             
@@ -3488,13 +3534,13 @@
             
             <tag> Windows </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
             
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
         </tags>
       
@@ -3518,11 +3564,11 @@
             
             <tag> Windows </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> SSL </tag>
             
@@ -3548,11 +3594,11 @@
             
             <tag> Windows </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
         </tags>
       
@@ -3574,9 +3620,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
         </tags>
       
@@ -3602,9 +3648,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> CentOS </tag>
             
@@ -3692,9 +3738,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> CentOS </tag>
             
@@ -3720,9 +3766,9 @@
       
         <tags>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
         </tags>
       
@@ -3774,9 +3820,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> Apache </tag>
             
@@ -3808,15 +3854,15 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
             
-            <tag> MySQL </tag>
+            <tag> 教學 </tag>
             
             <tag> Apache </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> MySQL </tag>
             
             <tag> CentOS </tag>
             
@@ -3896,11 +3942,11 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> SSL </tag>
             
@@ -3924,17 +3970,17 @@
             
             <tag> 筆記 </tag>
             
-            <tag> SQL </tag>
-            
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
+            <tag> SQL </tag>
             
             <tag> Server </tag>
             
-            <tag> MySQL </tag>
+            <tag> 教學 </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> MySQL </tag>
             
         </tags>
       
@@ -3960,9 +4006,9 @@
             
             <tag> SQL </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3990,9 +4036,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> SSL </tag>
             
@@ -4048,9 +4094,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4082,9 +4128,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> phpMyAdmin </tag>
             
@@ -4110,9 +4156,9 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> 轉載 </tag>
             
@@ -4198,11 +4244,11 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
             
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4230,11 +4276,11 @@
             
             <tag> Linux </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> Server </tag>
             
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> 轉載 </tag>
             
@@ -4366,9 +4412,9 @@
       
         <tags>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> SSL </tag>
             
@@ -4398,9 +4444,9 @@
             
             <tag> 筆記 </tag>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> php </tag>
             
@@ -4422,9 +4468,9 @@
       
         <tags>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
         </tags>
       
@@ -4470,9 +4516,9 @@
       
         <tags>
             
-            <tag> 教學 </tag>
-            
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> 轉載 </tag>
             
@@ -4496,13 +4542,13 @@
       
         <tags>
             
-            <tag> 教學 </tag>
-            
             <tag> IIS </tag>
             
             <tag> Server </tag>
             
             <tag> WordPress </tag>
+            
+            <tag> 教學 </tag>
             
             <tag> 轉載 </tag>
             

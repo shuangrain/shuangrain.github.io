@@ -298,6 +298,351 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/iis-sites-insist-on-using-https-encryption-online/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/iis-sites-insist-on-using-https-encryption-online/" itemprop="url">IIS 網站強制使用 https 加密連線</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-18T00:37:48+08:00">
+                2016-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/iis-sites-insist-on-using-https-encryption-online/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/iis-sites-insist-on-using-https-encryption-online/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在這篇 <a href="https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/">IIS 使用 Let’s Encrypt 的 SSL 免費憑證 - 多站台申請</a> 提到了免費SSL憑證申請，現在我們要申請完後要限制每個網站都只能用https瀏覽的話，就必須用<code>web.config</code>來將使用者自動轉移到https的網址上，廢話不多說教學如下。</p>
+<ul>
+<li>在要移轉的網域資料夾下新增檔案<code>web.config</code>，內容如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;</span><br><span class="line">&amp;lt;configuration&amp;gt;</span><br><span class="line">	&amp;lt;system.webServer&amp;gt;</span><br><span class="line">		&amp;lt;rewrite&amp;gt;</span><br><span class="line">			&amp;lt;rules&amp;gt;</span><br><span class="line">				&amp;lt;rule name=&quot;HTTP to HTTPS redirect from:https://blog.exfast.me&quot; stopProcessing=&quot;true&quot;&amp;gt;</span><br><span class="line">					&amp;lt;match url=&quot;(.*)&quot; /&amp;gt;</span><br><span class="line">					&amp;lt;conditions&amp;gt;</span><br><span class="line">					  &amp;lt;add input=&quot;&#123;HTTPS&#125;&quot; pattern=&quot;off&quot; ignoreCase=&quot;true&quot; /&amp;gt;</span><br><span class="line">					&amp;lt;/conditions&amp;gt;</span><br><span class="line">					&amp;lt;action type=&quot;Redirect&quot; redirectType=&quot;Found&quot; url=&quot;https://&#123;HTTP_HOST&#125;/&#123;R:1&#125;&quot; /&amp;gt;</span><br><span class="line">				&amp;lt;/rule&amp;gt;</span><br><span class="line">			&amp;lt;/rules&amp;gt;</span><br><span class="line">		&amp;lt;/rewrite&amp;gt;</span><br><span class="line">	&amp;lt;/system.webServer&amp;gt;</span><br><span class="line">&amp;lt;/configuration&amp;gt;</span><br></pre></td></tr></table></figure>
+<p>新增完畢後無須重啟立即生效，現在輸入http網址看看會不會轉跳到https吧！</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/" itemprop="url">IIS 使用 Let’s Encrypt 的 SSL 免費憑證 - 多站台申請</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-17T18:32:02+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/iis-lets-encrypt-ssl-free-certificates-multi-platform-application/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>先前有教大家使用 <a href="https://blog.exfast.me/2016/05/iis-lets-encrypt-ssl-free-certificates/">IIS 使用 Let’s Encrypt 的 SSL 免費憑證</a> ，不知道各位有沒有發現到若多站台都要申請免費SSL的時候，會發生申請一個憑證另一個站台就會掛掉的問題，現在來教大家怎麼用一個憑證涵蓋全部的站台囉！</p>
+<p>這邊可以省略新增<code>web.config</code>的動作，因為程式會自動幫你新增唷！</p>
+<ol>
+<li>對著解壓縮後的<code>資料夾</code>按著<code>Shift+右鍵</code>選擇<code>在此處開啟命令視窗(W)</code><br><img src="/images/wordpress/2016/04/96a3be3cf272e017046d1b2674a52bd3-e1463518056492.jpg" alt="圖一"></li>
+<li>輸入指令(<a href="https://github.com/Lone-Coder/letsencrypt-win-simple/wiki/How-to-Run" target="_blank" rel="noopener">Help</a>)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">letsencrypt.exe --san</span><br></pre></td></tr></table></figure>
+<p><img src="/images/wordpress/2016/05/c8ed57c56d06e066e79a3a2da746e4a2.jpg" alt="IIS 使用 Let’s Encrypt 的 SSL 免費憑證 - 多站台申請 - 01"></p>
+<ol>
+<li>輸入<code>S</code>產生一個用於複數站台的憑證<br><img src="/images/wordpress/2016/05/83b3988933b75f20504cac747d522c2b.jpg" alt="IIS 使用 Let’s Encrypt 的 SSL 免費憑證 - 多站台申請 - 02"></li>
+<li>輸入你想要新增的站台編號，範例為：<code>1,2,3,4,5</code><br><img src="/images/wordpress/2016/05/07b19f5c9ea86d5f24e487d097d8abce.jpg" alt="IIS 使用 Let’s Encrypt 的 SSL 免費憑證 - 多站台申請 - 03"></li>
+<li>完成！<br>延伸閱讀：<a href="https://blog.exfast.me/2016/05/iis-sites-insist-on-using-https-encryption-online/">IIS 網站強制使用 https 加密連線</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/wordpress-plugin-automatic-conversion-of-wp-slug-translate-web-site-in-english/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1886,453 +2231,6 @@ To push the current branch and set the remote as upstream, use</code></p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/centos-install-7-x-lamp-environment-linux-apache-mariadb-php/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/centos-install-7-x-lamp-environment-linux-apache-mariadb-php/" itemprop="url">CentOS 7.X Lamp環境安裝 (Linux+Apache+MariaDB+PHP)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-09T06:45:20+08:00">
-                2016-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
-                    <span itemprop="name">OS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/centos-install-7-x-lamp-environment-linux-apache-mariadb-php/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/centos-install-7-x-lamp-environment-linux-apache-mariadb-php/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>看到網路上的人都推說，Linux Server使用CentOS架設比較適合，從預設開啟防火牆就知道了，我就來試試看CentOS與目前本站使用的Ubuntu Server差在哪。</p>
-<h2 id="安裝CentOS與更新套件清單"><a href="#安裝CentOS與更新套件清單" class="headerlink" title="安裝CentOS與更新套件清單"></a>安裝CentOS與更新套件清單</h2><ol>
-<li>從<a href="https://www.centos.org/download/" target="_blank" rel="noopener">CentOS官方網站</a>下載最新版<a href="http://ftp.yzu.edu.tw/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-DVD-1511.iso" target="_blank" rel="noopener">CentOS-7-x86_64-DVD-1511.iso</a>，安裝過程就省略了，本人是使用最小安裝，所以只有指令介面，反正要當Server使用，如果安裝GUI的話反而浪費資源對吧？</li>
-<li>Ubuntu與CentOS安裝套件的方式有點不太一樣，Ubuntu是使用<code>apt-get</code>這個指令來安裝，但CentOS是使用<code>yum</code>來安裝套件，這點需要注意一下。首先先更新一下列表吧，使用管理員權限的帳號輸入</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum update -y</span><br></pre></td></tr></table></figure>
-<p><code>-y 是忽略詢問是否同意直接更新</code></p>
-<h2 id="安裝Apache網頁伺服器"><a href="#安裝Apache網頁伺服器" class="headerlink" title="安裝Apache網頁伺服器"></a>安裝Apache網頁伺服器</h2><ol>
-<li>安裝前記得先使用上面的指令更新套件清單唷，不然可能會有奇怪的問題。</li>
-<li>輸入指令</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install httpd -y</span><br></pre></td></tr></table></figure>
-<ol>
-<li>安裝完畢後接著就要啟用服務拉，輸入指令</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">service httpd start</span><br></pre></td></tr></table></figure>
-<h2 id="安裝MariaDB-MySQL-資料庫伺服器"><a href="#安裝MariaDB-MySQL-資料庫伺服器" class="headerlink" title="安裝MariaDB(MySQL)資料庫伺服器"></a>安裝MariaDB(MySQL)資料庫伺服器</h2><ol>
-<li>在CentOS 7.X中MySQL是被替換成MariaDB的，所以就借此也來體驗看看MariaDB的資料庫囉。<br>輸入指令</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install mariadb mariadb-server -y</span><br></pre></td></tr></table></figure>
-<p>這樣就安裝成功囉！<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-1.png" alt="01"></p>
-<ol>
-<li>來啟動服務吧</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">service mariadb start</span><br></pre></td></tr></table></figure>
-<p><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-2.png" alt="01"></p>
-<h1 id="設定MariaDB伺服器"><a href="#設定MariaDB伺服器" class="headerlink" title="設定MariaDB伺服器"></a>設定MariaDB伺服器</h1><ol>
-<li>安裝完畢後，就來設定一些資料庫的基本設定吧！<br>輸入指令</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/usr/bin/mysql_secure_installation</span><br></pre></td></tr></table></figure>
-<p>這裡因為是第一次安裝，所以直接按<code>Enter</code>繼續即可。<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-3.png" alt="01"></p>
-<ol>
-<li>是否要設定root的密碼，輸入<code>y</code>開始設定<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-4.png" alt="01"></li>
-<li>重複輸入兩次相同的密碼<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-5.png" alt="01"></li>
-<li>是否要刪除匿名帳號，輸入<code>y</code>同意刪除，不然日後會有很多安全性問題<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-6.png" alt="01"></li>
-<li>是否要開放root管理員透過外網登入，這邊請輸入<code>y</code>限制管理員只能從本地連線較為安全<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-7.png" alt="01"></li>
-<li>是否刪除test資料庫輸入<code>y</code><br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-8.png" alt="01"></li>
-<li>是否重新載入權限表輸入<code>y
-![01](/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-9.png)</code></li>
-<li>設定完成！<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-10.png" alt="01"></li>
-</ol>
-<h1 id="安裝PHP-phpMyAdmin管理資料庫"><a href="#安裝PHP-phpMyAdmin管理資料庫" class="headerlink" title="安裝PHP+phpMyAdmin管理資料庫"></a>安裝PHP+phpMyAdmin管理資料庫</h1><ol>
-<li>安裝php與連接資料庫套件</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install php php-mysql -y</span><br></pre></td></tr></table></figure>
-<p><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-11.png" alt="01"></p>
-<ol>
-<li>安裝yum第三方EPEL套件庫</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install epel-release -y</span><br></pre></td></tr></table></figure>
-<p>清除快取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum clean all -y</span><br></pre></td></tr></table></figure>
-<p>更新套件庫</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum update -y</span><br></pre></td></tr></table></figure>
-<ol>
-<li>安裝phpMyAdmin</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install phpmyadmin -y</span><br></pre></td></tr></table></figure>
-<p><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-12.png" alt="01"></p>
-<ol>
-<li>重新啟動網頁伺服器</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">service httpd restart</span><br></pre></td></tr></table></figure>
-<h1 id="設定防火牆"><a href="#設定防火牆" class="headerlink" title="設定防火牆"></a>設定防火牆</h1><ol>
-<li>永久允許網頁伺服器通過防火牆</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo firewall-cmd --add-service=http --permanent</span><br></pre></td></tr></table></figure>
-<ol>
-<li>若需要https服務則輸入</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo firewall-cmd --add-service=https --permanent</span><br></pre></td></tr></table></figure>
-<p>查詢防火牆規則</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">firewall-cmd --list-all --permanent</span><br></pre></td></tr></table></figure>
-<p><code>--permanent</code>為永久規則</p>
-<ol>
-<li>重新啟動防火牆</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">service firewalld restart</span><br></pre></td></tr></table></figure>
-<h1 id="設定phpMyAdmin"><a href="#設定phpMyAdmin" class="headerlink" title="設定phpMyAdmin"></a>設定phpMyAdmin</h1><ol>
-<li>預設除了本地是不允許訪問phpMyAdmin，但因為我們現在要設定所以需要修改一下預設值，使用WinSCP連線到主機上面打開</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/etc/httpd/conf.d/phpMyAdmin.conf</span><br></pre></td></tr></table></figure>
-<ol>
-<li>找到</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;RequireAny&amp;gt;</span><br><span class="line">   Require ip 127.0.0.1</span><br><span class="line">   Require ip ::1</span><br><span class="line">&amp;lt;/RequireAny&amp;gt;</span><br></pre></td></tr></table></figure>
-<p>在<code>Require ip ::1</code>下方新增自己的IP</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;RequireAny&amp;gt;</span><br><span class="line">   Require ip 127.0.0.1</span><br><span class="line">   Require ip ::1</span><br><span class="line">   Require ip 你的IP</span><br><span class="line">&amp;lt;/RequireAny&amp;gt;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>重啟網頁伺服器<br>service httpd restart</li>
-<li>這樣就可以正常登入囉！<br><img src="/images/wordpress/2016/05/96a3be3cf272e017046d1b2674a52bd3-13.png" alt="01"><br>&nbsp;</li>
-</ol>
-<h1 id="開機自動啟動服務"><a href="#開機自動啟動服務" class="headerlink" title="開機自動啟動服務"></a>開機自動啟動服務</h1><p>每次開機都要手動啟用服務，這樣實在太麻煩了，輸入以下指令可以在每次開機後自動啟用服務</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">chkconfig httpd on</span><br><span class="line">chkconfig mariadb on</span><br></pre></td></tr></table></figure>
-<p>&nbsp;</p>
-<p>參考：</p>
-<ol>
-<li><a href="http://note.tc.edu.tw/932.html" target="_blank" rel="noopener">[Centos7] 新的防火牆firewalld</a></li>
-<li><a href="http://www.tecmint.com/install-lamp-in-centos-7/" target="_blank" rel="noopener">Installing LAMP (Linux, Apache, MariaDB, PHP/PhpMyAdmin) in RHEL/CentOS 7.0</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/line-helper-chatbot-baby-wi-fi-query/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/line-helper-chatbot-baby-wi-fi-query/" itemprop="url">Line ChatBot 寶寶小幫手 無線熱點查詢</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-08T20:19:25+08:00">
-                2016-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/line-helper-chatbot-baby-wi-fi-query/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/line-helper-chatbot-baby-wi-fi-query/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天又增加了一個無線熱點查詢的功能。<br>資料來源：<a href="http://data.gov.tw/node/5962" target="_blank" rel="noopener">iTaiwan中央行政機關室內公共區域免費無線上網熱點查詢服務</a></p>
-<p>使用教學：</p>
-<ol>
-<li>選擇左下角「+」打開選單<br><img src="/images/wordpress/2016/05/03.png" alt="03"></li>
-<li>選擇「傳送位置訊息」<br><img src="/images/wordpress/2016/05/02.png" alt="02"></li>
-<li>選擇「公開所在位置」<br><img src="/images/wordpress/2016/05/bd5428a33d37f279346447128a728dc4.png" alt="01204563"></li>
-<li>寶寶馬上回傳五個距離最近的熱點<br><img src="/images/wordpress/2016/05/01.png" alt="01"><br>寶寶QRCode：</li>
-</ol>
-<p><img src="/images/wordpress/2016/04/5981e242d13db40a8d40fa351ebc9f55.png" alt="yqx0407i"></p>
-<p>距離演算法：<a href="http://www.fuqianrong.com/article-detail-24.html" target="_blank" rel="noopener">跟据经纬度实现附近搜索</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2387,7 +2285,7 @@ To push the current branch and set the remote as upstream, use</code></p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

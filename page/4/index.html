@@ -298,6 +298,389 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/06/c-sharp-leetcode-easy-617-merge-two-binary-trees/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/c-sharp-leetcode-easy-617-merge-two-binary-trees/" itemprop="url">[C#][LeetCode][Easy] 617. Merge Two Binary Trees</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-06-29T18:55:29+08:00">
+                2017-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/c-sharp-leetcode-easy-617-merge-two-binary-trees/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/c-sharp-leetcode-easy-617-merge-two-binary-trees/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>問題：</p>
+<blockquote>
+<p>Given two binary trees and imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not.</p>
+<p>You need to merge them into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of new tree.<br>心得：</p>
+</blockquote>
+<p>這題就是把兩個二元樹合併，我就想著最簡單遞迴來解決，看了最佳解答才發現如果為一邊null的話就可以直接用另外一邊來return更有效率，學習了。<br>我的答案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public TreeNode MergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">        if (t1 == null &amp;amp;&amp;amp; t2 == null)</span><br><span class="line">        &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int t1Val = (t1 == null) ? 0 : t1.val;</span><br><span class="line">        int t2Val = (t2 == null) ? 0 : t2.val;</span><br><span class="line"></span><br><span class="line">        return new TreeNode(t1Val + t2Val)</span><br><span class="line">        &#123;</span><br><span class="line">            left = MergeTrees(t1?.left, t2?.left),</span><br><span class="line">            right = MergeTrees(t1?.right, t2?.right)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最佳解答：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public TreeNode MergeTrees(TreeNode t1, TreeNode t2) &#123;</span><br><span class="line">        if (t1 == null)</span><br><span class="line">        &#123;</span><br><span class="line">            return t2;</span><br><span class="line">        &#125;</span><br><span class="line">        if (t2 == null)</span><br><span class="line">        &#123;</span><br><span class="line">            return t1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return new TreeNode(t1.val + t2.val)</span><br><span class="line">        &#123;</span><br><span class="line">            left = MergeTrees(t1.left, t2.left),</span><br><span class="line">            right = MergeTrees(t1.right, t2.right)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/06/c-sharp-invoke-and-begininvoke-the-execution-order-and-difference-in-the-primary-and-secondary-threads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/c-sharp-invoke-and-begininvoke-the-execution-order-and-difference-in-the-primary-and-secondary-threads/" itemprop="url">[C#] Invoke 與 BeginInvoke 在主副線程中的執行順序和區別</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-06-14T14:08:42+08:00">
+                2017-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/c-sharp-invoke-and-begininvoke-the-execution-order-and-difference-in-the-primary-and-secondary-threads/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/c-sharp-invoke-and-begininvoke-the-execution-order-and-difference-in-the-primary-and-secondary-threads/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在寫多執行緒時必須更新UI狀態時查到的資料，做個紀錄一下。</p>
+<p>據msdn中介紹，它們最大的區別就是BeginInvoke屬於異步執行的。</p>
+<ul>
+<li>Control.Invoke 方法 (Delegate)<br>在擁有此控件的基礎窗口句柄的線程上執行指定的委託。</li>
+<li>Control.BeginInvoke 方法 (Delegate)<br>在創建控件的基礎句柄所在線程上異步執行指定委託。<br>總結：</li>
+</ul>
+<p>以下為了方便理解，假設如下：</p>
+<ol>
+<li>主線程表示Control.Invoke或Control.BeginInvoke中Control所在的線程，即創建該創建的線程。 （一般為UI線程）</li>
+<li>支線程表示不同於主線程的調用Invoke或BeginInvoke的線程。</li>
+<li>Control的Invoke和BeginInvoke的委託方法是在主線程，即UI線程上執行。 （也就是說如果你的委託方法用來取花費時間長的數據，然後更新界面什麼的，千萬別在主線程上調用Control.Invoke和Control.BeginInvoke，因為這些是依然阻塞UI線程的，造成界面的假死）</li>
+<li>Invoke會阻塞主支線程，BeginInvoke只會阻塞主線程，不會阻塞支線程！因此BeginInvoke的異步執行是指相對於支線程異步，而不是相對於主線程異步。 （從最後一個例子就能看出，程序運行點擊button1）<br>&nbsp;</li>
+</ol>
+<p>轉載：<a href="http://www.cnblogs.com/wangshenhe/archive/2012/05/25/2516842.html" target="_blank" rel="noopener">【分析】浅谈C#中Control的Invoke与BeginInvoke在主副线程中的执行顺序和区别（SamWang）</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/06/javascript-exfast-comic-scroll-watch-to-comic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1837,415 +2220,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/04/windows-browser-homepage-was-kidnapped-by-hao123/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/windows-browser-homepage-was-kidnapped-by-hao123/" itemprop="url">[Windows] 瀏覽器首頁被 hao123 綁架</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-04-16T05:03:26+08:00">
-                2017-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index">
-                    <span itemprop="name">Windows</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/心得/" itemprop="url" rel="index">
-                    <span itemprop="name">心得</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/心得/應用/" itemprop="url" rel="index">
-                    <span itemprop="name">應用</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/windows-browser-homepage-was-kidnapped-by-hao123/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/windows-browser-homepage-was-kidnapped-by-hao123/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前幾天再找百度乾淨雲的時候不小心中了hao123了<br>自從用了hao123 再也沒被奇怪的網站綁架了呢 !!! 才不是勒 !!!<br>稍微看了一下原來是瀏覽器的開啟路徑被動了手腳<br>本來以為很簡單…但最後費了一些力氣才終於解決…</p>
-<p><img src="/images/wordpress/2017/04/fafdfdb79c1a5079903122396820cd36.png" alt=""></p>
-<p>&nbsp;</p>
-<p>病毒對於我們資訊人來說還不就是登入檔or排程or執行檔or註冊檔or服務之類的東西，沒想到這次我碰壁了，竟然在每個地方都找不到任何蹤跡 !!!<br>而我的瀏覽器連結就這樣定時的被修改路徑…</p>
-<p>身為一個資訊人馬上就發揮了看家本領Google求大神了 !!<br>發現原來Win還有WMI Event這個鬼東西<br>也藏太深了吧 !!!  ( 受教了</p>
-<p>解決方法如下：</p>
-<ol>
-<li>下載 <a href="/images/wordpress/2017/04/97cc11e0dde791834a67f7d3d9648719.zip">WMITools</a> (官方網址掛了，這裡我有上傳備份，解壓縮密碼：<code>https://exfast.me/</code>)</li>
-<li>安裝後右鍵使用管理員開啟</li>
-<li>點選左上角<br><img src="/images/wordpress/2017/04/66b340df99ee66ac89d960cea1193d15.jpg" alt=""></li>
-<li>不用改直接按OK<br><img src="/images/wordpress/2017/04/41b165379c58013de4f1b8712ef9f75f.jpg" alt=""></li>
-<li>直接按OK<br><img src="/images/wordpress/2017/04/ae4492c053dcc669d8df64e6815426c3.jpg" alt=""></li>
-<li>兇手就是你啦 !!!!<br>對著這個王八蛋點右鍵刪除吧 !!<br><img src="/images/wordpress/2017/04/1727a75de6e7229988ade627fcf97a71.png" alt=""></li>
-<li>最後清除所有lnk的hao網址即可 (圖片中為RogueKiller免費版)<br><img src="/images/wordpress/2017/04/fe37a3fe618f0d7767271724b6567f69.png" alt=""><br>&nbsp;</li>
-</ol>
-<p>參考：</p>
-<ol>
-<li><a href="https://zhuanlan.zhihu.com/p/24216079" target="_blank" rel="noopener">中招了——WMI脚本劫持浏览器</a></li>
-<li><a href="http://blog.xuite.net/allenyin/blog/457900935" target="_blank" rel="noopener">瀏覽器首頁以「篡改瀏覽器捷徑方式」被綁架 - 復原雜記</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/04/javascript-do-not-work-history-back-or-history-go-in-special-browser/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/javascript-do-not-work-history-back-or-history-go-in-special-browser/" itemprop="url">[JavaScript] 在特定瀏覽器中使用 history.back() 或 history.go(-1) 皆無反應？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-04-13T01:19:31+08:00">
-                2017-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/Program/心得/" itemprop="url" rel="index">
-                    <span itemprop="name">心得</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/javascript-do-not-work-history-back-or-history-go-in-special-browser/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/javascript-do-not-work-history-back-or-history-go-in-special-browser/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天有個一個需求如下：</p>
-<p>點擊連結後回到上一頁，這麼簡單的東西竟然有雷 !!!</p>
-<p>首先我們來寫個簡單的範例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&amp;lt;script&amp;gt;</span><br><span class="line">    function clickEvent_back() &#123;</span><br><span class="line">        history.back();</span><br><span class="line">    &#125;</span><br><span class="line">    function clickEvent_go() &#123;</span><br><span class="line">        history.go(-1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $(&apos;a&apos;).on(&apos;click&apos;, function (event) &#123; </span><br><span class="line">        event.preventdefault()</span><br><span class="line">        return false;</span><br><span class="line">    &#125;)</span><br><span class="line">&amp;lt;/script&amp;gt;</span><br><span class="line"></span><br><span class="line">&amp;lt;h1&amp;gt;onclick&amp;lt;/h1&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;#&quot; onclick=&quot;history.back()&quot;&amp;gt;history.back()&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;#&quot; onclick=&quot;history.go(-1)&quot;&amp;gt;history.go(-1)&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;h1&amp;gt;href&amp;lt;/h1&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;javascript: history.back()&quot;&amp;gt;history.back()&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;javascript: history.go(-1)&quot;&amp;gt;history.go(-1)&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;h1&amp;gt;onclick call method&amp;lt;/h1&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;#&quot; onclick=&quot;clickEvent_back()&quot;&amp;gt;history.back()&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;#&quot; onclick=&quot;clickEvent_go()&quot;&amp;gt;history.go(-1)&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;h1&amp;gt;href call method&amp;lt;/h1&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;javascript: clickEvent_back()&quot;&amp;gt;history.back()&amp;lt;/a&amp;gt;</span><br><span class="line">&amp;lt;a href=&quot;javascript: clickEvent_go()&quot;&amp;gt;history.go(-1)&amp;lt;/a&amp;gt;</span><br></pre></td></tr></table></figure>
-<p>畫面如圖：</p>
-<p><img src="/images/wordpress/2017/04/d2df6f329ec32daa8b5e27684899a55e.png" alt=""></p>
-<p>&nbsp;</p>
-<p>不管點擊哪種<code>onclick</code>觸發的返回上一頁皆無反應，但有趣的是寫在<code>href</code>裡面的卻都正常</p>
-<p>有問題的瀏覽器：</p>
-<ol>
-<li>Safari</li>
-<li><p>Safari - WebView (in app)<br>正常運作的瀏覽器：</p>
-</li>
-<li><p>Chrome</p>
-</li>
-<li>Chrome (mobile app)</li>
-<li>Edge</li>
-<li>IE 11<br>看來Chrome比較聽話 …</li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2300,7 +2274,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

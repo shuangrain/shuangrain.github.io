@@ -298,6 +298,412 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/08/c-replication-model-changes-will-lead-each-other-rings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/c-replication-model-changes-will-lead-each-other-rings/" itemprop="url">[C#] 複製 Model 後異動時會互相引響</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-08-25T22:22:11+08:00">
+                2016-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/c-replication-model-changes-will-lead-each-other-rings/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/08/c-replication-model-changes-will-lead-each-other-rings/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有一需求必須複製一個Model，這時如果異動Model_Copy時會造成Model_Source也跟著被更動，爬文後找到了一些方法來測試，問題依然存在…</p>
+<p>&nbsp;</p>
+<ol>
+<li><p>用等於(=)的方式取值</p>
+<ul>
+<li>程式碼<br><img src="/images/wordpress/2016/08/547f61f703c6cfc8a8115a2555e8ea0d.jpg" alt="2016-08-25 22_03_12-ConsoleApplication1 - Microsoft Visual Studio"></li>
+<li>結果：<br><img src="/images/wordpress/2016/08/535506879e7cfaec4da28a7ad2c2e90e.jpg" alt="2016-08-25 22_03_39-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"></li>
+</ul>
+</li>
+<li><p>用new建立新的物件的方式取值</p>
+<ul>
+<li>程式碼<br><img src="/images/wordpress/2016/08/48fa67c63b65bea025238feb134b2c2e.jpg" alt="2016-08-25 22_06_46-ConsoleApplication1 [執行] - Microsoft Visual Studio"></li>
+<li>結果<br><img src="/images/wordpress/2016/08/535506879e7cfaec4da28a7ad2c2e90e.jpg" alt="2016-08-25 22_03_39-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"></li>
+</ul>
+</li>
+<li><p>利用LINQ的方式取值</p>
+<ul>
+<li>程式碼<br><img src="/images/wordpress/2016/08/51b104b3f58c0041a06300d91d616f7b.jpg" alt="2016-08-25 22_08_09-ConsoleApplication1 [執行] - Microsoft Visual Studio"></li>
+<li>結果<br><img src="/images/wordpress/2016/08/535506879e7cfaec4da28a7ad2c2e90e.jpg" alt="2016-08-25 22_03_39-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"><br>&nbsp;</li>
+</ul>
+</li>
+</ol>
+<p>最後終於找到了一個方法可以用，那就是讓Model繼承<code>ICloneable</code>並使用<code>Object</code>中的<code>MemberwiseClone()來實作Clone()</code>，就可以順利Copy啦！</p>
+<ul>
+<li><p>程式碼</p>
+<ol>
+<li>Model<br><img src="/images/wordpress/2016/08/55738d89ff448294b2c2a3e756d67796.jpg" alt="2016-08-25 22_11_30-ConsoleApplication1 [執行] - Microsoft Visual Studio"></li>
+<li>利用LINQ來呼叫<code>Clone()方法</code><br><img src="/images/wordpress/2016/08/95382c9f25eaa3681ba31fa35e8f25fe.jpg" alt="2016-08-25 22_46_21-ConsoleApplication1 - Microsoft Visual Studio"></li>
+</ol>
+</li>
+<li><p>結果<br><img src="/images/wordpress/2016/08/329c707602e796fcbddf9b9feb105c38.jpg" alt="2016-08-25 22_15_03-file____C__Users_Minsheng_Desktop_ConsoleApplication1_ConsoleApplication1_bin_De"><br>&nbsp;</p>
+</li>
+<li><p>原始碼：<a href="https://github.com/shuangrain/ConsoleApplication_ModelClone" target="_blank" rel="noopener">https://github.com/shuangrain/ConsoleApplication_ModelClone</a></p>
+</li>
+<li><p>參考：</p>
+<ol>
+<li><a href="http://www.cnblogs.com/zhangji/archive/2011/02/23/1961897.html" target="_blank" rel="noopener">C# 之 类复制 MemberwiseClone与Clone(深 浅 Clone)</a></li>
+<li><a href="https://dotblogs.com.tw/yc421206/archive/2011/06/17/28785.aspx" target="_blank" rel="noopener">[C#.NET] 淺複製與深複製</a></li>
+</ol>
+</li>
+</ul>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/" itemprop="url">[MSSQL] SQL Server Management Studio 連線非預設 1433 port 埠號</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-08-20T18:15:25+08:00">
+                2016-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/Program/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/08/mssql-sql-server-management-studio-online-not-the-default-1433-port-port-number/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>參考：<a href="http://blog.miniasp.com/post/2009/03/29/How-to-connect-to-SQL-Server-using-non-default-1433-port.aspx" target="_blank" rel="noopener">SQL Server 透過 TCP/IP 遠端連線時如何使用非 1433 埠號</a></p>
+<p>&nbsp;</p>
+<p><img src="/images/wordpress/2016/08/34844e063030bf987c070e7ab679e0b7.jpg" alt="未命名"></p>
+<p>自從把SQL Server放到公用網路上的時候，就常常被人暴力破解Try我的密碼，雖然不至於被猜到，但是看了總是不太開心，於是乎就把預設的Port修改掉了，卻發生使用SQL Server Management Studio無法連線的問題，之前用MySQL時格式不外乎就是在後面加上<code>:port</code>但轉來MSSQL卻發生無法連線的問題…</p>
+<p>&nbsp;</p>
+<p>爬了一下文才發現，使用<code>ip,port(127.0.0.1,4321)</code>這種格式就可以正常連線囉！<br><img src="/images/wordpress/2016/08/4a2dc1d14487ec94534d580b9d47c842.jpg" alt="2016-08-20 18_18_00-連接到伺服器"></p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/RYhfDe5DKPI" frameborder="0" allowfullscreen></iframe></div>
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/mssql-sql-server-management-studio-online-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1793,401 +2199,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/trashed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/trashed/" itemprop="url">OpenCV 實作 (一) : 環境架設</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-07-01T15:01:23+08:00">
-                2016-07-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/Program/Windows/" itemprop="url" rel="index">
-                    <span itemprop="name">Windows</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/07/trashed/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/07/trashed/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>以下為個人在編寫影像視覺程式時，常遇到的問題以及函式使用方法，想說做個筆記讓自己不用太勞煩Google大神。</p>
-<p>關於OpenCV的基本介紹:</p>
-<p><div id="fullContent"></div></p>
-<p><div class="tempImage_height image_wrapper portrait_img ng-scope"></div></p>
-<p><section id="overview" class="article_content"></section></p>
-<blockquote>
-<p><strong>OpenCV</strong>的全稱是Open Source Computer Vision Library，是一個跨平台的<a href="https://www.wikiwand.com/zh-tw/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89" title="電腦視覺" target="_blank" rel="noopener">電腦視覺</a>庫。OpenCV是由<a href="https://www.wikiwand.com/zh-tw/%E8%8B%B1%E7%89%B9%E5%B0%94" target="_blank" rel="noopener">英特爾公司</a>發起並參與開發，以<a href="https://www.wikiwand.com/zh-tw/BSD%E8%AE%B8%E5%8F%AF%E8%AF%81" target="_blank" rel="noopener">BSD授權條款</a>授權發行，可以在商業和研究領域中免費使用。OpenCV可用於開發實時的<a href="https://www.wikiwand.com/zh-tw/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86" title="圖像處理" target="_blank" rel="noopener">圖像處理</a>、<a href="https://www.wikiwand.com/zh-tw/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89" title="電腦視覺" target="_blank" rel="noopener">電腦視覺</a>以及<a href="https://www.wikiwand.com/zh-tw/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB" target="_blank" rel="noopener">模式識別</a>程式。該程式庫也可以使用英特爾公司的IPP進行加速處理。<br><br>本文章將使用OpenCV2.4.9搭配Visual Studio 2013進行操作。</p>
-</blockquote>
-<p>事前準備</p>
-<p>OpenCV官網下載 : <a href="http://opencv.org/downloads.html" target="_blank" rel="noopener">http://opencv.org/downloads.html</a></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/06/c-asp-net-mvc5-uploaded-with-the-jquery-form-plugin-and-httppostedfilebase-archives/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/c-asp-net-mvc5-uploaded-with-the-jquery-form-plugin-and-httppostedfilebase-archives/" itemprop="url">[C#][ASP.NET MVC5] 使用 jQuery Form Plugin 與 HttpPostedFileBase 檔案上傳</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-06-25T22:45:05+08:00">
-                2016-06-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/JavaScript/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/06/c-asp-net-mvc5-uploaded-with-the-jquery-form-plugin-and-httppostedfilebase-archives/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/06/c-asp-net-mvc5-uploaded-with-the-jquery-form-plugin-and-httppostedfilebase-archives/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>先前提到過 <a href="https://blog.exfast.me/2016/06/c-asp-net-mvc5-use-the-httppostedfilebase-file-upload/">[C#][ASP.NET MVC5] 使用 HttpPostedFileBase 檔案上傳</a> ，這次我要使用Ajax的方式上傳檔案，但研究了<code>Ajax.BeginForm</code>許久都無法上傳檔案，最後找到使用jQuery Form Plugin來實作此功能。</p>
-<p>來源：</p>
-<ol>
-<li><a href="http://kevintsengtw.blogspot.tw/2013/03/aspnet-mvc-jquery-form-plugin.html" target="_blank" rel="noopener">ASP.NET MVC - 使用 jQuery Form Plugin 做檔案上傳</a></li>
-<li><a href="http://kevintsengtw.blogspot.tw/2013/03/aspnet-mvc-jquery-form-plugin_26.html" target="_blank" rel="noopener">ASP.NET MVC - 使用 jQuery Form Plugin 做檔案上傳之加點東西</a><br>&nbsp;</li>
-</ol>
-<h1 id="使用NuGet安裝所需套件"><a href="#使用NuGet安裝所需套件" class="headerlink" title="使用NuGet安裝所需套件"></a>使用NuGet安裝所需套件</h1><ol>
-<li>安裝jQuery Form Plugin<br><img src="/images/wordpress/2016/06/96a3be3cf272e017046d1b2674a52bd3-4.jpg" alt="01"></li>
-<li>安裝Javascript Alert：toastr<br><img src="/images/wordpress/2016/06/a2ef406e2c2351e0b9e80029c909242d-3.jpg" alt="02"><br>&nbsp;</li>
-</ol>
-<h1 id="View"><a href="#View" class="headerlink" title="View"></a>View</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@&#123;</span><br><span class="line">    ViewBag.Title = &quot;Upload&quot;;</span><br><span class="line">&#125;</span><br><span class="line">&amp;lt;h2&amp;gt;Upload&amp;lt;/h2&amp;gt;</span><br><span class="line">&amp;lt;hr /&amp;gt;</span><br><span class="line">@using (Html.BeginForm(&quot;Upload&quot;, &quot;Home&quot;, FormMethod.Post, new &#123; enctype = &quot;multipart/form-data&quot; &#125;))</span><br><span class="line">&#123;</span><br><span class="line">    &amp;lt;div class=&quot;form-horizontal&quot;&amp;gt;</span><br><span class="line">        &amp;lt;div class=&quot;form-group&quot;&amp;gt;</span><br><span class="line">            &amp;lt;label class=&quot;control-label col-sm-2&quot;&amp;gt;選擇檔案&amp;lt;/label&amp;gt;</span><br><span class="line">            &amp;lt;div class=&quot;col-sm-10&quot;&amp;gt;</span><br><span class="line">                &amp;lt;input type=&quot;file&quot; name=&quot;file&quot;&amp;gt;</span><br><span class="line">            &amp;lt;/div&amp;gt;</span><br><span class="line">        &amp;lt;/div&amp;gt;</span><br><span class="line">        &amp;lt;div class=&quot;form-group&quot;&amp;gt;</span><br><span class="line">            &amp;lt;div class=&quot;col-sm-offset-2 col-sm-10&quot;&amp;gt;</span><br><span class="line">                &amp;lt;input type=&quot;submit&quot; value=&quot;提交&quot; class=&quot;btn btn-primary&quot; /&amp;gt;</span><br><span class="line">            &amp;lt;/div&amp;gt;</span><br><span class="line">        &amp;lt;/div&amp;gt;</span><br><span class="line">    &amp;lt;/div&amp;gt;</span><br><span class="line">&#125;</span><br><span class="line">@section css</span><br><span class="line">&#123;</span><br><span class="line">    @Styles.Render(&quot;~/Content/toastr&quot;)</span><br><span class="line">&#125;</span><br><span class="line">@section scripts</span><br><span class="line">&#123;</span><br><span class="line">    @Scripts.Render(&quot;~/bundles/jqueryajax&quot;)</span><br><span class="line">    @Scripts.Render(&quot;~/bundles/jqueryform&quot;)</span><br><span class="line">    @Scripts.Render(&quot;~/bundles/toastr&quot;)</span><br><span class="line">    &amp;lt;script&amp;gt;</span><br><span class="line">        $(&quot;form&quot;).ajaxForm(&#123;</span><br><span class="line">            iframe: true,</span><br><span class="line">            dataType: &quot;json&quot;,</span><br><span class="line">            success: function (result) &#123;</span><br><span class="line">                $(&quot;form&quot;).resetForm();</span><br><span class="line">                if (result.success) &#123;</span><br><span class="line">                    toastr.success(result.message, &apos;Success Message&apos;)</span><br><span class="line">                &#125;</span><br><span class="line">                else &#123;</span><br><span class="line">                    toastr.error(result.message, &apos;Error Message&apos;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            error: function (xhr, textStatus, errorThrown) &#123;</span><br><span class="line">                $(&quot;form&quot;).resetForm();</span><br><span class="line">                toastr.error(&apos;檔案上傳錯誤.&apos;, &apos;Error Message&apos;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &amp;lt;/script&amp;gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>HTML的部分可以不用更動，無須使用<code>Ajax.BeginForm</code>，只需要在JavaScript的地方使用<code>ajaxForm</code>即可將表單轉換成Ajax模式。</p>
-<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[HttpPost]</span><br><span class="line">public JsonResult Upload(HttpPostedFileBase file)</span><br><span class="line">&#123;</span><br><span class="line">	if (file != null &amp;amp;&amp;amp; file.ContentLength &amp;gt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		var fileName = Path.GetFileName(file.FileName);</span><br><span class="line">		var path = Server.MapPath(&quot;~/App_Data/FileUploads&quot;);</span><br><span class="line">		//若該資料夾不存在，則新增一個</span><br><span class="line">		if (!Directory.Exists(path))</span><br><span class="line">		&#123;</span><br><span class="line">			Directory.CreateDirectory(path);</span><br><span class="line">		&#125;</span><br><span class="line">		path = Path.Combine(path, fileName);</span><br><span class="line">		file.SaveAs(path);</span><br><span class="line">		return Json(new</span><br><span class="line">		&#123;</span><br><span class="line">			success = true,</span><br><span class="line">			message = fileName,</span><br><span class="line">			ContentLenght = file.ContentLength</span><br><span class="line">		&#125;, &quot;text/html&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		return Json(new</span><br><span class="line">		&#123;</span><br><span class="line">			success = false,</span><br><span class="line">			message = &quot;請上傳正確的檔案.&quot;</span><br><span class="line">		&#125;, &quot;text/html&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由於前端使用Ajax所以後台回傳資訊則必須從<code>ActionResult</code>修改成<code>JsonResult</code>，這樣才能強制回傳Json格式，需要注意的一點是在IE底下若無指定<code>contentType</code>的話則會出現問題如下圖，必須指定回傳的<code>contentType</code>為<code>text/html</code>才能在IE底下正常接收資訊。</p>
-<p><img src="/images/wordpress/2016/06/e45ee7ce7e88149af8dd32b27f9512ce-2.jpg" alt="03"></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2242,7 +2253,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

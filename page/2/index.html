@@ -298,6 +298,368 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/" itemprop="url">[C#][DI] 相互依賴造成循環注入死結</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-08-29T19:22:00+08:00">
+                2018-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/c-sharp-di-Interdependence-leads-to-loop-injection/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="問題緣由"><a href="#問題緣由" class="headerlink" title="問題緣由"></a>問題緣由</h1><p>最近在寫 .NET Core 的時候遇到了一個問題</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A circular dependency was detected for the service of type &apos;WebApplication1.Service.A1Service&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="A1Service"><a href="#A1Service" class="headerlink" title="A1Service"></a>A1Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A1Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly A2Service _a2Service = null;</span><br><span class="line"></span><br><span class="line">    public A1Service(A2Service a2Service)</span><br><span class="line">    &#123;</span><br><span class="line">        _a2Service = a2Service;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A1Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _a2Service.Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這是網路教學文章上常見的從建構子中依賴注入 <code>A2Service</code> 的程式<br>接著我們再來看看另外一支程式</p>
+<h2 id="A2Service"><a href="#A2Service" class="headerlink" title="A2Service"></a>A2Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A2Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly A1Service _a1Service = null;</span><br><span class="line"></span><br><span class="line">    public A2Service(A1Service a1Service)</span><br><span class="line">    &#123;</span><br><span class="line">        _a1Service = a1Service;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A2Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _a1Service.Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這裡就發生了一個循環依賴的問題 <code>A1Service</code> 在建構子中注入了 <code>A2Service</code>，而 <code>A2Service</code> 也在建構子中注入了 <code>A1Service</code>，造成兩個物件互相依賴造成 Exception</p>
+<h1 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h1><p>改成不直接在建構子中注入 Service ，改注入 <code>IServiceProvider</code>，再利用 <code>GetService</code> 這個方法來取得物件，這樣就可以順利解決這個問題囉。</p>
+<h2 id="A3Service"><a href="#A3Service" class="headerlink" title="A3Service"></a>A3Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A3Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly IServiceProvider _serviceProvider = null;</span><br><span class="line"></span><br><span class="line">    public A3Service(IServiceProvider serviceProvider)</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider = serviceProvider;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A3Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider.GetService&lt;A4Service&gt;().Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="A4Service"><a href="#A4Service" class="headerlink" title="A4Service"></a>A4Service</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class A4Service</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string guid = null;</span><br><span class="line">    private readonly IServiceProvider _serviceProvider = null;</span><br><span class="line"></span><br><span class="line">    public A4Service(IServiceProvider serviceProvider)</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider = serviceProvider;</span><br><span class="line"></span><br><span class="line">        if (guid == null)</span><br><span class="line">        &#123;</span><br><span class="line">            guid = Guid.NewGuid().ToString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Run()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(&quot;A4Service: &quot; + guid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void RunOther()</span><br><span class="line">    &#123;</span><br><span class="line">        _serviceProvider.GetService&lt;A3Service&gt;().Run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/" itemprop="url">[iOS] 越獄後 Whoscall 老是更新失敗無法使用？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-07-22T22:53:00+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/應用/" itemprop="url" rel="index">
+                    <span itemprop="name">應用</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/應用/筆記/" itemprop="url" rel="index">
+                    <span itemprop="name">筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/iOS-After-jailbreak-Whoscall-always-fails-update-and-cannot-be-used/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>不知道有沒有人跟我一樣手賤去點更新 Whoscall，來電辨識功能就掛掉了，無法開啟識別也無法更新資料庫，嘗試過無數次重新安裝與重開機都出現下圖狀況</p>
+<p><img src="/images/auto-save/pasted-5.png" alt=""></p>
+<p>今天剛好看到瘋先生 <a href="https://mrmad.com.tw/app-admin" target="_blank" rel="noopener">免電腦！直接用App Store替iOS App 將版/降回舊版教學</a> 這篇文章，就趕快在我的手機上降級 App 版本看看還有沒有救，最後結果當然是…復活拉 ~</p>
+<h1 id="實測裝置"><a href="#實測裝置" class="headerlink" title="實測裝置"></a>實測裝置</h1><ul>
+<li>Device：Apple iPhone 7</li>
+<li>Version：iOS 10.1.1</li>
+</ul>
+<h1 id="教學步驟"><a href="#教學步驟" class="headerlink" title="教學步驟"></a>教學步驟</h1><ol>
+<li>從 Cydia 安裝 App Admin (<a href="https://mrmad.com.tw/app-admin" target="_blank" rel="noopener">教學</a>)</li>
+<li><p>在 AppStore 找到 Whoscall <code>長按開啟</code> 並點選 <code>Downgrade</code><br><img src="/images/auto-save/pasted-6.png" alt=""></p>
+</li>
+<li><p>選擇 <code>2.2.16</code> (最後一版可以成功啟用的版本)<br><img src="/images/auto-save/pasted-7.png" alt=""></p>
+</li>
+<li><p>大功告成 !!<br><img src="/images/auto-save/pasted-8.png" alt=""></p>
+</li>
+</ol>
+<p>不知道 Whoscall 是為了防堵越獄還是程式本身的 Bug，有回報粉絲團許久都沒有修正這個問題，在程式修復以前目前只好用降版的方式了。</p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/07/Windows-After-updating-Visual-Studio-2017-the-debug-mode-will-stop-by-itself/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1649,432 +2011,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2018/03/MSSQL-開啟對外-TCP-IP-Port-連線/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/MSSQL-開啟對外-TCP-IP-Port-連線/" itemprop="url">[MSSQL] 開啟對外 TCP/IP Port 連線</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-20T21:48:00+08:00">
-                2018-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/筆記/" itemprop="url" rel="index">
-                    <span itemprop="name">筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/MSSQL-開啟對外-TCP-IP-Port-連線/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/MSSQL-開啟對外-TCP-IP-Port-連線/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="\images\auto-save\pasted-1.png" alt=""></p>
-<ol>
-<li>電腦管理</li>
-<li>服務與應用程式</li>
-<li>SQL Server 網路組態</li>
-<li>MSSQLSERVER</li>
-<li>TCP/IP</li>
-<li>通訊協定</li>
-<li>啟用：是</li>
-</ol>
-<p>這樣就可以用預設 port 1433 連線囉</p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/12/sideproject-ministry-of-finance-e-invoicing-api-testing-tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/sideproject-ministry-of-finance-e-invoicing-api-testing-tools/" itemprop="url">[SideProject] 財政部電子發票 API 測試工具</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-12-22T19:19:55+08:00">
-                2017-12-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C#</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/JavaScript/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/JavaScript/Program/應用/" itemprop="url" rel="index">
-                    <span itemprop="name">應用</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/sideproject-ministry-of-finance-e-invoicing-api-testing-tools/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/12/sideproject-ministry-of-finance-e-invoicing-api-testing-tools/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="財政部電子發票-API-測試工具"><a href="#財政部電子發票-API-測試工具" class="headerlink" title="財政部電子發票 API 測試工具"></a>財政部電子發票 API 測試工具</h1><p>這是我最近在串接財政部 API 時自己寫的測試工具，希望能讓大家在串接測試上更加方便。<br>歡迎 PR 財政部的 API 清單</p>
-<ul>
-<li>前端：Angular 4.0</li>
-<li>後端：ASP.NET NetCore 2.0 - ASP.NET Web Api</li>
-<li>Live Demo：<a href="https://exfast.me/einvoiceApiTest" target="_blank" rel="noopener">https://exfast.me/einvoiceApiTest</a></li>
-<li>SourceCode：<a href="https://github.com/shuangrain/EinvoiceApiTest" target="_blank" rel="noopener">https://github.com/shuangrain/EinvoiceApiTest</a></li>
-</ul>
-<h2 id="操作說明"><a href="#操作說明" class="headerlink" title="操作說明"></a>操作說明</h2><ul>
-<li>環境變數</li>
-</ul>
-<ol>
-<li>簽章 (Signature)：將 Request 參數按照名稱排序並以 HMAC-SHA1 加密後加在 Query 後方傳送至財政部</li>
-<li>測試環境：將資料傳送至<a href="https://wwwtest.einvoice.nat.gov.tw/" target="_blank" rel="noopener">財政部測試環境</a></li>
-<li>Client 模式：以另開新頁的方式呼叫財政部 API</li>
-</ol>
-<ul>
-<li>選擇 Api<br>要測試的 API<p></p></li>
-<li><p>財政部加密用 Key<br>財政部提供的 HMAC-SHA1 加密用 AppKey</p>
-</li>
-<li><p>Api 位置<br>呼叫的 API 位置</p>
-</li>
-<li><p>Request<br>傳送給財政部的資料</p>
-</li>
-</ul>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ol>
-<li>開啟 <code>/src/appsettings.json</code></li>
-<li>將財政部提供的 <code>AppKey</code> 與 <code>AppID</code> 填上去</li>
-<li>用 Visual Studio 2017 開啟並執行即可 !!</li>
-</ol>
-<h2 id="Api-新增"><a href="#Api-新增" class="headerlink" title="Api 新增"></a>Api 新增</h2><p></p><p>開啟 <code>/src/Json/ApiList.json</code> 且依照下面的參數新增 Api</p>
-<h4 id="參數介紹"><a href="#參數介紹" class="headerlink" title="參數介紹"></a>參數介紹</h4><table>
-<thead>
-<tr>
-<th>參數名稱</th>
-<th>參數說明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TypeName</td>
-<td>Api 類型 (依此欄位排序)</td>
-</tr>
-<tr>
-<td>ApiName</td>
-<td>Api 名稱</td>
-</tr>
-<tr>
-<td>ApiUrl</td>
-<td>Api 位置</td>
-</tr>
-<tr>
-<td>Param</td>
-<td>Api 需傳送的參數範本 (參數 timeStamp, expTimeStamp, uuid, appID 會被自動取代)</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2129,7 +2065,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">155</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
