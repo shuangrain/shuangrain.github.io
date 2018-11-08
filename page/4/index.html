@@ -298,6 +298,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/06/c-sharp-linq-expression-divides-the-array-into-small-arrays-of-fixed-lengths/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/c-sharp-linq-expression-divides-the-array-into-small-arrays-of-fixed-lengths/" itemprop="url">[C#][Linq][Expression] 將陣列分割成固定長度的小陣列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-06-29T19:19:08+08:00">
+                2017-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/應用/" itemprop="url" rel="index">
+                    <span itemprop="name">應用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/c-sharp-linq-expression-divides-the-array-into-small-arrays-of-fixed-lengths/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/c-sharp-linq-expression-divides-the-array-into-small-arrays-of-fixed-lengths/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>來源：<a href="http://friskit.me/2016/08/08/c-sharp-split-list-to-small-lists/" target="_blank" rel="noopener">[Snippet]在C#中将List分割成多个定长的小List</a></p>
+<p>可以將一個很長很長很長的List分割成固定大小的List方便批次運算。</p>
+<p>程式碼：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public static IEnumerable&amp;lt;IEnumerable&amp;lt;T&amp;gt;&amp;gt; ChunkBy&amp;lt;T&amp;gt;(this IEnumerable&amp;lt;T&amp;gt; source, int chunkSize)</span><br><span class="line">&#123;</span><br><span class="line">    return source.Select((x, i) =&amp;gt; new &#123; Index = i, Value = x &#125;).GroupBy(x =&amp;gt; x.Index / chunkSize).Select(x =&amp;gt; x.Select(v =&amp;gt; v.Value));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/06/c-sharp-leetcode-easy-617-merge-two-binary-trees/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2033,193 +2222,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/04/git-common-instruction-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/git-common-instruction-summary/" itemprop="url">[Git] 常用指令總匯</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-04-16T05:41:01+08:00">
-                2017-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/git-common-instruction-summary/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/git-common-instruction-summary/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <table><br><thead><br><tr><br><th>分类</th><br><th>Git 命令</th><br><th>作用</th><br></tr><br></thead><br><tbody><br><tr><br><td>配置</td><br><td>git config –global user.name “John Doe”</td><br><td>配置 Git 提交姓名</td><br></tr><br><tr><br><td>配置</td><br><td>git config –global user.email “<a href="mailto:johndoe@example.com" target="_blank" rel="noopener">johndoe@example.com</a>”</td><br><td>配置 Git 提交邮箱</td><br></tr><br><tr><br><td>创建</td><br><td>git init</td><br><td>初始化当前目录为 Git 目录</td><br></tr><br><tr><br><td>创建</td><br><td>git add ./[file_name]</td><br><td>添加跟踪(所有)当前操作文件到 Git 管理暂存</td><br></tr><br><tr><br><td>创建</td><br><td>git clone [URL]</td><br><td>从 URL 仓库clone文件并建立 Git 管理</td><br></tr><br><tr><br><td>提交</td><br><td>git commit -m ‘提交记录’</td><br><td>提交当前暂存区的文件并记录提交</td><br></tr><br><tr><br><td>提交</td><br><td>git status</td><br><td>查看文件 Git 状态</td><br></tr><br><tr><br><td>提交</td><br><td>git status -s/–short</td><br><td>查看文件 Git 状态(紧凑格式)</td><br></tr><br><tr><br><td>提交</td><br><td>.gitignore文件</td><br><td>文件中记录当前目录下不参与 git 跟踪的文件</td><br></tr><br><tr><br><td>比较</td><br><td>git diff</td><br><td>比较工作目录中当前文件和暂存区域快照之间的差异</td><br></tr><br><tr><br><td>比较</td><br><td>git diff –[cached/staged]</td><br><td>查看已暂存与当前已提交的文件差异</td><br></tr><br><tr><br><td>删除</td><br><td>git rm [file_name]</td><br><td>从当前 Git 仓库中删除某文件</td><br></tr><br><tr><br><td>删除</td><br><td>git rm <strong>-f</strong> [file_name]</td><br><td>从当前 Git 仓库中删除某文件（<strong>包括已修改但未暂存的文件</strong>）</td><br></tr><br><tr><br><td>删除</td><br><td>git rm <strong>–cached</strong> [file_name]</td><br><td>从当前 Git 仓库中删除某文件不再跟踪(<strong>但保留在当前工作目录中</strong>)</td><br></tr><br><tr><br><td>移动</td><br><td>git mv [file_old_name] [file_new_name]</td><br><td>重命名/移动文件</td><br></tr><br><tr><br><td>日志</td><br><td>git log</td><br><td>查看提交日志</td><br></tr><br><tr><br><td>日志</td><br><td>git log <strong>-p</strong> -[<strong>N</strong>]</td><br><td>查看最近 [<strong>N</strong>] 次的提交日志和<strong>差异</strong></td><br></tr><br><tr><br><td>日志</td><br><td>git log <strong>–stat</strong></td><br><td>查看每次提交的<strong>简略</strong>的统计信息</td><br></tr><br><tr><br><td>日志</td><br><td>git log <strong>–graph</strong></td><br><td>查看每次提交的<strong>图形化</strong>的统计信息</td><br></tr><br><tr><br><td>日志</td><br><td>git log –pretty=[oneline/short/full/fuller]</td><br><td>指定使用不同于默认格式的方式展示提交历史</td><br></tr><br><tr><br><td>日志</td><br><td>git log –pretty=format:”%h - %an, %ar : %s”</td><br><td>定制要显示的记录格式[^定制格式说明]</td><br></tr><br><tr><br><td>撤销</td><br><td>git commit –amend</td><br><td>撤销上次提交，并重新提交(用当前状态替换上次提交)</td><br></tr><br><tr><br><td>撤销</td><br><td>git reset HEAD [file]</td><br><td>取消某文件暂存(撤销某文件的 git add 操作)</td><br></tr><br><tr><br><td>撤销</td><br><td>git checkout – [file]</td><br><td>撤销对工作目录下未提交的文件的修改</td><br></tr><br><tr><br><td>远程</td><br><td>git remote [<strong>-v</strong>]</td><br><td>查看远端仓库名[<strong>及其 URL</strong>]</td><br></tr><br><tr><br><td>远程</td><br><td>git remote add [shortname] [url]</td><br><td>添加远端仓库并命名</td><br></tr><br><tr><br><td>远程</td><br><td>git fetch [remote-name]</td><br><td>拉取远端所有内容以及更新至本地引用</td><br></tr><br><tr><br><td>远程</td><br><td>git push [remote-name] [branch-name]</td><br><td>推送本地[branch-name]分支至远端[remote-name]</td><br></tr><br><tr><br><td>远程</td><br><td>git remote show [remote-name]</td><br><td>查看远端仓库详细状态</td><br></tr><br><tr><br><td>远程</td><br><td>git remote rename [remote-old-name] [remote-new-name]</td><br><td>重命名远端仓库</td><br></tr><br><tr><br><td>远程</td><br><td>git remote rm [remote-name]</td><br><td>移除远端仓库</td><br></tr><br><tr><br><td>标签</td><br><td>git tag</td><br><td>列出所有标签</td><br></tr><br><tr><br><td>标签</td><br><td>git tag -a [tag-name] -m “[annotation]”</td><br><td>创建附注标签</td><br></tr><br><tr><br><td>标签</td><br><td>git show [tag-name]</td><br><td>列出指定标签详细信息</td><br></tr><br><tr><br><td>标签</td><br><td>git tag [tag-name]</td><br><td>创建轻量标签</td><br></tr><br><tr><br><td>标签</td><br><td>git tag -a [tag-name] [commit-sha-1]</td><br><td>对某次提交(以 sha-1 码形式)补充标签</td><br></tr><br><tr><br><td>标签</td><br><td>git push [branch-name] [tag-name]/[–tags]</td><br><td>将本地的[某个/全部]标签全部推送至远端</td><br></tr><br><tr><br><td>标签</td><br><td>git checkout -b [branchname] [tagname]</td><br><td>在特定标签上创建一个新的分支</td><br></tr><br><tr><br><td>别名</td><br><td>git config –global alias.[alias] [command]</td><br><td>创建一个[command]的[alias]别名(<code>git config --global alias.unstage &#39;reset HEAD --&#39;</code>)</td><br></tr><br><tr><br><td>分支</td><br><td>git branch [branch-name]</td><br><td>创建分支（但是不会切换至此分支）</td><br></tr><br><tr><br><td>分支</td><br><td>git checkout [<strong>-b</strong>] [branch-name]</td><br><td>[<strong>创建并</strong>]检出此分支为当前分支</td><br></tr><br><tr><br><td>分支</td><br><td>git merge [branch-name]</td><br><td>在当前分支处合并某分支</td><br></tr><br><tr><br><td>分支</td><br><td>git branch -[d/D] [branch-name]</td><br><td>[删除/强制删除]某分支</td><br></tr><br><tr><br><td>分支</td><br><td>git branch [<strong>-v/-vv</strong>]</td><br><td>查看所有分支[<strong>以及它们最后一次提交/以及与本地缓存下的远端分支的联系</strong>]</td><br></tr><br><tr><br><td>分支</td><br><td>git branch –merged/–no-merged</td><br><td>查看[已经/尚未]合并到当前分支的分支</td><br></tr><br><tr><br><td>分支</td><br><td>git checkout -b [branch] [remotename]/[branch]</td><br><td>从远端检出并创建本地分支同时<strong>默认跟踪</strong>远端此分支</td><br></tr><br><tr><br><td>分支</td><br><td>git checkout –track [remotename]/[branch]</td><br><td>从远端检出并创建本地<strong>同名</strong>分支同时<strong>默认跟踪</strong>远端此分支</td><br></tr><br><tr><br><td>分支</td><br><td>git branch [-u/–set-upstream-to] [remotename]/[branch]</td><br><td>设置或更新当前分支<strong>跟踪</strong>远端分支</td><br></tr><br><tr><br><td>分支</td><br><td>git fetch –all</td><br><td>拉取远端分支所有更新至本地缓存</td><br></tr><br><tr><br><td>分支</td><br><td>git pull/[git fetch THEN git merge]</td><br><td>拉取远端分支并合并</td><br></tr><br><tr><br><td>分支</td><br><td>git push origin –delete [branch-name]</td><br><td>删除远端分支</td><br></tr><br><tr><br><td>变基</td><br><td>git rebase[目前使用不多，需要深入理解]</td><br><td><strong>不要对在你的仓库外有副本的分支执行变基,详情参见<a href="https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%8F%98%E5%9F%BA" target="_blank" rel="noopener">此处</a></strong></td><br></tr><br><tr><br><td>储藏</td><br><td>git stash/git stash save</td><br><td>储藏当前未提交的修改并回复工作目录至提交状态</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash list</td><br><td>查看当前储藏栈</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash apply [stash@{2}]</td><br><td>应用[最近的一次/指定的某次]储藏</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash drop [stash@{0}]</td><br><td>在储藏栈中删除[指定的某次]储藏</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash pop</td><br><td>在储藏栈中应用最近的一次储藏并删除</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash –keep-index</td><br><td>c储藏工作目录中未暂存的东西(已经通过 add 暂存的不储藏)</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash -u</td><br><td>储藏当前未提交的修改（包括未加入 Git 跟踪的文件）</td><br></tr><br><tr><br><td>储藏</td><br><td>git stash branch [branch-name]</td><br><td>依据上次储藏的内容创建一个新的分支并应用上次的储藏(将上次储藏前的工作目录应用于一个新的分支上处理)</td><br></tr><br><tr><br><td>清理</td><br><td>git clean</td><br><td>清理当前目录中所有未被跟踪的文件且不能恢复(不包括 .gitignore 文件中的列表)</td><br></tr><br><tr><br><td>清理</td><br><td>git stash –all</td><br><td>清理当前目录中所有未被跟踪的文件并暂存起来</td><br></tr><br><tr><br><td>清理</td><br><td>git clean -f -d</td><br><td>移除工作目录中所有未追踪的文件以及空的子目录</td><br></tr><br><tr><br><td>清理</td><br><td>git clean -d -n</td><br><td>使用<strong>-n而不是-d</strong>表示做一次演习然后告诉你<strong>将要</strong>移除什么</td><br></tr><br><tr><br><td>清理</td><br><td>git clean <strong>-f</strong> -d <strong>-x</strong></td><br><td>移除工作目录中所有未追踪的文件以及空的子目录(<strong>包括 .gitignore 文件中的列表</strong>)</td><br></tr><br><tr><br><td>清理</td><br><td>git clean <strong>-n</strong> -d <strong>-x</strong></td><br><td><strong>演习</strong>移除工作目录中所有未追踪的文件以及空的子目录(<strong>包括 .gitignore 文件中的列表</strong>)</td><br></tr><br><tr><br><td>重置</td><br><td>git reset[需要深入理解]</td><br><td>详情参见<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E7%BD%AE%E6%8F%AD%E5%AF%86" target="_blank" rel="noopener">此处</a>**</td><br></tr><br><tr><br><td>合并</td><br><td>git merge –abort</td><br><td>在 merge 操作后需要处理冲突时使用此命令撤销此合并</td><br></tr><br><tr><br><td>合并</td><br><td>git reset –hard HEAD</td><br><td>无论当前什么状态，直接恢复至本分支上次提交状态(这会将清除工作目录中的所有内容)</td><br></tr><br><tr><br><td>合并</td><br><td>git reset –hard HEAD~</td><br><td>恢复至本分支上次提交的父状态(最近一次提交的父节点提交)</td><br></tr><br><tr><br><td>合并</td><br><td>git reset/revert</td><br><td>更多合并撤销详情见<a href="http://nillhex.com/" target="_blank" rel="noopener">此处</a></td><br></tr><br></tbody><br></table>
-
-<ul>
-<li><p>文件 .gitignore 的格式规范如下：</p>
-<ul>
-<li>所有空行或者以 ＃ 开头的行都会被 Git 忽略。</li>
-<li>可以使用标准的 glob 模式匹配。</li>
-<li>匹配模式可以以（/）开头防止递归。</li>
-<li>匹配模式可以以（/）结尾指定目录。</li>
-<li>要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。<br>[^定制格式说明]: 格式详情见<a href="https://git-scm.com/book/zh/v2/ch00/pretty_format" target="_blank" rel="noopener">git log –pretty=format 常用的选项</a><br>來源：<a href="http://nillhex.com/2016/08/10/Git-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener">Git 常用命令总结</a></li>
-</ul>
-</li>
-</ul>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2274,7 +2276,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">155</span>
+                  <span class="site-state-item-count">156</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

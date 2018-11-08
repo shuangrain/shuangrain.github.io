@@ -298,6 +298,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2017/01/c-sharp-leetcode-easy-448-find-all-numbers-disappeared-in-an-array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/c-sharp-leetcode-easy-448-find-all-numbers-disappeared-in-an-array/" itemprop="url">[C#][LeetCode][Easy] 448. Find All Numbers Disappeared in an Array</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-01-03T11:27:17+08:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/LeetCode/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/c-sharp-leetcode-easy-448-find-all-numbers-disappeared-in-an-array/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/c-sharp-leetcode-easy-448-find-all-numbers-disappeared-in-an-array/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>心得：</p>
+<p>題目大意是有一陣列1~N且亂序，必須找出N並找出未出現哪些數字，剛開始我用硬幹的方式，結果顯示Time Out如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public IList&amp;lt;int&amp;gt; FindDisappearedNumbers(int[] nums) &#123;</span><br><span class="line">        List&amp;lt;int&amp;gt; ans = new List&amp;lt;int&amp;gt;();</span><br><span class="line"></span><br><span class="line">        if(nums.Length &amp;gt; 1)&#123;</span><br><span class="line">            //Sort</span><br><span class="line">            for(int i = 0; i &amp;lt; nums.Length; i++)&#123;</span><br><span class="line">                for(int j = i; j &amp;lt; nums.Length; j++)&#123;</span><br><span class="line">                    if(nums[j] &amp;lt; nums[i])&#123;</span><br><span class="line">                        int tmp = nums[j];</span><br><span class="line">                        nums[j] = nums[i];</span><br><span class="line">                        nums[i] = tmp;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            int n = nums.Length;</span><br><span class="line">            for(int i = 0; i &amp;lt; n; i++)&#123;</span><br><span class="line">                bool b = false;</span><br><span class="line">                for(int j = 0; j &amp;lt; nums.Length; j++)&#123;</span><br><span class="line">                    if(i+1 == nums[j])&#123;</span><br><span class="line">                        b = true;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if(!b)&#123;</span><br><span class="line">                    ans.Add(i+1);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else if(nums.Length == 1)&#123;</span><br><span class="line">            if(nums[0] != 1)&#123;</span><br><span class="line">                ans.Add(1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>後來改用稍為聰明一點的LinQ來找出N，結果還是Time Out如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public IList&amp;lt;int&amp;gt; FindDisappearedNumbers(int[] nums) &#123;</span><br><span class="line">        List&amp;lt;int&amp;gt; ans = new List&amp;lt;int&amp;gt;();</span><br><span class="line">        if(nums.Length &amp;gt; 0)&#123;</span><br><span class="line">            int max = nums.Max();</span><br><span class="line">            if(max &amp;lt; nums.Length)&#123;</span><br><span class="line">                max = nums.Length;</span><br><span class="line">            &#125;</span><br><span class="line">            for(int i = 1; i &amp;lt;= max; i++)&#123;</span><br><span class="line">                if(nums.Any(x=&amp;gt; x == i) == false)&#123;</span><br><span class="line">                    ans.Add(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最後生氣了，直接全部都用LinQ，交給<code>Range</code>與<code>Except</code>直接省略兩個迴圈並且順利解決！</p>
+<p>問題：</p>
+<blockquote>
+<p>Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.</p>
+<p>Find all the elements of [1, n] inclusive that do not appear in this array.</p>
+<p>Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.<br>答案：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public IList&amp;lt;int&amp;gt; FindDisappearedNumbers(int[] nums) &#123;</span><br><span class="line">        List&amp;lt;int&amp;gt; ans = new List&amp;lt;int&amp;gt;();</span><br><span class="line"></span><br><span class="line">        if(nums.Length &amp;gt; 0)&#123;</span><br><span class="line">            ans.AddRange(Enumerable</span><br><span class="line">            .Range(1, nums.Length &amp;gt; nums.Max() ? nums.Length : nums.Max())</span><br><span class="line">            .Except(nums));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>參考：</p>
+<ol>
+<li><a href="https://dotblogs.com.tw/kirkchen/2010/06/12/15836" target="_blank" rel="noopener">[C#] 對List&amp;lt;T&amp;gt;取交集、聯集及差集</a></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/12/c-sharp-leetcode-easy-344-reverse-string/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2009,194 +2211,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/11/system-architecture-design/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/system-architecture-design/" itemprop="url">[轉載] 系統架構設計</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-11-27T15:06:23+08:00">
-                2016-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/system-architecture-design/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/11/system-architecture-design/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>來源：<a href="http://kyleap.blogspot.tw/2014/09/30aspnet-mvc-angularjs-mvc-3.html" target="_blank" rel="noopener">[鐵人30天]當ASP.NET MVC 遇見 Angular.js MVC 客戶管理系統(3) - 系統架構設計</a></p>
-<h1 id="為何要分層架構規劃"><a href="#為何要分層架構規劃" class="headerlink" title="* 為何要分層架構規劃"></a>* 為何要分層架構規劃</h1><p>分層的重要性，也是寫程式幾年後才真的領悟，ASP時代那種義大利麵式的寫法(html、Script、後端程式、SQL程式全混再一起)，接著WebForm CodeBind將前後端拆後，再到現在慣用的MVC，深深覺得”關注點分離”這的確是一件很重要的事，目前開發習慣，即使專案在小，也會整理出自己的三層架構起手式，如果是更大型專案，就會再更細分。</p>
-<p>架構圖：</p>
-<p><img src="/images/wordpress/2016/11/d6bb8e17f499f5d31e81ba2e03b8f383.jpg" alt="_thumb3"></p>
-<p>各分層介紹：</p>
-<ul>
-<li>DAL(Data Access Layer) : 有關SQL語法、EntityFream資料庫溝通，都會在此層。</li>
-<li>BLL(Business Login Layer):資料流從DB或從User輸入後，一定會有一些邏輯判斷，該商業邏輯流程都會寫在此層</li>
-<li>UI(User Interface):有關Web專案、Web API(Web Service)、Apps 都會在此層</li>
-<li>Domain Entity : 裡面會有定義ViewModel Class，用來貫穿三個分層</li>
-<li>Resources:用來放一些資源檔 … e.g 多國語系檔</li>
-<li>Utility : 用來放置一些共用函示庫 … 如加解密<br>整個專案建立完如下圖：</li>
-</ul>
-<p><img src="/images/wordpress/2016/11/807a29bad26410f32479002a04fc3fb6.jpg" alt="1_thumb4"></p>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2251,7 +2265,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">155</span>
+                  <span class="site-state-item-count">156</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

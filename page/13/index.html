@@ -298,6 +298,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/" itemprop="url">Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-18T03:08:07+08:00">
+                2016-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/after-wordpress-added-the-media-show-500-internal-server-error/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Windwes Server 2012 R2下安裝Wordpress還滿多東西需要設定的，像是上傳新照片的時候會出現<code>500 - 內部伺服器錯誤</code>，</p>
+<p><img src="/images/wordpress/2016/05/e57263cd82ee3ce5a6204c623c40c313-e1463511760240.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 01"><img src="/images/wordpress/2016/05/d8d8ba652fb5563e0b814d541e9edd77-e1463511734719.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 02"></p>
+<p>這個問題非常讓人頭痛，詢問了Google小姐一陣子後找到了解答是說，由於IIS沒有權限讀取暫存資料夾<code>C:\Windows\Temp</code>，明明沒有權限讀取此資料夾為什麼又要上傳到這裡呢？難道沒有自己的一個專屬暫存資料夾嗎？<br>不過既然知道了問題點，解決起來就不是甚麼問題了。</p>
+<p>解決方法：</p>
+<ol>
+<li>找到路徑<code>C:\Windows\Temp</code>，編輯<code>IIS_IUSRS</code>使用者，給予該使用者<code>讀取</code>的權限即可。<br><img src="/images/wordpress/2016/05/188d72da76f304af3dc217701c147e96.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 03"></li>
+<li>這樣就可以正常顯示圖片囉！<br><img src="/images/wordpress/2016/05/5549962abeea6531d929a72491837df2.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 04"></li>
+</ol>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/iis-sites-insist-on-using-https-encryption-online/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2015,222 +2197,6 @@ To push the current branch and set the remote as upstream, use</code></p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/" itemprop="url">CentOS 7.X Wrodpress 上傳的檔案無法被移動至wp-content/uploads/</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-09T20:36:27+08:00">
-                2016-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/OS/" itemprop="url" rel="index">
-                    <span itemprop="name">OS</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/OS/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/centos-7-x-wrodpress-uploaded-file-cannot-be-moved-to-wp-content-uploads/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在移植完Wrodpress測試是否正常時，發生了媒體無法上傳的問題，錯誤訊息給出<code>上傳的檔案無法被移動至wp-content/uploads/</code>，就翻了之前寫的文章<a href="https://blog.exfast.me/2016/05/wordpress-%e8%b3%87%e6%96%99%e6%ac%8a%e9%99%90%e4%bf%ae%e5%be%a9/">WordPress 資料權限修復</a>，這邊有一點點不太一樣的就是在CentOS裡面Apache的使用者不是<code>www-data</code>而是<code>apache</code>，修正完資料夾權限後竟然還是無法正常上傳媒體，爬文爬了一整晚將近12小時，下了各種關鍵字都找不到原因，最後快要放棄時逛逛PTT Linux版時無意間看到了<a href="https://www.ptt.cc/bbs/Linux/M.1461909132.A.489.html" target="_blank" rel="noopener">這篇</a>，才發現原來除了預設的資料夾權限以外，還多了SELinux安全性的問題。</p>
-<p>解決方法有兩種如下：</p>
-<ol>
-<li><p>給予權限寫入資料 (推薦!!)</p>
-<ul>
-<li>給予httpd讀取的權限</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo chcon -t httpd_sys_content_t /var/www/html/ -R</span><br></pre></td></tr></table></figure>
-<pre><code>*   給予寫入的權限
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo chcon -t httpd_sys_rw_content_t /data/www/html/sofast/wp-content/* -R</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>完全關閉SELinux (不推薦)</p>
-<ul>
-<li>開啟路徑</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/etc/sysconfig/selinux</span><br></pre></td></tr></table></figure>
-<pre><code>*   搜尋`SELINUX`修改為`&lt;code&gt;disabled`&lt;/code&gt;
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//預設enforcing為開啟，disabled為關閉</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
-<pre><code>*   重開機
-</code></pre><p>查詢SELinux是否開啟<code>(Enforcing為開啟，disabled為關閉)</code>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">getenforce</span><br></pre></td></tr></table></figure>
-<p>參考：</p>
-<ol>
-<li><a href="https://blog.lysender.com/2015/07/centos-7-selinux-php-apache-cannot-writeaccess-file-no-matter-what/" target="_blank" rel="noopener">CentOS 7 + SELinux + PHP + Apache – cannot write/access file no matter what</a></li>
-<li><a href="http://download.ithome.com.tw/article/index/id/2410" target="_blank" rel="noopener">CentOS 關閉SELinux方式</a></li>
-<li><a href="https://www.ptt.cc/bbs/Linux/M.1461909132.A.489.html" target="_blank" rel="noopener">[問題] CentOS 7 apache資料夾權限</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2285,7 +2251,7 @@ To push the current branch and set the remote as upstream, use</code></p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">155</span>
+                  <span class="site-state-item-count">156</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

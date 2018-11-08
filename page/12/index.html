@@ -298,6 +298,212 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/" itemprop="url">[C#] 使用 HtmlAgilityPack 來採集網頁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-07-02T14:12:51+08:00">
+                2016-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/07/c-use-the-htmlagilitypack-to-collect-web-pages/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>因為工作需求，所以必須寫一隻小程式來擷取網頁資料，上網Google了一下於是找到了一個好用的套件<code>HtmlAgilityPack</code>，可以迅速的過濾HTML標籤，取得網頁資料。</p>
+<p>&nbsp;</p>
+<ol>
+<li>從NuGet安裝<code>&lt;code&gt;HtmlAgilityPack</code>&nbsp;</li>
+</ol>
+<p><img src="/images/wordpress/2016/07/01.jpg" alt="01"></p>
+<ol>
+<li>讀取網頁(以原價屋為例)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//指定來源網頁</span><br><span class="line">WebClient url = new WebClient();</span><br><span class="line">//將網頁來源資料暫存到記憶體內</span><br><span class="line">MemoryStream ms = new MemoryStream(url.DownloadData(&quot;http://www.coolpc.com.tw/evaluate.php&quot;));</span><br><span class="line">//使用預設編碼讀入 HTML </span><br><span class="line">HtmlDocument doc = new HtmlDocument();</span><br><span class="line">doc.Load(ms, Encoding.Default);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>原價屋除了商品的類型以外，類型內的選單(select)有做群組分類，為了要將分類與商品所以先建一個Model</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Product</span><br><span class="line">&#123;</span><br><span class="line">	public string type &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">	public string name &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>判斷所要的商品類型(以CPU為例)，再擷取該商品類型內選單的分類</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var list_type = new List&amp;lt;string&amp;gt;();</span><br><span class="line">HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(&quot;//select[@name=&apos;n4&apos;]//optgroup&quot;);</span><br><span class="line"></span><br><span class="line">foreach (HtmlNode node in nodes)</span><br><span class="line">&#123;</span><br><span class="line">	var type = node.Attributes[&quot;label&quot;].Value;</span><br><span class="line">	list_type.Add(type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>接下來就要該使擷取商品名稱與價格了</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">List&amp;lt;string&amp;gt; list_name = doc.DocumentNode.SelectSingleNode(&quot;//select[@name=&apos;n4&apos;]&quot;).InnerText.Split(&apos;\n&apos;).ToList();</span><br><span class="line"></span><br><span class="line">//刪除不必要的非商品選項</span><br><span class="line">list_name.RemoveRange(0,3);</span><br><span class="line">list_name.RemoveAt(list_name.Count - 1);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>將商品類型與名稱填入Model</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var models = new List&amp;lt;Product&amp;gt;();</span><br><span class="line">int number = 0;</span><br><span class="line">for (int i = 0; i &amp;lt; list_name.Count; i++)</span><br><span class="line">&#123;</span><br><span class="line">	string type = list_type[number];</span><br><span class="line">	string name = list_name[i];</span><br><span class="line"></span><br><span class="line">	if (name == &quot;&quot;)</span><br><span class="line">	&#123;</span><br><span class="line">		number++;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		models.Add(new Product()</span><br><span class="line">		&#123;</span><br><span class="line">			type = type,</span><br><span class="line">			name = name</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		Console.WriteLine(&quot;類型：&#123;0&#125; ,&quot;, type);</span><br><span class="line">		Console.WriteLine(&quot;名稱：&#123;0&#125;&quot;, name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Console.ReadLine();</span><br></pre></td></tr></table></figure>
+<ol>
+<li>執行結果<img src="/images/wordpress/2016/07/0000.jpg" alt="0000"><br>&nbsp;</li>
+</ol>
+<p>範例程式：<a href="https://github.com/shuangrain/ConsoleApplication_HtmlAgilityPack" target="_blank" rel="noopener">https://github.com/shuangrain/ConsoleApplication_HtmlAgilityPack</a></p>
+<p>&nbsp;</p>
+<p>參考：<a href="https://dotblogs.com.tw/jackbgova/2014/06/10/145471" target="_blank" rel="noopener">[ASP.NET][C#]使用HtmlAgilityPack(1) 擷取網頁上的股票</a></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/07/trashed/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2020,188 +2226,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/" itemprop="url">Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-05-18T03:08:07+08:00">
-                2016-05-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index">
-                    <span itemprop="name">Windows</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/05/after-wordpress-added-the-media-show-500-internal-server-error/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/05/after-wordpress-added-the-media-show-500-internal-server-error/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在Windwes Server 2012 R2下安裝Wordpress還滿多東西需要設定的，像是上傳新照片的時候會出現<code>500 - 內部伺服器錯誤</code>，</p>
-<p><img src="/images/wordpress/2016/05/e57263cd82ee3ce5a6204c623c40c313-e1463511760240.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 01"><img src="/images/wordpress/2016/05/d8d8ba652fb5563e0b814d541e9edd77-e1463511734719.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 02"></p>
-<p>這個問題非常讓人頭痛，詢問了Google小姐一陣子後找到了解答是說，由於IIS沒有權限讀取暫存資料夾<code>C:\Windows\Temp</code>，明明沒有權限讀取此資料夾為什麼又要上傳到這裡呢？難道沒有自己的一個專屬暫存資料夾嗎？<br>不過既然知道了問題點，解決起來就不是甚麼問題了。</p>
-<p>解決方法：</p>
-<ol>
-<li>找到路徑<code>C:\Windows\Temp</code>，編輯<code>IIS_IUSRS</code>使用者，給予該使用者<code>讀取</code>的權限即可。<br><img src="/images/wordpress/2016/05/188d72da76f304af3dc217701c147e96.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 03"></li>
-<li>這樣就可以正常顯示圖片囉！<br><img src="/images/wordpress/2016/05/5549962abeea6531d929a72491837df2.jpg" alt="Wordpress 新增媒體後顯示 500 - 內部伺服器錯誤 - 04"></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2256,7 +2280,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">155</span>
+                  <span class="site-state-item-count">156</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>

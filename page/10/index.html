@@ -298,6 +298,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/11/system-architecture-design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lex">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="從入門到放棄">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/system-architecture-design/" itemprop="url">[轉載] 系統架構設計</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-11-27T15:06:23+08:00">
+                2016-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/Program/" itemprop="url" rel="index">
+                    <span itemprop="name">Program</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/system-architecture-design/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/11/system-architecture-design/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>來源：<a href="http://kyleap.blogspot.tw/2014/09/30aspnet-mvc-angularjs-mvc-3.html" target="_blank" rel="noopener">[鐵人30天]當ASP.NET MVC 遇見 Angular.js MVC 客戶管理系統(3) - 系統架構設計</a></p>
+<h1 id="為何要分層架構規劃"><a href="#為何要分層架構規劃" class="headerlink" title="* 為何要分層架構規劃"></a>* 為何要分層架構規劃</h1><p>分層的重要性，也是寫程式幾年後才真的領悟，ASP時代那種義大利麵式的寫法(html、Script、後端程式、SQL程式全混再一起)，接著WebForm CodeBind將前後端拆後，再到現在慣用的MVC，深深覺得”關注點分離”這的確是一件很重要的事，目前開發習慣，即使專案在小，也會整理出自己的三層架構起手式，如果是更大型專案，就會再更細分。</p>
+<p>架構圖：</p>
+<p><img src="/images/wordpress/2016/11/d6bb8e17f499f5d31e81ba2e03b8f383.jpg" alt="_thumb3"></p>
+<p>各分層介紹：</p>
+<ul>
+<li>DAL(Data Access Layer) : 有關SQL語法、EntityFream資料庫溝通，都會在此層。</li>
+<li>BLL(Business Login Layer):資料流從DB或從User輸入後，一定會有一些邏輯判斷，該商業邏輯流程都會寫在此層</li>
+<li>UI(User Interface):有關Web專案、Web API(Web Service)、Apps 都會在此層</li>
+<li>Domain Entity : 裡面會有定義ViewModel Class，用來貫穿三個分層</li>
+<li>Resources:用來放一些資源檔 … e.g 多國語系檔</li>
+<li>Utility : 用來放置一些共用函示庫 … 如加解密<br>整個專案建立完如下圖：</li>
+</ul>
+<p><img src="/images/wordpress/2016/11/807a29bad26410f32479002a04fc3fb6.jpg" alt="1_thumb4"></p>
+
+          
+        
+           
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+t-ja+f+1qn"
+     data-ad-client="ca-pub-4656031434250785"
+     data-ad-slot="7193857337"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/11/ng2-understands-angular-cli-generated-project-directory-structure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2168,192 +2356,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.exfast.me/2016/09/mssql-using-t-sql-implementation-tab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lex">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="從入門到放棄">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/mssql-using-t-sql-implementation-tab/" itemprop="url">[MSSQL] 使用 T-SQL 實作分頁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-09-03T01:08:50+08:00">
-                2016-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index">
-                    <span itemprop="name">Program</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/SQL/" itemprop="url" rel="index">
-                    <span itemprop="name">SQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/09/mssql-using-t-sql-implementation-tab/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2016/09/mssql-using-t-sql-implementation-tab/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>很多表格會遇上資料有上萬筆資料或者上千萬時的大數據，這時如果還是把所有資料撈出來在分頁的話，會造成使用者頁面讀取時間過久，更會有伺服器壓力倍增的問題，這裡提供一個SQL解決方案。</p>
-<p>SQL如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">DECLARE @PageNum AS BIGINT;</span><br><span class="line">DECLARE @PageSize AS BIGINT;</span><br><span class="line">DECLARE @PageCount AS BIGINT;</span><br><span class="line">SET @PageNum = 3;</span><br><span class="line">SET @PageSize = 10;</span><br><span class="line">SET @PageCount = (	SELECT	COUNT(1)</span><br><span class="line">					FROM	dbo.TBase_Product</span><br><span class="line">					WHERE	Product_State != 9) / @PageSize;</span><br><span class="line"></span><br><span class="line">IF @PageNum &amp;lt; 1	SET @PageNum = 1;</span><br><span class="line"></span><br><span class="line">WITH Temp AS</span><br><span class="line">(</span><br><span class="line">	SELECT	*,</span><br><span class="line">			ROW_NUMBER() OVER(ORDER BY Product_ID) AS RowNum</span><br><span class="line">	FROM dbo.TBase_Product</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">SELECT	RowNum, @PageCount AS PageCount</span><br><span class="line">FROM	Temp</span><br><span class="line">WHERE	RowNum </span><br><span class="line">		BETWEEN ((@PageNum - 1) * @PageSize + 1) </span><br><span class="line">			AND (@PageNum * @PageSize)</span><br><span class="line">ORDER BY Product_ID;</span><br></pre></td></tr></table></figure>
-<p>執行結果：</p>
-<p><img src="/images/wordpress/2016/09/82eac96db99e98f9c96e3550d29bb239.jpg" alt="2016-09-03 01_01_10-SQLQuery9.sql - exfast.me,6000.iPCE_Coding (shuangrain (143))_ - Microsoft SQL S"></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>參考：</p>
-<ol>
-<li><a href="http://stackoverflow.com/questions/10190/how-to-return-a-page-of-results-from-sql" target="_blank" rel="noopener">How to return a page of results from SQL?</a></li>
-<li><a href="https://dotblogs.com.tw/jeff-yeh/2011/01/12/20767" target="_blank" rel="noopener">Select Count(*) / Count(1) / Count(欄位名) 的差異</a></li>
-</ol>
-
-          
-        
-           
-
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6p+t-ja+f+1qn"
-     data-ad-client="ca-pub-4656031434250785"
-     data-ad-slot="7193857337"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2408,7 +2410,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">155</span>
+                  <span class="site-state-item-count">156</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
