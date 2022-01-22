@@ -1,4 +1,4 @@
-baseURL: http://example.org/
+baseURL: https://shuangrain.github.io/
 languageCode: zh-TW
 title: Lex's Blog
 theme: hugo-theme-stack
@@ -154,10 +154,10 @@ params:
 
     colorScheme:
         # Display toggle
-        toggle: true
+        toggle: false
 
         # Available values: auto, light, dark
-        default: auto
+        default: dark
 
     imageProcessing:
         cover:
