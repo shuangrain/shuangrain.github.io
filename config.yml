@@ -4,6 +4,8 @@ title: Lex's Blog
 theme: hugo-theme-stack
 paginate: 5
 
+disqusShortname: lex-blog
+
 # Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
 
