@@ -19,8 +19,8 @@ DefaultContentLanguage: zh-tw
 hasCJKLanguage: false
 
 permalinks:
-    posts: /:year/:month/:slug/
-    page: /:slug/
+    posts: /posts/:year/:month/:slug/
+    page: /pages/:slug/
 
 params:
     mainSections:
@@ -38,12 +38,12 @@ params:
         lastUpdated: 2006-01-01 15:04 MST
 
     sidebar:
-        emoji: 🍥
-        subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        emoji: 😸
+        subtitle: Copying and Pasting from Stack Overflow
         avatar:
             enabled: true
             local: true
-            src: img/avatar.png
+            src: /img/avatar.jpg
 
     article:
         math: false
@@ -128,9 +128,9 @@ params:
 
     widgets:
         enabled:
-            - search
-            - archives
-            - tag-cloud
+            # - search
+            # - archives
+            # - tag-cloud
 
         archives:
             limit: 5
@@ -154,10 +154,10 @@ params:
 
     colorScheme:
         # Display toggle
-        toggle: false
+        toggle: true
 
         # Available values: auto, light, dark
-        default: dark
+        default: auto
 
     imageProcessing:
         cover:
@@ -178,10 +178,18 @@ menu:
               ### For demonstration purpose, the home link will be open in a new tab
               newTab: true
               icon: home
+        - identifier: archives
+          name: Archives
+          url: /pages/archives
+          weight: 1
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: true
+              icon: archives
         - identifier: github
           name: GitHub
           url: https://github.com/shuangrain
-          weight: 1
+          weight: 100
           params:
               ### For demonstration purpose, the home link will be open in a new tab
               newTab: true
