@@ -27,7 +27,7 @@ params:
         - posts
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    favicon: favicon.ico
 
     footer:
         since: 2022
@@ -43,7 +43,7 @@ params:
         avatar:
             enabled: true
             local: true
-            src: /img/avatar.jpg
+            src: img/avatar.jpg
 
     article:
         math: false
@@ -157,7 +157,7 @@ params:
         toggle: true
 
         # Available values: auto, light, dark
-        default: auto
+        default: dark
 
     imageProcessing:
         cover:
@@ -176,7 +176,7 @@ menu:
           weight: -100
           params:
               ### For demonstration purpose, the home link will be open in a new tab
-              newTab: true
+              newTab: false
               icon: home
         - identifier: archives
           name: Archives
@@ -184,7 +184,7 @@ menu:
           weight: 1
           params:
               ### For demonstration purpose, the home link will be open in a new tab
-              newTab: true
+              newTab: false
               icon: archives
         - identifier: github
           name: GitHub
