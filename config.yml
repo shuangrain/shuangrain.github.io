@@ -34,8 +34,8 @@ params:
         customText:
 
     dateFormat:
-        published: 2006-01-01
-        lastUpdated: 2006-01-01 15:04 MST
+        published: 2006-01-02
+        lastUpdated: 2006-01-02 15:04 MST
 
     sidebar:
         emoji: 😸
@@ -43,7 +43,7 @@ params:
         avatar:
             enabled: true
             local: true
-            src: img/avatar.jpg
+            src: /img/avatar.jpg
 
     article:
         math: false
@@ -223,10 +223,10 @@ markup:
     goldmark:
         renderer:
             ## Set to true if you have HTML content inside Markdown
-            unsafe: false
+            unsafe: true
     tableOfContents:
         endLevel: 4
         ordered: true
-        startLevel: 2
+        startLevel: 1
     highlight:
         noClasses: false
