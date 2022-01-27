@@ -1,3 +1,132 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lex's Blog</title><link>https://shuangrain.github.io/</link><description>Recent content on Lex's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Sat, 22 Jan 2022 21:02:38 +0800</lastBuildDate><atom:link href="https://shuangrain.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World</title><link>https://shuangrain.github.io/posts/2022/01/hello-world/</link><pubDate>Sat, 22 Jan 2022 21:02:38 +0800</pubDate><guid>https://shuangrain.github.io/posts/2022/01/hello-world/</guid><description>&lt;p>test, test&lt;/p>
-&lt;pre tabindex="0">&lt;code>go install
-&lt;/code>&lt;/pre></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lex's Blog</title><link>https://shuangrain.github.io/</link><description>Recent content on Lex's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Sat, 22 Jan 2022 21:02:38 +0800</lastBuildDate><atom:link href="https://shuangrain.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>嗨！Hugo 我們又見面了 (一)</title><link>https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/</link><pubDate>Sat, 22 Jan 2022 21:02:38 +0800</pubDate><guid>https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/</guid><description>&lt;h1 id="前言">前言&lt;/h1>
+&lt;p>工作繁忙 &lt;del>偷懶&lt;/del> 的關係讓原先的部落格閒置許久都沒有更新，之前我是購買 &lt;a class="link" href="https://www.sugarhosts.com/zh-tw/" target="_blank" rel="noopener"
+>Sugarhosts&lt;/a> 的 Web Hosting 服務，但想著自己的使用需求降低後似乎可以把續約的費用省下來做其他事情 &lt;del>買更多酷東西&lt;/del>。最近又閒得發慌想找事情來過過手癮，正好藉著這個機會來玩最近很紅的 &lt;a class="link" href="https://github.com/features/actions" target="_blank" rel="noopener"
+>GitHub Actions&lt;/a>。&lt;/p>
+&lt;p>其實先前部落格已使用過許多不同的方案:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://tw.wordpress.org/" target="_blank" rel="noopener"
+>Wordpress&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://hexo.io" target="_blank" rel="noopener"
+>Hexo&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a class="link" href="https://hexo.io" target="_blank" rel="noopener"
+>Hexo&lt;/a> 與 &lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a> 這種產生靜態網站的方案優點是瀏覽的流暢度快到無話可說，不像動態編譯語言可能會受到伺服器當前的負載而影響速度，缺點則是每次異動都需「編譯」再將檔案「部屬」至伺服器。
+&lt;a class="link" href="https://tw.wordpress.org/" target="_blank" rel="noopener"
+>Wordpress&lt;/a> 功能非常豐富自訂性也非常高，也有許多好用的成熟插件可以使用，缺點就是非常肥還必須有 &lt;a class="link" href="https://www.php.net/" target="_blank" rel="noopener"
+>PHP&lt;/a> 與 &lt;a class="link" href="https://www.mysql.com/" target="_blank" rel="noopener"
+>MySQL&lt;/a> 環境才能使用。採用 Self-Hosting 會有不少維運成本；Cloud-Hosting 雖省去了不少維運成本，但卻會讓能換成喜歡東西的錢錢不見。&lt;/p>
+&lt;p>&lt;figure
+class="gallery-image"
+style="
+flex-grow: 103;
+flex-basis: 247px"
+>
+&lt;a href="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/3d984108-4c3e-4979-82d1-b0466b5f235b.png" data-size="600x582">
+&lt;img src="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/3d984108-4c3e-4979-82d1-b0466b5f235b.png"
+width="600"
+height="582"
+srcset="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/3d984108-4c3e-4979-82d1-b0466b5f235b_huc32147aa9c9fb0f7deed9cd019befd69_317614_480x0_resize_box_3.png 480w, https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/3d984108-4c3e-4979-82d1-b0466b5f235b_huc32147aa9c9fb0f7deed9cd019befd69_317614_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+>
+&lt;/a>
+&lt;/figure>&lt;/p>
+&lt;h1 id="開始動手">開始動手&lt;/h1>
+&lt;h2 id="沒有計畫就是最好的計畫">沒有計畫，就是最好的計畫&lt;/h2>
+&lt;p>根據之前跳來跳去的經驗，最麻煩的事情其實是遷移既有文章最讓人頭痛。&lt;a class="link" href="https://tw.wordpress.org/" target="_blank" rel="noopener"
+>Wordpress&lt;/a> 寫文章時是靠著它提供的所見及所得的線上編輯器並不相容於 &lt;a class="link" href="https://markdown.tw/" target="_blank" rel="noopener"
+>Markdown&lt;/a> 語法，坊間有不少轉換的工具可以將資料讀取出來轉換成 MD 格式，但都有不少的相容性問題要人工介入處理，所以這次我決定痛斷捨離重新開始，順便也想讓自己的文章品質有個分界線，畢竟之前的文章都是隨筆居多對讀者來說並不友善，這次打算改過自新好好地寫文章。&lt;/p>
+&lt;p>&lt;figure
+class="gallery-image"
+style="
+flex-grow: 100;
+flex-basis: 240px"
+>
+&lt;a href="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/fefe0eef-7c99-46bf-bdca-b48e6ef59d7a.jpg" data-size="640x640">
+&lt;img src="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/fefe0eef-7c99-46bf-bdca-b48e6ef59d7a.jpg"
+width="640"
+height="640"
+srcset="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/fefe0eef-7c99-46bf-bdca-b48e6ef59d7a_hu7e7a85877d6a79ea7594e0d10226c81f_44718_480x0_resize_q75_box.jpg 480w, https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/fefe0eef-7c99-46bf-bdca-b48e6ef59d7a_hu7e7a85877d6a79ea7594e0d10226c81f_44718_1024x0_resize_q75_box.jpg 1024w"
+loading="lazy"
+>
+&lt;/a>
+&lt;/figure>&lt;/p>
+&lt;h2 id="工欲善其事必先利其器">工欲善其事，必先利其器&lt;/h2>
+&lt;p>這次的組合如下：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a>&lt;br>
+選擇 Hugo 單純是工作上有用到 Golang 所以想說如果到時候真的功能不足需要客製化可以下海改。&lt;/li>
+&lt;li>&lt;a class="link" href="https://pages.github.com/" target="_blank" rel="noopener"
+>GitHub Page&lt;/a>&lt;br>
+免費 &lt;del>可白嫖&lt;/del> 的靜態網頁託管服務，省去自己維護伺服器的麻煩。&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/features/actions" target="_blank" rel="noopener"
+>GitHub Actions&lt;/a>&lt;br>
+本次 Coding for Fun 的主角，免費方案提供了 2,000 分鐘/月 的額度，以我的部落格更新頻率絕對是夠的。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a> 的官方文件有寫了非常多種安裝方法，這邊我選擇 &lt;code>go install&lt;/code> 的方式安裝：&lt;/p>
+&lt;ol>
+&lt;li>從 &lt;a class="link" href="https://github.com/" target="_blank" rel="noopener"
+>GitHub&lt;/a> 上將 &lt;a class="link" href="https://github.com/gohugoio/hugo#fetch-from-github" target="_blank" rel="noopener"
+>Hugo&lt;/a> 的專案 Clone 下來&lt;/li>
+&lt;li>輸入 &lt;code>go install --tags extended&lt;/code> 即可將 &lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a> 安裝到 &lt;code>$GOROOT/bin&lt;/code>
+&lt;ul>
+&lt;li>&lt;code>--tags extended&lt;/code> 是為支援 Sass/SCSS 格式的 CSS Preprocessor (許多 theme 都依賴此功能)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>建立網站只需要執行 &lt;code>hugo new site shuangrain.github.io -f yml&lt;/code> 就可以看到當前目錄多個 &lt;code>shuangrain.github.io&lt;/code> 的資料夾
+&lt;ul>
+&lt;li>&lt;code>-f yml&lt;/code> 是指定 config 檔案的格式為 yaml (預設為 toml)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>進入剛剛新增的資料夾後執行 &lt;code>hugo new posts/hello-world.md&lt;/code> 就可以在 &lt;code>./content/posts/hello-world.md&lt;/code> 找到新建立的檔案&lt;/li>
+&lt;/ol>
+&lt;h2 id="佛要金裝人要衣裝">佛要金裝，人要衣裝&lt;/h2>
+&lt;p>剛剛介紹完如何安裝 &lt;a class="link" href="https://github.com/gohugoio/hugo#fetch-from-github" target="_blank" rel="noopener"
+>Hugo&lt;/a> 與建立網站，但目前網站還是白茫茫的什麼都沒有，必須先讓它穿上漂亮的表皮才能見人，官方網站有提供&lt;a class="link" href="https://themes.gohugo.io/" target="_blank" rel="noopener"
+>更衣間&lt;/a>供各位客官挑選，這邊我選擇的是 &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>Hugo Theme Stack&lt;/a> 這套衣服。&lt;/p>
+&lt;p>我選擇使用 &lt;a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Submodules" target="_blank" rel="noopener"
+>Git Submodule&lt;/a> 安裝：&lt;/p>
+&lt;ol>
+&lt;li>將剛剛建立出來的資料夾初始化&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">git init
+&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>使用 &lt;a class="link" href="https://git-scm.com/" target="_blank" rel="noopener"
+>Git&lt;/a> 命令下載主題&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
+&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
+&lt;li>複製該專案的 &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack/blob/master/exampleSite/config.yaml" target="_blank" rel="noopener"
+>&lt;code>exampleSite/config.yaml&lt;/code>&lt;/a> 的內容至自己的 &lt;code>config.yml&lt;/code> 裡面&lt;/li>
+&lt;li>再來需要修改剛剛複製的內容以順利偵測文章路徑，找到下面的字段後將 &lt;code>post&lt;/code> 修改為 &lt;code>posts&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">params:
+mainSections:
+- post
+&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="5">
+&lt;li>最後就可以用 &lt;code>hugo server --buildDrafts&lt;/code> 看到剛剛新增的文章&lt;/li>
+&lt;/ol>
+&lt;p>&lt;figure
+class="gallery-image"
+style="
+flex-grow: 144;
+flex-basis: 345px"
+>
+&lt;a href="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/2d3dba4d-5841-4e78-aa6f-e8ed76642765.png" data-size="1021x709">
+&lt;img src="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/2d3dba4d-5841-4e78-aa6f-e8ed76642765.png"
+width="1021"
+height="709"
+srcset="https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/2d3dba4d-5841-4e78-aa6f-e8ed76642765_hudac5ecf60c9c667372bf0a305fd73994_24138_480x0_resize_box_3.png 480w, https://shuangrain.github.io/posts/2022/01/hugo-hello-again-part-1/2d3dba4d-5841-4e78-aa6f-e8ed76642765_hudac5ecf60c9c667372bf0a305fd73994_24138_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+>
+&lt;/a>
+&lt;/figure>&lt;/p>
+&lt;h1 id="總結">總結&lt;/h1>
+&lt;p>這套解決方案非常容易上手，沒有過多的複雜設定也有支援熱加載的功能，有任何修改都可以即時在網頁上反應。下個文章再來分享如何部屬到 &lt;a class="link" href="https://pages.github.com/" target="_blank" rel="noopener"
+>GitHub Page&lt;/a> 給大家。&lt;/p></description></item></channel></rss>
