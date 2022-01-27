@@ -16,7 +16,7 @@ DefaultContentLanguage: zh-tw
 
 # Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
 # This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage: false
+hasCJKLanguage: true
 
 permalinks:
     posts: /posts/:year/:month/:slug/
@@ -27,7 +27,7 @@ params:
         - posts
     featuredImageField: image
     rssFullContent: true
-    favicon: favicon.ico
+    favicon: /favicon.ico
 
     footer:
         since: 2022
